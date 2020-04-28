@@ -10,23 +10,19 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
 # Install Node
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-  ng build --prod
-  displayName: 'npm install and build'
-
 # Install Angular CLI
-
 - task: Npm@1
   inputs:
     command: 'custom'
     workingDir: 'ClarkSnacks.MTS.Web'
-    customCommand: 'ng install -g @angular/cli'
+    customCommand: 'install -g @angular/cli'
   displayName: NPM Install Angular CLI
 
 # Install NPM Packages
@@ -36,24 +32,19 @@ steps:
     workingDir: 'ClarkSnacks.MTS.Web'
   displayName: NPM Install Packages
 
-# build applications
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: 'ClarkSnacks.MTS.Web'
-    customCommand: 'ng build --prod'
-  displayName: NPM Build
+# Build 
+- script: |
+  ng build --prod
+  displayName: 'npm build'
 
-  # copy output to build artifacts
-
+# Copy output to build artifacts
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)/app'
   inputs:
     SourceFolder: 'dist'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/app'
 
-    # publish build artifacts
-
+# publish build artifacts
 - task: PublishBuildArtifacts@1
   inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/app'
