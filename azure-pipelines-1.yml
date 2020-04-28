@@ -40,7 +40,7 @@ steps:
 
 # Copy output to build artifacts
 - task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)/app'
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)/dist'
   inputs:
     SourceFolder: 'dist'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/app'
@@ -48,7 +48,7 @@ steps:
 # publish build artifacts
 - task: PublishBuildArtifacts@1
   inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/app'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
       ArtifactName: app
       publishLocation: Container
   displayName: "Publish artifacts"
