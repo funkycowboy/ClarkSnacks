@@ -35,6 +35,7 @@ steps:
 # Build 
 - script: |
     ng build --prod
+  workingDirectory: 'ClarkSnacks.MTS.Web'
   displayName: 'npm build'
 
 # Copy output to build artifacts
