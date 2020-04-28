@@ -34,7 +34,7 @@ steps:
 
 # Build 
 - script: |
-  ng build --prod
+    ng build --prod
   displayName: 'npm build'
 
 # Copy output to build artifacts
