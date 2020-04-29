@@ -44,6 +44,7 @@ steps:
     SourceFolder: '$(agent.builddirectory)/ClarkSnacks.MTS.Web/dist'
     Contents: '**'
     TargetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: "Source: $(agent.builddirectory), Target: $(Build.ArtifactStagingDirectory)
     
 # Publish files
 #- task: PublishBuildArtifacts@1
