@@ -41,7 +41,7 @@ steps:
 # Copy files 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(agent.builddirectory)'
+    SourceFolder: '$(agent.builddirectory)/ClarkSnacks.MTS.Web/dist'
     Contents: '**'
     TargetFolder: $(Build.ArtifactStagingDirectory)
     
