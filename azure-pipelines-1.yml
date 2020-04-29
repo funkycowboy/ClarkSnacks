@@ -44,16 +44,16 @@ steps:
     SourceFolder: "$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/"
     Contents: '**'
     TargetFolder: $(Build.ArtifactStagingDirectory)
-  displayName: "Source: $(agent.builddirectory), Target: $(Build.ArtifactStagingDirectory)"
+  displayName: "Copy Files"
     
 # Publish files
-#- task: PublishBuildArtifacts@1
-#  inputs:
-#      PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
-#      ArtifactName: app
-#      publishLocation: FilePath
-#      TargetPath: $(Build.ArtifactStagingDirectory)
-#  displayName: "Publish artifacts"
+- task: PublishBuildArtifacts@1
+  inputs:
+      PathtoPublish: '$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/'
+      ArtifactName: ClarkSnacksApp
+      publishLocation: FilePath
+      TargetPath: $(Build.ArtifactStagingDirectory)
+  displayName: "Publish artifacts"
 
 
 
