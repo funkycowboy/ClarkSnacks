@@ -41,10 +41,10 @@ steps:
 # Copy files 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(agent.builddirectory)/ClarkSnacks.MTS.Web/dist'
+    SourceFolder: '$(agent.builddirectory)/ClarkSnacks.MTS.Web/dist/'
     Contents: '**'
     TargetFolder: $(Build.ArtifactStagingDirectory)
-  displayName: "Source: $(agent.builddirectory), Target: $(Build.ArtifactStagingDirectory)
+  displayName: "Source: $(agent.builddirectory), Target: $(Build.ArtifactStagingDirectory)"
     
 # Publish files
 #- task: PublishBuildArtifacts@1
