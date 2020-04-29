@@ -51,8 +51,8 @@ steps:
   inputs:
       PathtoPublish: '$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/'
       ArtifactName: ClarkSnacksApp
-      publishLocation: FilePath
-      TargetPath: $(Build.ArtifactStagingDirectory)
+#      publishLocation: FilePath
+#      TargetPath: $(Build.ArtifactStagingDirectory)
   displayName: "Publish artifacts"
 
 
