@@ -41,7 +41,7 @@ steps:
 # Copy files 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: "$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/"
+    SourceFolder: "$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/ClarkSnacks"
     Contents: '**'
     TargetFolder: $(Build.ArtifactStagingDirectory)
   displayName: "Copy Files"
@@ -49,7 +49,7 @@ steps:
 # Publish files
 - task: PublishBuildArtifacts@1
   inputs:
-      PathtoPublish: '$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/'
+      PathtoPublish: '$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/ClarkSnacks'
 #      ArtifactName: ClarkSnacksApp
 #      publishLocation: FilePath
 #      TargetPath: $(Build.ArtifactStagingDirectory)
