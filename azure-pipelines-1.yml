@@ -38,13 +38,22 @@ steps:
   workingDirectory: 'ClarkSnacks.MTS.Web'
   displayName: 'npm build'
 
-- task: PublishBuildArtifacts@1
+# Copy files 
+- task: CopyFiles@2
   inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
-      ArtifactName: app
-      publishLocation: FilePath
-      TargetPath: $(Build.ArtifactStagingDirectory)
-  displayName: "Publish artifacts"
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**'
+    TargetFolder: $(Build.ArtifactStagingDirectory)
+    
+# Publish files
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#      PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
+#      ArtifactName: app
+#      publishLocation: FilePath
+#      TargetPath: $(Build.ArtifactStagingDirectory)
+#  displayName: "Publish artifacts"
+
 
 
 
