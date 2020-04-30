@@ -14,6 +14,8 @@ export class MaterialInspectionComponent implements OnInit {
     overallResultOptions: SelectItem[];
     supplierOptions: SelectItem[];
     itemOptions: SelectItem[];
+    dispositionOptions: SelectItem[];
+    holdStatusOptions: SelectItem[];
 
     selectedQ1Option: string = "";
     selectedQ2Option: string = "";
@@ -49,23 +51,39 @@ export class MaterialInspectionComponent implements OnInit {
 
         this.resultOptions = [
             { label: 'Yes', value: { id: 1, name: 'Yes', code: 'Y' } },
-            { label: 'No', value: { id: 1, name: 'No', code: 'N' } },
+            { label: 'No', value: { id: 2, name: 'No', code: 'N' } },
             { label: 'N/A', value: null }
         ];
 
         this.supplierOptions = [
             { label: '- Select a Supplier -', value: null },
             { label: 'Supplier A', value: { id: 1, name: 'Supplier A', code: 'Supplier A' } },
-            { label: 'Supplier C', value: { id: 1, name: 'Supplier A', code: 'Supplier A' } },
-            { label: 'Supplier F', value: { id: 1, name: 'Supplier A', code: 'Supplier A' } }
+            { label: 'Supplier C', value: { id: 2, name: 'Supplier A', code: 'Supplier A' } },
+            { label: 'Supplier F', value: { id: 3, name: 'Supplier A', code: 'Supplier A' } }
         ];
 
         this.itemOptions = [
 
             { label: '- Select an Item -', value: null },
             { label: 'Carton', value: { id: 1, name: 'Carton', code: 'Carton' } },
-            { label: 'Film', value: { id: 1, name: 'Film', code: 'Film' } },
-            { label: 'Bag', value: { id: 1, name: 'SupplBag', code: 'Bag' } }
+            { label: 'Film', value: { id: 2, name: 'Film', code: 'Film' } },
+            { label: 'Bag', value: { id: 3, name: 'SupplBag', code: 'Bag' } }
+        ];
+
+        this.dispositionOptions = [
+
+            { label: '- Select a Disposition -', value: null },
+            { label: 'Disposition 1', value: { id: 1, name: 'Carton', code: 'Carton' } },
+            { label: 'Disposition 2', value: { id: 2, name: 'Film', code: 'Film' } },
+            { label: 'Disposition 3', value: { id: 3, name: 'Bag', code: 'Bag' } }
+        ];
+
+        this.holdStatusOptions = [
+
+            { label: '- Select a Hold Status -', value: null },
+            { label: 'Hold Status 1', value: { id: 1, name: 'Hold Status 1', code: 'Hold Status 1' } },
+            { label: 'Hold Status 2', value: { id: 2, name: 'Hold Status 2', code: 'Hold Status 2' } },
+            { label: 'Hold Status 3', value: { id: 3, name: 'Hold Status 3', code: 'Hold Status 3' } }
         ];
     }
 
