@@ -1,0 +1,34 @@
+
+/deep/ .topnav .logo {
+  /*margin-top: 7px;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  padding: 20px 68px;
+  background: url('/assets/beyond_logo_mark.png') no-repeat;
+  background-size: 125px;*/
+}
+
+/deep/ .ui-widget-content {
+  border: 1px solid #e2e5e8;
+  background: #000;
+  color: #fff;
+}
+
+
+/deep/ .ui-menuitem .ui-menuitem-link {
+  color: #fff;
+}
+
+/deep/ .ui-inputtext {
+  background-color: #ccc;
+  color: #fff;
+  font-size: 50px;
+  border: 0;
+}
+
+/deep/ .ui-state-active {
+  background-color: darkgrey;
+}
