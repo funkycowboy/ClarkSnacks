@@ -30,15 +30,15 @@ export class DefaultHeaderComponent implements OnInit {
                 items: [
                     {
                         label: 'Perform Inspection',
-                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/home']
+                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/material-inspection']
                     },
                     {
                         label: 'View Inspections',
-                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/home']
+                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/view-inspections']
                     },
                     {
                         label: 'Upload Artwork',
-                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/home']
+                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/upload']
                     }
                 ]
             },
@@ -49,8 +49,8 @@ export class DefaultHeaderComponent implements OnInit {
                 items: [
 
                     {
-                        label: 'Track Material Lots',
-                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/home']
+                        label: 'Process Lots',
+                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/track-lots']
                        
                     }
                 ]
@@ -60,12 +60,53 @@ export class DefaultHeaderComponent implements OnInit {
                 icon: 'fa fa-table',
 
                 items: [
-
                     {
-                        label: 'Track Material Lots',
-                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/home']
+                        label: 'Lot Reporting',
+                        icon: 'fa fa-arrow-circle-right',
+                        items: [
+                            {
+                                label: 'Processed Today',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
 
+                            },
+                            {
+                                label: 'Processed Today',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            },
+                            {
+                                label: 'Processed This Month',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            },
+                            {
+                                label: 'Processed This Year',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            },
+                            {
+                                label: 'Processed By Date',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            },
+                            {
+                                label: 'Processed By Vendor',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            },
+                            {
+                                label: 'Processed By Production Line',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            },
+                            {
+                                label: 'Processed By Operator',
+                                icon: 'fa fa-arrow-circle-right', 'routerLink': ['/reports']
+
+                            }
+                        ]
                     }
+
                 ]
             },  
             {
@@ -75,19 +116,9 @@ export class DefaultHeaderComponent implements OnInit {
                 items: [
 
                     {
-                        label: 'User Admistration',
+                        label: 'Operator Admistration',
                         icon: 'fa fa-arrow-circle-right',
                         'routerLink': ['/home']
-                    },
-                    {
-                        label: 'Run Timesheets',
-                        icon: 'fa fa-arrow-circle-right',
-                        'routerLink': ['/timesheets']
-                    },
-                    {
-                        label: 'Manage Tribe',
-                        icon: 'fa fa-arrow-circle-right',
-                        'routerLink': ['/tribe']
                     }
 
                 ]
