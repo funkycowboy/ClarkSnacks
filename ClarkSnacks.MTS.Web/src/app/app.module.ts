@@ -17,6 +17,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/components/button/button';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ButtonModule } from 'primeng/components/button/button';
     InputSwitchModule,
     SelectButtonModule,
     DropdownModule,
-    ButtonModule
+      ButtonModule,
+      CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
