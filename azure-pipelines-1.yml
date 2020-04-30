@@ -1,0 +1,60 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+# Install Node
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+# Install Angular CLI
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'ClarkSnacks.MTS.Web'
+    customCommand: 'install -g @angular/cli@8.3.9'
+  displayName: NPM Install Angular CLI
+
+# Install NPM Packages
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'ClarkSnacks.MTS.Web'
+  displayName: NPM Install Packages
+
+# Build 
+- script: |
+    ng build --prod
+  workingDirectory: 'ClarkSnacks.MTS.Web'
+  displayName: 'npm build'
+
+# Copy files 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: "$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/ClarkSnacks"
+    Contents: '**'
+    TargetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: "Copy Files"
+    
+# Publish files
+- task: PublishBuildArtifacts@1
+  inputs:
+      PathtoPublish: '$(agent.builddirectory)/s/ClarkSnacks.MTS.Web/dist/ClarkSnacks'
+#      ArtifactName: ClarkSnacksApp
+#      publishLocation: FilePath
+#      TargetPath: $(Build.ArtifactStagingDirectory)
+  displayName: "Publish artifacts"
+
+
+
+
