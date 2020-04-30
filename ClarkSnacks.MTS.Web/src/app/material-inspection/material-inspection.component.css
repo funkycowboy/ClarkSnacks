@@ -1,9 +1,4 @@
-/*/deep/ body .ui-datepicker table td > a, body .ui-datepicker table td > span {
-  color: #FFF;
-}
 
-/deep/ .ui-datepicker .ui-state-default {
-  border: 1px solid #2c3e50;
-  background: #2c3e50;
-  color: #ffffff;
-}*/
+/deep/ .ui-dialog {
+  width: 800px;
+}

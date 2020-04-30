@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+/deep/ body .ui-datepicker table td > a, body .ui-datepicker table td > span {
+  color: #FFF;
+}
+
+/deep/ .ui-datepicker .ui-state-default {
+  border: 1px solid #2c3e50;
+  background: #2c3e50;
+  color: #ffffff;
+}
+
+/deep/ input[type=text] {
+  padding: 8px;
+  border-radius: 2px;
+  border: 1px solid #a6a6a6;
+}
+
+/deep/ body {
+  font-family: Arial;
+}
+
+  /deep/ body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item, body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group {
+    color: #fff;
+  }
