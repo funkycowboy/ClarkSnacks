@@ -12,11 +12,13 @@ export class MaterialInspectionComponent implements OnInit {
 
     resultOptions: SelectItem[];
     overallResultOptions: SelectItem[];
-    selectedOverallResult: string = "";
     supplierOptions: SelectItem[];
-    itemOptions: SelectItem[];
+    itemTypeOptions: SelectItem[];
     dispositionOptions: SelectItem[];
     holdStatusOptions: SelectItem[];
+
+    selectedOverallResult: string = "";
+    selectedItemType: string = "";
 
     selectedQ1Option: string = "";
     selectedQ2Option: string = "";
@@ -65,12 +67,12 @@ export class MaterialInspectionComponent implements OnInit {
             { label: 'Supplier F', value: { id: 3, name: 'Supplier A', code: 'Supplier A' } }
         ];
 
-        this.itemOptions = [
+        this.itemTypeOptions = [
 
             { label: '- Select an Item -', value: null },
-            { label: 'Carton', value: { id: 1, name: 'Carton', code: 'Carton' } },
-            { label: 'Film', value: { id: 2, name: 'Film', code: 'Film' } },
-            { label: 'Bag', value: { id: 3, name: 'SupplBag', code: 'Bag' } }
+            { label: 'Carton', value: { id: 1, name: 'Carton', code: 'carton' } },
+            { label: 'Film', value: { id: 2, name: 'Film', code: 'film' } },
+            { label: 'Bag', value: { id: 3, name: 'SupplBag', code: 'bag' } }
         ];
 
         this.dispositionOptions = [

@@ -23,3 +23,14 @@
   /deep/ body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item, body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group {
     color: #fff;
   }
+
+/deep/ div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index:1000;
+}
+
+/deep/ body {
+  margin:0;
+}
