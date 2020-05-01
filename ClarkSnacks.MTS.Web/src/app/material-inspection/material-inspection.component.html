@@ -162,11 +162,12 @@
           <label for="name">Inspection Result:</label>
         </div>
         <div class="ui-g-8">
-          <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedQ1Option"></p-selectButton>
+          <span style="font-size:11px; font-weight: bold">{{resultDescription}}</span>
+          <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
           <!--<p-dropdown name="InspectionResult" [options]="supplierOptions" [(ngModel)]="selectedSupplier"></p-dropdown>-->
         </div>
       </div>
-      <div class="ui-g-12">
+      <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
         <div class="ui-g-4">
           <label for="name">Disposition:</label>
         </div>
@@ -174,7 +175,15 @@
           <p-dropdown name="Disposition" [options]="dispositionOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
         </div>
       </div>
-      <div class="ui-g-12">
+      <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'deviation'">
+        <div class="ui-g-4">
+          <label for="name">Deviation #:</label>
+        </div>
+        <div class="ui-g-8">
+          <input #deviationnumber type="text" pInputText />
+        </div>
+      </div>
+      <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
         <div class="ui-g-4">
           <label for="name">Hold Status:</label>
         </div>
@@ -190,7 +199,6 @@
           <textarea pInputTextarea></textarea>
         </div>
       </div>
-
     </div>
   </form>
   <p-footer>
