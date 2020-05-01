@@ -18,9 +18,9 @@ export class MaterialInspectionComponent implements OnInit {
     dispositionOptions: SelectItem[];
     holdStatusOptions: SelectItem[];
 
-    selectedOverallResult: any;
-    selectedItemType: any;
-    selectedSupplier: any;
+    selectedOverallResult: any = {};
+    selectedItemType: any  = {};
+    selectedSupplier: any = {};
     approvedSupplierChecked: boolean;
     selectedDateReceived: string;
 
