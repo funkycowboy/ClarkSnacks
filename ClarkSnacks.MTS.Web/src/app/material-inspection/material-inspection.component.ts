@@ -19,7 +19,7 @@ export class MaterialInspectionComponent implements OnInit {
     holdStatusOptions: SelectItem[];
 
     selectedOverallResult: string = "";
-    selectedItemType: string = "";
+    selectedItemType: any;
 
     selectedQ1Option: string = "";
     selectedQ2Option: string = "";
