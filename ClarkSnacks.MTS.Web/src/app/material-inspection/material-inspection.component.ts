@@ -48,6 +48,45 @@ export class MaterialInspectionComponent implements OnInit {
 
     constructor() {
 
+        this.loadOptions();
+    }
+
+    ngOnInit() {
+    }
+
+
+    continue() {
+        debugger;
+        this.displayDialog = true;
+    }
+
+    save() {
+        debugger;
+        this.displayDialog = false;
+    }
+
+    cancel() {
+        this.displayDialog = false;
+    }
+
+    showDescription(event) {
+        debugger
+        switch (event.value.code.toLowerCase()) {
+            case "accepted":
+                this.resultDescription = "All tests passed and the material is available for use.";
+                break;
+
+            case "rejected":
+                this.resultDescription = "One or more of the test results are \"No\" and significantly affect food safety or quality.";
+                break;
+
+            case "deviation":
+                this.resultDescription = "One or more of the test results are \"No\" and affect food safety or quality. ";
+                break;
+        }
+    }
+
+    loadOptions() {
         this.overallResultOptions = [
             { label: 'Accepted', value: { id: 1, name: 'Accepted', code: 'accepted' } },
             { label: 'Rejected', value: { id: 2, name: 'Rejected', code: 'rejected' } },
@@ -92,40 +131,6 @@ export class MaterialInspectionComponent implements OnInit {
             { label: 'Hold Status 2', value: { id: 2, name: 'Hold Status 2', code: 'Hold Status 2' } },
             { label: 'Hold Status 3', value: { id: 3, name: 'Hold Status 3', code: 'Hold Status 3' } }
         ];
-    }
-
-    ngOnInit() {
-    }
-
-    continue() {
-        debugger;
-        this.displayDialog = true;
-    }
-
-    save() {
-        debugger;
-        this.displayDialog = false;
-    }
-
-    showDescription(event) {
-        debugger
-        switch (event.value.code.toLowerCase()) {
-            case "accepted":
-                this.resultDescription = "All tests passed and the material is available for use.";
-                break;
-
-            case "rejected":
-                this.resultDescription = "One or more of the test results are \"No\" and significantly affect food safety or quality.";
-                break;
-
-            case "deviation":
-                this.resultDescription = "One or more of the test results are \"No\" and affect food safety or quality. ";
-                break;
-        }
-    }
-
-    cancel() {
-        this.displayDialog = false;
     }
 
 }
