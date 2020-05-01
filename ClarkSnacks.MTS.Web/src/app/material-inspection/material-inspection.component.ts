@@ -69,7 +69,7 @@ export class MaterialInspectionComponent implements OnInit {
     }
 
     onSubmit(value: string) {
-        alert("submitted");
+        this.displayDialog = true;
     }
 
     cancel() {
@@ -188,13 +188,10 @@ export class MaterialInspectionComponent implements OnInit {
     }
 
     setUserCategoryValidators() {
-        //const institutionControl = this.inspectionForm.get('institution');
-        //const companyControl = this.inspectionForm.get('company');
-        //const salaryControl = this.inspectionForm.get('salary');
-        
+       
         this.inspectionForm.get('itemType').valueChanges
             .subscribe(itemType => {
-                debugger
+                
                 if (itemType.code === 'bag') {
                     this.inspectionForm.get('itemTypeBagQ1').setValidators([Validators.required]);
                     this.inspectionForm.get('itemTypeBagQ2').setValidators([Validators.required]);
