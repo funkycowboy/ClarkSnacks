@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,14 +34,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     BrowserAnimationsModule,
     AppRoutingModule, 
     FormsModule,
+    ReactiveFormsModule,
     MenubarModule,
     InputSwitchModule,
     SelectButtonModule,
     DropdownModule,
     ButtonModule,
     CalendarModule,
-      DialogModule,
-      InputTextareaModule
+    DialogModule,
+    InputTextareaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
