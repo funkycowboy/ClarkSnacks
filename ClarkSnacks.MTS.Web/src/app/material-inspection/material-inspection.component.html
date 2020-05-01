@@ -112,7 +112,7 @@
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-8">Is the C of C acceptable? </div>
+        <div class="ui-g-8">Is the Certificate of Conformance acceptable? </div>
         <div class="ui-g-3" style="white-space: nowrap">
           <p-selectButton name="Q7" [options]="resultOptions" [(ngModel)]="selectedQ7Option"></p-selectButton>
           <!--<p-inputSwitch name="Q7" [(ngModel)]="q7Checked"></p-inputSwitch>-->
@@ -120,7 +120,7 @@
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-8">3 samples have been collected from each item?</div>
+        <div class="ui-g-8">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
           <p-selectButton name="Q8" [options]="resultOptions" [(ngModel)]="selectedQ8Option"></p-selectButton>
           <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
@@ -188,7 +188,7 @@
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-8">3 samples have been collected from each item?</div>
+        <div class="ui-g-8">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
           <p-selectButton name="Q8" [options]="resultOptions" [(ngModel)]="selectedQ8Option"></p-selectButton>
           <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
@@ -213,7 +213,7 @@
 
     </div>
 
-    <div class="ui-g" *ngIf="selectedItemType.code == 'film'">
+    <div class="ui-g" *ngIf="selectedItemType.code == 'overwrap film'">
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -256,7 +256,7 @@
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-8">3 samples have been collected from each item?</div>
+        <div class="ui-g-8">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
           <p-selectButton name="Q8" [options]="resultOptions" [(ngModel)]="selectedQ8Option"></p-selectButton>
           <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
@@ -273,6 +273,91 @@
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the overwrap construction match the standard on file, in regards to physical characteristics (film type, size, coatings) and functionality (seal area free of coating, wind direction is correct)?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q10" [options]="resultOptions" [(ngModel)]="selectedQ10Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q10" [(ngModel)]="q10Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui-g" *ngIf="selectedItemType.code == 'contact film'">
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q1" [options]="resultOptions" [(ngModel)]="selectedQ1Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q1" [(ngModel)]="q1Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q2" [options]="resultOptions" [(ngModel)]="selectedQ2Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q2" [(ngModel)]="q2Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q3" [options]="resultOptions" [(ngModel)]="selectedQ3Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q3" [(ngModel)]="q3Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q4" [options]="resultOptions" [(ngModel)]="selectedQ4Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q4" [(ngModel)]="q4Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Are the rolls marked with item number, tracking number and quantity of impressions?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q5" [options]="resultOptions" [(ngModel)]="selectedQ5Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q5" [(ngModel)]="q5Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Is a Certificate of Conformance available for each item & lot on the shipment?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q8" [options]="resultOptions" [(ngModel)]="selectedQ8Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Is the Certificate of Conformance acceptable?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q8" [options]="resultOptions" [(ngModel)]="selectedQ8Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Has 1 impression been collected for each item?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q8" [options]="resultOptions" [(ngModel)]="selectedQ8Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Does the film printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)?</div>
+        <div class="ui-g-3" style="white-space: nowrap">
+          <p-selectButton name="Q9" [options]="resultOptions" [(ngModel)]="selectedQ9Option"></p-selectButton>
+          <!--<p-inputSwitch name="Q9" [(ngModel)]="q9Checked"></p-inputSwitch>-->
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-8">Does the film construction match the standard on file, in regards to physical characteristics (film type, width, thickness)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
           <p-selectButton name="Q10" [options]="resultOptions" [(ngModel)]="selectedQ10Option"></p-selectButton>
           <!--<p-inputSwitch name="Q10" [(ngModel)]="q10Checked"></p-inputSwitch>-->
@@ -302,10 +387,12 @@
           <label for="name">Select an inspection result:</label>
         </div>
         <div class="ui-g-8">
-          <span style="font-size:11px; font-weight: bold">{{resultDescription}}</span>
+          <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
           <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
-          <!--<p-dropdown name="InspectionResult" [options]="supplierOptions" [(ngModel)]="selectedSupplier"></p-dropdown>-->
         </div>
+      </div>
+      <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+        <p style="font-weight: bold">Please provide the additional information below.</p>
       </div>
       <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
         <div class="ui-g-4">

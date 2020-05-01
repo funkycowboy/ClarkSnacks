@@ -71,8 +71,10 @@ export class MaterialInspectionComponent implements OnInit {
 
             { label: '- Select an Item -', value: null },
             { label: 'Carton', value: { id: 1, name: 'Carton', code: 'carton' } },
-            { label: 'Film', value: { id: 2, name: 'Film', code: 'film' } },
-            { label: 'Bag', value: { id: 3, name: 'SupplBag', code: 'bag' } }
+            { label: 'Bag', value: { id: 3, name: 'Bag', code: 'bag' } },
+            { label: 'Contact Film', value: { id: 2, name: 'Contact Film', code: 'contact film' } },
+            { label: 'Overwrap Film', value: { id: 2, name: 'Overwrap Film', code: 'overwrap film' } },
+
         ];
 
         this.dispositionOptions = [
@@ -120,6 +122,10 @@ export class MaterialInspectionComponent implements OnInit {
                 this.resultDescription = "One or more of the test results are \"No\" and affect food safety or quality. ";
                 break;
         }
+    }
+
+    cancel() {
+        this.displayDialog = false;
     }
 
 }
