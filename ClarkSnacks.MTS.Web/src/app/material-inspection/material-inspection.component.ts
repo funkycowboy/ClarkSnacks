@@ -20,6 +20,9 @@ export class MaterialInspectionComponent implements OnInit {
 
     selectedOverallResult: any;
     selectedItemType: any;
+    selectedSupplier: any;
+    approvedSupplierChecked: boolean;
+    selectedDateReceived: string;
 
     selectedQ1Option: string = "";
     selectedQ2Option: string = "";
