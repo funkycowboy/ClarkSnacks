@@ -7,6 +7,9 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// directives
+import { AddRowDirective } from '../app/directives/add-row-directive';
+
 // components
 import { HomeComponent } from './home/home.component';
 import { MaterialInspectionComponent } from './material-inspection/material-inspection.component';
@@ -30,7 +33,8 @@ import { TableModule } from 'primeng/table';
         AppComponent,
         HomeComponent,
         MaterialInspectionComponent,
-        DefaultHeaderComponent
+        DefaultHeaderComponent,
+        AddRowDirective
   ],
   imports: [
     BrowserModule,

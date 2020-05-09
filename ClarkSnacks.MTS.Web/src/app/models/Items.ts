@@ -1,4 +1,5 @@
 export class Inspection{
+    id: number;
     item: Item;
     lotNumbers: string[];
 }

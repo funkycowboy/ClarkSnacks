@@ -74,14 +74,22 @@ export class MaterialInspectionComponent implements OnInit {
         //item.description = "Test Description";
 
         let inspection = new Inspection();
+        inspection.id = 1;
         inspection.item = item;
         inspection.lotNumbers = ["15151", "45154"]
 
         this.inspections.push(inspection);
-        //this.inspections.push(inspection);
-        //this.inspections.push(inspection);
-        //this.inspections.push(inspection);
-        //this.inspections.push(inspection);
+
+        item = new Item();
+        item.name = "Bag";
+        //item.description = "Test Description";
+
+        inspection = new Inspection();
+        inspection.id = 2;
+        inspection.item = item;
+        inspection.lotNumbers = ["xaxax", "xaxxaxa"]
+
+        this.inspections.push(inspection);
     }
 
     continue() {
@@ -439,5 +447,10 @@ export class MaterialInspectionComponent implements OnInit {
     onRowEditCancel(inspection: Inspection, index: number) {
         //this.cars2[index] = this.clonedCars[car.vin];
         //delete this.clonedCars[car.vin];
+    }
+
+    newRow() {
+
+        return { item: '', lotNumbers: ''};
     }
 }

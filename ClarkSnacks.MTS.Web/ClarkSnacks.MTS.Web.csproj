@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="src\app\directives\add-row-directive.ts" />
     <None Remove="src\app\models\Items.ts" />
   </ItemGroup>
 
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\directives\add-row-directive.ts" />
     <TypeScriptCompile Include="src\app\models\Items.ts" />
   </ItemGroup>
 
