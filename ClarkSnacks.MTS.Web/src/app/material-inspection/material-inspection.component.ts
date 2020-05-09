@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 // primeng
@@ -8,6 +8,7 @@ import { SelectItem } from 'primeng/api';
 import {Inspection, Item} from '../models/items';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-material-inspection',
   templateUrl: './material-inspection.component.html',
   styleUrls: ['./material-inspection.component.css']
@@ -60,7 +61,7 @@ export class MaterialInspectionComponent implements OnInit {
 
     inspectionForm: FormGroup;
 
-    constructor(private fb: FormBuilder,) {
+    constructor(private fb: FormBuilder, private ref: ChangeDetectorRef) {
 
         this.loadOptions();
     }
@@ -450,7 +451,15 @@ export class MaterialInspectionComponent implements OnInit {
     }
 
     newRow() {
+            let item = new Item();
+            item.name = "";
 
-        return { item: '', lotNumbers: ''};
+        let inspection = new Inspection();
+            debugger;
+            inspection.id = this.inspections.length+1;
+            inspection.item = item;
+            inspection.lotNumbers = [];
+
+            return inspection;
     }
 }
