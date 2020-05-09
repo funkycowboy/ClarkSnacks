@@ -1,56 +1,92 @@
 <h2>Material Inspection Form</h2>
 
-<p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Please provide the following inspection information.</p>
+<!-- Shipment Information -->
+<p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Please provide the following shipment information.</p>
 
 <form [formGroup]="inspectionForm" (ngSubmit)="onSubmit(inspectionForm.value)">
 
   <div class="ui-g" style="background-color: #ececec; border-radius:5px;">
-    <div class="ui-g-12">
-      <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
-        <label for="Supplier">Supplier of the materials that need inspected: </label>
-      </div>
-      <div class="ui-g-2 ui-lg-3 ui-md-6 ui-sm-12">
-        <p-dropdown formControlName="supplier" name="Supplier" [options]="supplierOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
-      </div>
-      <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
-        <label for="ApprovedSupplier">Is the selected supplier is an approved supplier?</label>
-      </div>
-      <div class="ui-g-4 ui-lg-3 ui-md-6 ui-sm-12">
-        <p-inputSwitch formControlName="approvedSupplier" name="ApprovedSupplier" [(ngModel)]="approvedSupplierChecked"></p-inputSwitch>
-      </div>
-    </div>
 
     <div class="ui-g-12">
       <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
-        <label for="Item">Item type that requires inspection: </label>
-      </div>
-      <div class="ui-g-2 ui-lg-3 ui-md-6 ui-sm-12">
-        <p-dropdown formControlName="itemType" [options]="itemTypeOptions" [(ngModel)]="selectedItemType"></p-dropdown>
-      </div>
-      <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
-        <label for="Item">Date material received: </label>
+        <label for="Item">Shipment Received Date: </label>
       </div>
       <div class="ui-g-4 ui-lg-3 ui-md-6 ui-sm-12">
         <p-calendar formControlName="dateReceived" name="DateReceived" [(ngModel)]="selectedDateReceived" showIcon="true" readonlyInput="true"></p-calendar>
       </div>
-    </div>
-
-    <div class="ui-g-12">
       <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
         <label for="Item">BOL/Shipment Number: </label>
       </div>
       <div class="ui-g-2 ui-lg-3 ui-md-6 ui-sm-12">
         <input formControlName="bolShipmentNumber" #bolshipmentnumber type="text" pInputText />
       </div>
-      <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
-        <label for="Item">Lot Number: </label>
-      </div>
-      <div class="ui-g-2 ui-lg-3 ui-md-6 ui-sm-12">
-        <input formControlName="lotNumber" #lotnumber type="text" pInputText />
-      </div>
     </div>
 
+    <div class="ui-g-12">
+      <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
+        <label for="Supplier">Shipment Supplier: </label>
+      </div>
+      <div class="ui-g-2 ui-lg-3 ui-md-6 ui-sm-12">
+        <p-dropdown formControlName="supplier" name="Supplier" [options]="supplierOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
+      </div>
+      <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
+        <label for="ApprovedSupplier">Is the supplier an approved supplier?</label>
+      </div>
+      <div class="ui-g-4 ui-lg-3 ui-md-6 ui-sm-12">
+        <p-inputSwitch formControlName="approvedSupplier" name="ApprovedSupplier" [(ngModel)]="approvedSupplierChecked"></p-inputSwitch>
+      </div>
+    </div>
   </div>
+
+  <div class="ui-g">
+    <div class="ui-g-12" style="text-align: right">
+      <button type="submit" pButton icon="fa fa-arrow-circle-right" label="Continue"></button>
+    </div>
+  </div>
+
+  <!-- Item and Lot Number Information -->
+  <p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Please provide the following shipping item and lot information.</p>
+
+  <p-table [value]="inspections" editMode="row" [responsive]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Item</th>
+        <th>Lot Numbers</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-inspection let-rowData let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="rowData">
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-dropdown formControlName="item" [options]="itemTypeOptions" [(ngModel)]="inspection.item.name"></p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{inspection.item.name}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-chips formControlName="lotNumbers" [(ngModel)]="inspection.lotNumbers"></p-chips>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{inspection.lotNumbers}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td style="text-align:center">
+          <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+          <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+          <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Inspection Criteria -->
 
   <div *ngIf="selectedItemType.code">
     <p style="font-weight:bold">
@@ -66,80 +102,70 @@
       <div class="ui-g-12">
         <div class="ui-g-8">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ1" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q1" [(ngModel)]="q1Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ1" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ2" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q2" [(ngModel)]="q2Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ2" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ3" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q3" [(ngModel)]="q3Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ3" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ4" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q4" [(ngModel)]="q4Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ4" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Are the individual cases of bags marked with item number and tracking number (lot)?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ5" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q5" [(ngModel)]="q5Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ5" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is a Certificate of Conformance available for each item & lot on the shipment?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ6" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q6" [(ngModel)]="q6Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ6" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the Certificate of Conformance acceptable? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ7" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q7" [(ngModel)]="q7Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ7" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ8" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ8" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the bag printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ9" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q9" [(ngModel)]="q9Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ9" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the bag construction match the standard on file, in regards to physical characteristics (paper type, size) functionality (gusset, glue, bottom seal)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeBagQ10" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q10" [(ngModel)]="q10Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeBagQ10" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
@@ -150,64 +176,56 @@
       <div class="ui-g-12">
         <div class="ui-g-8">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ1" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q1" [(ngModel)]="q1Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ1" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ2" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q2" [(ngModel)]="q2Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ2" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ3" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q3" [(ngModel)]="q3Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ3" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Do the item numbers and quantities of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ4" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q4" [(ngModel)]="q4Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ4" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Are the individual cases of cartons marked with item number?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ5" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q5" [(ngModel)]="q5Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ5" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ6" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ6" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the carton printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard, especially net weight & allergen/ingredient statements)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ7" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q9" [(ngModel)]="q9Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ7" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the carton construction match the standard on file, in regards to physical characteristics (paper type, size, coatings) and functionality (flaps, glue, scoring)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeCartonQ8" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q10" [(ngModel)]="q10Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeCartonQ8" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
@@ -218,64 +236,56 @@
       <div class="ui-g-12">
         <div class="ui-g-8">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ1" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q1" [(ngModel)]="q1Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ1" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ2" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q2" [(ngModel)]="q2Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ2" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ3" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q3" [(ngModel)]="q3Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ3" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ4" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q4" [(ngModel)]="q4Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ4" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Are the cores marked with item number and quantity?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ5" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q5" [(ngModel)]="q5Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ5" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ6" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ6" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the overwrap printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard, especially net weight & allergen/ingredient statements)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ7" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q9" [(ngModel)]="q9Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ7" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the overwrap construction match the standard on file, in regards to physical characteristics (film type, size, coatings) and functionality (seal area free of coating, wind direction is correct)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeOverwrapFilmQ8" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q10" [(ngModel)]="q10Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeOverwrapFilmQ8" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
@@ -286,56 +296,49 @@
       <div class="ui-g-12">
         <div class="ui-g-8">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ1" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q1" [(ngModel)]="q1Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ1" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ2" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q2" [(ngModel)]="q2Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ2" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ3" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q3" [(ngModel)]="q3Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ3" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ4" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q4" [(ngModel)]="q4Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ4" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Are the rolls marked with item number, tracking number and quantity of impressions?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ5" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q5" [(ngModel)]="q5Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ5" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is a Certificate of Conformance available for each item & lot on the shipment?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ6" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ6" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Is the Certificate of Conformance acceptable?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ7" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ7" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
@@ -343,24 +346,21 @@
       <div class="ui-g-12">
         <div class="ui-g-8">Has 1 impression been collected for each item?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ8" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q8" [(ngModel)]="q8Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ8" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the film printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)?</div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ9" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q9" [(ngModel)]="q9Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ9" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-8">Does the film construction match the standard on file, in regards to physical characteristics (film type, width, thickness)? </div>
         <div class="ui-g-3" style="white-space: nowrap">
-          <p-selectButton formControlName="itemTypeContactFilmQ10" [options]="resultOptions" ></p-selectButton>
-          <!--<p-inputSwitch name="Q10" [(ngModel)]="q10Checked"></p-inputSwitch>-->
+          <p-selectButton formControlName="itemTypeContactFilmQ10" [options]="resultOptions"></p-selectButton>
         </div>
       </div>
 
@@ -370,7 +370,6 @@
       <div class="ui-g-1"></div>
       <div class="ui-g-8"></div>
       <div class="ui-g-3" style="white-space: nowrap">
-        <!--<button type="button" pButton icon="fa fa-times" (click)="cancel()" label="Cancel"></button>&nbsp;-->
         <button type="submit" pButton icon="fa fa-arrow-circle-right" [disabled]="!inspectionForm.valid" label="Continue"></button>
       </div>
     </div>
@@ -380,53 +379,53 @@
 </form>
 
 <p-dialog header="Confirm Inspection" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true">
-    <div class="ui-g ui-fluid">
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="name">Select an inspection result:</label>
-        </div>
-        <div class="ui-g-8">
-          <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
-          <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
-        </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="name">Select an inspection result:</label>
       </div>
-      <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
-        <p style="font-weight: bold">Please provide the additional information below.</p>
-      </div>
-      <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
-        <div class="ui-g-4">
-          <label for="name">Disposition:</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown name="Disposition" [options]="dispositionOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'deviation'">
-        <div class="ui-g-4">
-          <label for="name">Deviation #:</label>
-        </div>
-        <div class="ui-g-8">
-          <input #deviationnumber type="text" pInputText />
-        </div>
-      </div>
-      <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
-        <div class="ui-g-4">
-          <label for="name">Hold Status:</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown name="HoldStatus" [options]="holdStatusOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12" *ngIf="selectedOverallResult && selectedOverallResult.code != 'accepted'">
-        <div class="ui-g-4">
-          <label for="name">Measure(s) to prevent release:</label>
-        </div>
-        <div class="ui-g-8">
-          <textarea pInputTextarea></textarea>
-        </div>
+      <div class="ui-g-8">
+        <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
+        <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
       </div>
     </div>
-  
+    <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+      <p style="font-weight: bold">Please provide the additional information below.</p>
+    </div>
+    <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
+      <div class="ui-g-4">
+        <label for="name">Disposition:</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown name="Disposition" [options]="dispositionOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'deviation'">
+      <div class="ui-g-4">
+        <label for="name">Deviation #:</label>
+      </div>
+      <div class="ui-g-8">
+        <input #deviationnumber type="text" pInputText />
+      </div>
+    </div>
+    <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+      <div class="ui-g-4">
+        <label for="name">Hold Status:</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown name="HoldStatus" [options]="holdStatusOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12" *ngIf="selectedOverallResult && selectedOverallResult.code != 'accepted'">
+      <div class="ui-g-4">
+        <label for="name">Measure(s) to prevent release:</label>
+      </div>
+      <div class="ui-g-8">
+        <textarea pInputTextarea></textarea>
+      </div>
+    </div>
+  </div>
+
   <p-footer>
     <button type="button" pButton icon="fa fa-times" label="Cancel" (click)="cancel()"></button>&nbsp;
     <button type="button" pButton icon="fa fa-check" label="Save" (click)="save()"></button>

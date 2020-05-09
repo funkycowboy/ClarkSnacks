@@ -4,6 +4,9 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 // primeng
 import { SelectItem } from 'primeng/api';
 
+// class
+import {Inspection, Item} from '../models/items';
+
 @Component({
   selector: 'app-material-inspection',
   templateUrl: './material-inspection.component.html',
@@ -15,11 +18,13 @@ export class MaterialInspectionComponent implements OnInit {
     overallResultOptions: SelectItem[];
     supplierOptions: SelectItem[];
     itemTypeOptions: SelectItem[];
+    itemOptions: SelectItem[];
     dispositionOptions: SelectItem[];
     holdStatusOptions: SelectItem[];
 
     selectedOverallResult: any = {};
-    selectedItemType: any  = {};
+    selectedItemType: any = {};
+    selectedItem: any = {};
     selectedSupplier: any = {};
     approvedSupplierChecked: boolean;
     selectedDateReceived: string;
@@ -46,6 +51,9 @@ export class MaterialInspectionComponent implements OnInit {
     //q9Checked: boolean = false;
     //q10Checked: boolean = false;
 
+    inspections: Inspection[] = [];
+    clonedInspections: { [s: string]: Inspection; } = {};
+
     displayDialog: boolean;
 
     resultDescription: string = "";
@@ -60,6 +68,20 @@ export class MaterialInspectionComponent implements OnInit {
     ngOnInit() {
         this.configureForm();
         this.setUserCategoryValidators();
+
+        let item = new Item();
+        item.name = "Carton";
+        //item.description = "Test Description";
+
+        let inspection = new Inspection();
+        inspection.item = item;
+        inspection.lotNumbers = ["15151", "45154"]
+
+        this.inspections.push(inspection);
+        //this.inspections.push(inspection);
+        //this.inspections.push(inspection);
+        //this.inspections.push(inspection);
+        //this.inspections.push(inspection);
     }
 
     continue() {
@@ -118,11 +140,18 @@ export class MaterialInspectionComponent implements OnInit {
 
         this.itemTypeOptions = [
 
+            { label: '- Select an Item Type -', value: null },
+            { label: 'Carton', value: 'Carton'},
+            { label: 'Bag', value: 'Bag'},
+            { label: 'Contact Film', value:'Contact Film'},
+            { label: 'Overwrap Film', value: 'Overwrap Film'},
+
+        ];
+
+        this.itemOptions = [
+
             { label: '- Select an Item -', value: null },
-            { label: 'Carton', value: { id: 1, name: 'Carton', code: 'carton' } },
-            { label: 'Bag', value: { id: 3, name: 'Bag', code: 'bag' } },
-            { label: 'Contact Film', value: { id: 2, name: 'Contact Film', code: 'contact film' } },
-            { label: 'Overwrap Film', value: { id: 2, name: 'Overwrap Film', code: 'overwrap film' } },
+            { label: 'POP SECRET MINI 94%FF BUTTER 4 PACK', value: { id: 1, name: 'Carton', code: 'carton' } }
 
         ];
 
@@ -148,6 +177,7 @@ export class MaterialInspectionComponent implements OnInit {
             'supplier': new FormControl('', Validators.required),
             'approvedSupplier': new FormControl('', Validators.required),
             'itemType': new FormControl('', Validators.required),
+            'item': new FormControl('', Validators.required),
             'dateReceived': new FormControl('', Validators.required),
             'bolShipmentNumber': new FormControl('', Validators.compose([Validators.required, Validators.maxLength(25)])),
             'lotNumber': new FormControl('', Validators.compose([Validators.required, Validators.maxLength(25)])),
@@ -186,7 +216,8 @@ export class MaterialInspectionComponent implements OnInit {
             'itemTypeOverwrapFilmQ5': new FormControl(''),
             'itemTypeOverwrapFilmQ6': new FormControl(''),
             'itemTypeOverwrapFilmQ7': new FormControl(''),
-            'itemTypeOverwrapFilmQ8': new FormControl('')
+            'itemTypeOverwrapFilmQ8': new FormControl(''),
+            'lotNumbers': new FormControl('')
         });
     }
 
@@ -387,5 +418,26 @@ export class MaterialInspectionComponent implements OnInit {
                 this.inspectionForm.get('itemTypeOverwrapFilmQ7').updateValueAndValidity();
                 this.inspectionForm.get('itemTypeOverwrapFilmQ8').updateValueAndValidity();
             });
+    }
+
+    onRowEditInit(inspection: Inspection) {
+        this.clonedInspections[1] = { ...inspection };
+    }
+
+    onRowEditSave(inspection: Inspection) {
+
+        debugger
+        //if (car.year > 0) {
+        //    delete this.clonedCars[car.vin];
+        //    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Car is updated' });
+        //}
+        //else {
+        //    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Year is required' });
+        //}
+    }
+
+    onRowEditCancel(inspection: Inspection, index: number) {
+        //this.cars2[index] = this.clonedCars[car.vin];
+        //delete this.clonedCars[car.vin];
     }
 }

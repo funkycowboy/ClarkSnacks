@@ -21,6 +21,9 @@ import { ButtonModule } from 'primeng/components/button/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/components/dialog/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ChipsModule } from 'primeng/chips';
+import { TableModule } from 'primeng/table';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +45,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ButtonModule,
     CalendarModule,
     DialogModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ChipsModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
