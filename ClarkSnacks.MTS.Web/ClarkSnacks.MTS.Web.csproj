@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <None Remove="src\app\directives\add-row-directive.ts" />
-    <None Remove="src\app\models\inspection.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="src\app\models\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -20,9 +20,6 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="src\app\directives\add-row-directive.ts" />
-    <TypeScriptCompile Include="src\app\models\inspection.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
   </ItemGroup>
 
 </Project>
