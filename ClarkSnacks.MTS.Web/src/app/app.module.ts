@@ -26,7 +26,7 @@ import { DialogModule } from 'primeng/components/dialog/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ChipsModule } from 'primeng/chips';
 import { TableModule } from 'primeng/table';
-
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { TableModule } from 'primeng/table';
     DialogModule,
     InputTextareaModule,
     ChipsModule,
-    TableModule
+    TableModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

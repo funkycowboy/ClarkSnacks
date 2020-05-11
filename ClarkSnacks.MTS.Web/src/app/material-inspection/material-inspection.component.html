@@ -71,7 +71,12 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <p-chips (onAdd)="lotNumbersChange($event)" formControlName="lotNumbers" [(ngModel)]="inspection.lotNumbers"></p-chips>
+                <div style="display: inline-block; vertical-align:middle">
+                  <p-chips (onAdd)="lotNumbersChange($event)" formControlName="lotNumbers" [(ngModel)]="inspection.lotNumbers"></p-chips>
+                </div>
+                <div style="display: inline-block;vertical-align:middle; margin-left: 10px;">
+                  <button class="ui-button-rounded ui-button-secondary" type="button" pButton icon="fa fa-info" pTooltip="Press ENTER on your keybord after each lot number entered."></button>
+                </div>
               </ng-template>
               <ng-template pTemplate="output">
                 {{inspection.lotNumbers}}
