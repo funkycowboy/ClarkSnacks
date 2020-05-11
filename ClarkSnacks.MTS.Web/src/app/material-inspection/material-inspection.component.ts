@@ -7,6 +7,7 @@ import { Table } from 'primeng/table';
 // class
 import {Inspection, Item} from '../models/inspection';
 
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-material-inspection',
