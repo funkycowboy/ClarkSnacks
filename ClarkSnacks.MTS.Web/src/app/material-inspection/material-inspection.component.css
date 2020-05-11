@@ -68,3 +68,7 @@
     display: table-cell;
   }
 }
+
+/deep/ span.ui-state-default.fa.fa-arrow-circle-right {
+  color: #007ad9;
+}
