@@ -5,7 +5,7 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
 // class
-import {Inspection, Item} from '../models/items';
+import {Inspection, Item} from '../models/inspection';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
