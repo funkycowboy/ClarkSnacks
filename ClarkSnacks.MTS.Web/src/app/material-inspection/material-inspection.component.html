@@ -75,7 +75,7 @@
                   <p-chips (onAdd)="lotNumbersChange($event)" formControlName="lotNumbers" [(ngModel)]="inspection.lotNumbers"></p-chips>
                 </div>
                 <div style="display: inline-block;vertical-align:middle; margin-left: 10px;">
-                  <button class="ui-button-rounded ui-button-secondary" type="button" pButton icon="fa fa-info" pTooltip="Press ENTER on your keybord after each lot number entered."></button>
+                  <button class="ui-button-rounded ui-button-secondary" type="button" pButton icon="fa fa-info" pTooltip="Input a lot number and press ENTER to enter multiple lots."></button>
                 </div>
               </ng-template>
               <ng-template pTemplate="output">
@@ -84,7 +84,7 @@
             </p-cellEditor>
           </td>
           <td style="text-align:center">
-            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)" label="Add Item"></button>
             <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
             <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
           </td>
