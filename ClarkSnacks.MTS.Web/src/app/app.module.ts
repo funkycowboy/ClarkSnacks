@@ -52,7 +52,8 @@ import { TooltipModule } from 'primeng/tooltip';
     InputTextareaModule,
     ChipsModule,
     TableModule,
-    TooltipModule
+    TooltipModule,
+    InputTextareaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
