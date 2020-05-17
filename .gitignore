@@ -4,3 +4,11 @@
 
 /.vs
 /ClarkSnacks.MTS.Web/obj
+/ClarkSnacks.MTS.API/bin/Debug/netcoreapp3.1
+/ClarkSnacks.MTS.API/obj
+/ClarkSnacks.MTS.API/Properties
+/ClarkSnacks.MTS.Domain/bin/Debug/netcoreapp3.1
+/ClarkSnacks.MTS.Domain/obj
+/ClarkSnacks.MTS.EntityFramework/bin/Debug/netcoreapp3.1
+/ClarkSnacks.MTS.EntityFramework/obj
+/ClarkSnacks.MTS.Web/bin/Debug/netcoreapp2.1
