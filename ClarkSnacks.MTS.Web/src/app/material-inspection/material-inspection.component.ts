@@ -505,7 +505,7 @@ export class MaterialInspectionComponent implements OnInit {
     loadVendors() {
         this.vendorService.getVendors()
             .then(vendors => {
-                vendors.forEach((item) => {
+                (<any>vendors).forEach((item) => {
                     this.supplierOptions.push({ label: item.name, value: item.id });
                 });
             });
