@@ -6,10 +6,12 @@ import { SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
 
 // class
-import { Inspection, Item } from '../models/inspection';
+import { Inspection, InspectionItem } from '../models/inspection';
 
 // services
-import {VendorService} from '../services/vendor-service'
+import { VendorService } from '../services/vendor-service';
+import { CategoryService } from '../services/category-service';
+import { ItemService } from '../services/item-service';
 
 
 @Component({
@@ -24,8 +26,8 @@ export class MaterialInspectionComponent implements OnInit {
     resultOptions: SelectItem[];
     overallResultOptions: SelectItem[];
     supplierOptions: SelectItem[] = [];
-    itemTypeOptions: SelectItem[];
-    itemOptions: SelectItem[];
+    itemTypeOptions: SelectItem[] = [];
+    itemOptions: SelectItem[] = [];
     dispositionOptions: SelectItem[];
     holdStatusOptions: SelectItem[];
 
@@ -65,7 +67,9 @@ export class MaterialInspectionComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
         private ref: ChangeDetectorRef,
-        private vendorService: VendorService) {
+        private vendorService: VendorService,
+        private categoryService: CategoryService,
+        private itemService: ItemService) {
 
         this.loadOptions();
     }
@@ -111,8 +115,12 @@ export class MaterialInspectionComponent implements OnInit {
 
     loadOptions() {
 
+        // Data-driven options
         this.loadVendors();
+        this.loadCategories();
+        this.loadItems();
 
+        // Hard coded options
         this.overallResultOptions = [
             { label: 'Accepted', value: { id: 1, name: 'Accepted', code: 'accepted' } },
             { label: 'Rejected', value: { id: 2, name: 'Rejected', code: 'rejected' } },
@@ -123,25 +131,7 @@ export class MaterialInspectionComponent implements OnInit {
             { label: 'Yes', value: { id: 1, name: 'Yes', code: 'Y' } },
             { label: 'No', value: { id: 2, name: 'No', code: 'N' } },
             { label: 'N/A', value: { id: 3, name: 'N/A', code: 'NA' } },
-        ];
-
-        
-        this.itemTypeOptions = [
-
-            { label: '- Select an Item Type -', value: '' },
-            { label: 'Carton', value: 'Carton'},
-            { label: 'Bag', value: 'Bag'},
-            { label: 'Contact Film', value:'Contact Film'},
-            { label: 'Overwrap Film', value: 'Overwrap Film'},
-
-        ];
-
-        this.itemOptions = [
-
-            { label: '- Select an Item -', value: null },
-            { label: 'POP SECRET MINI 94%FF BUTTER 4 PACK', value: { id: 1, name: 'Carton', code: 'carton' } }
-
-        ];
+        ];       
 
         this.dispositionOptions = [
 
@@ -432,7 +422,7 @@ export class MaterialInspectionComponent implements OnInit {
     }
 
     loadStep2TableRow() {
-        let item = new Item();
+        let item = new InspectionItem();
         item.name = "";
 
         let inspection = new Inspection();
@@ -507,6 +497,25 @@ export class MaterialInspectionComponent implements OnInit {
             .then(vendors => {
                 (<any>vendors).forEach((item) => {
                     this.supplierOptions.push({ label: item.name, value: item.id });
+                });
+            });
+    }
+
+    loadCategories() {
+        this.categoryService.getCategories()
+            .then(categories => {
+                (<any>categories).forEach((item) => {
+                    this.itemTypeOptions.push({ label: item.name, value: item.id });
+                });
+            });
+    }
+
+    loadItems() {
+        this.itemService.getItems()
+            .then(items => {
+                debugger
+                (<any>items).forEach((item) => {
+                    this.itemOptions.push({ label: item.description, value: item.id });
                 });
             });
     }

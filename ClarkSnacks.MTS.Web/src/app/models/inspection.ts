@@ -1,10 +1,10 @@
 export class Inspection {
     id: number;
-    item: Item;
+    item: InspectionItem;
     lotNumbers: string[];
 }
 
-export class Item {
+export class InspectionItem {
     name: string;
     description: string;
 }

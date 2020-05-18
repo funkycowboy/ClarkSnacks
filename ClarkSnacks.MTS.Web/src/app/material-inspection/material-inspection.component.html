@@ -61,7 +61,7 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <p-dropdown (onChange)="itemTypeChange($event)" formControlName="item" [options]="itemTypeOptions" [(ngModel)]="inspection.item.name"></p-dropdown>
+                <p-dropdown (onChange)="itemTypeChange($event)" formControlName="item" [options]="itemOptions" [(ngModel)]="inspection.item.name"></p-dropdown>
               </ng-template>
               <ng-template pTemplate="output">
                 {{inspection.item.name}}

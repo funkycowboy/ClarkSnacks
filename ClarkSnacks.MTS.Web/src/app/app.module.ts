@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 
 // services
 import { VendorService } from './services/vendor-service';
+import { CategoryService } from './services/category-service';
+import { ItemService } from './services/item-service';
 
 // directives
 import { AddRowDirective } from '../app/directives/add-row-directive';
@@ -61,7 +63,9 @@ import { TooltipModule } from 'primeng/tooltip';
     HttpClientModule  
   ],
     providers: [
-        VendorService
+        VendorService,
+        CategoryService,
+        ItemService
     ],
   bootstrap: [AppComponent]
 })
