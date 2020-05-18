@@ -7,6 +7,8 @@
   <ItemGroup>
     <None Remove="src\app\directives\add-row-directive.ts" />
     <None Remove="src\app\models\inspection.ts" />
+    <None Remove="src\app\models\vendor.ts" />
+    <None Remove="src\app\services\vendor-service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +22,11 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="src\app\directives\add-row-directive.ts" />
+    <TypeScriptCompile Include="src\app\models\vendor.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\inspection.ts" />
+    <TypeScriptCompile Include="src\app\services\vendor-service.ts" />
   </ItemGroup>
 
 </Project>

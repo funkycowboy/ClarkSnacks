@@ -3,9 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+// services
+import { VendorService } from './services/vendor-service';
 
 // directives
 import { AddRowDirective } from '../app/directives/add-row-directive';
@@ -53,9 +57,12 @@ import { TooltipModule } from 'primeng/tooltip';
     ChipsModule,
     TableModule,
     TooltipModule,
-    InputTextareaModule
+    InputTextareaModule,
+    HttpClientModule  
   ],
-  providers: [],
+    providers: [
+        VendorService
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

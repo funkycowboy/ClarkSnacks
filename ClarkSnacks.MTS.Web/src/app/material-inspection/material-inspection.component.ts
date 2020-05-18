@@ -4,8 +4,12 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 // primeng
 import { SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
+
 // class
-import {Inspection, Item} from '../models/inspection';
+import { Inspection, Item } from '../models/inspection';
+
+// services
+import {VendorService} from '../services/vendor-service'
 
 
 @Component({
@@ -16,9 +20,10 @@ import {Inspection, Item} from '../models/inspection';
 })
 export class MaterialInspectionComponent implements OnInit {
 
+    // Define select list options
     resultOptions: SelectItem[];
     overallResultOptions: SelectItem[];
-    supplierOptions: SelectItem[];
+    supplierOptions: SelectItem[] = [];
     itemTypeOptions: SelectItem[];
     itemOptions: SelectItem[];
     dispositionOptions: SelectItem[];
@@ -57,16 +62,17 @@ export class MaterialInspectionComponent implements OnInit {
 
     dt: Table;
 
-    constructor(private fb: FormBuilder, private ref: ChangeDetectorRef) {
+
+    constructor(private fb: FormBuilder,
+        private ref: ChangeDetectorRef,
+        private vendorService: VendorService) {
 
         this.loadOptions();
     }
 
     ngOnInit() {
         this.configureForm();
-        this.setUserCategoryValidators();        
-
-        //this.addInspectionTestData();        
+        this.setUserCategoryValidators();
     }
 
     continue() {
@@ -104,6 +110,9 @@ export class MaterialInspectionComponent implements OnInit {
     }
 
     loadOptions() {
+
+        this.loadVendors();
+
         this.overallResultOptions = [
             { label: 'Accepted', value: { id: 1, name: 'Accepted', code: 'accepted' } },
             { label: 'Rejected', value: { id: 2, name: 'Rejected', code: 'rejected' } },
@@ -116,13 +125,7 @@ export class MaterialInspectionComponent implements OnInit {
             { label: 'N/A', value: { id: 3, name: 'N/A', code: 'NA' } },
         ];
 
-        this.supplierOptions = [
-            { label: '- Select a Supplier -', value: null },
-            { label: 'Supplier A', value: { id: 1, name: 'Supplier A', code: 'supplier A' } },
-            { label: 'Supplier C', value: { id: 2, name: 'Supplier A', code: 'supplier A' } },
-            { label: 'Supplier F', value: { id: 3, name: 'Supplier A', code: 'supplier A' } }
-        ];
-
+        
         this.itemTypeOptions = [
 
             { label: '- Select an Item Type -', value: '' },
@@ -497,5 +500,14 @@ export class MaterialInspectionComponent implements OnInit {
         return !(this.inspectionForm.valid && this.inspectionForm.get("inspectionFormStep2").dirty && this.inspectionForm.get("inspectionFormStep3").dirty) 
           
               
+    }
+
+    loadVendors() {
+        this.vendorService.getVendors()
+            .then(vendors => {
+                vendors.forEach((item) => {
+                    this.supplierOptions.push({ label: item.name, value: item.id });
+                });
+            });
     }
 }

@@ -11,3 +11,5 @@
 /ClarkSnacks.MTS.Domain/obj
 /ClarkSnacks.MTS.EntityFramework/bin/Debug/netcoreapp3.1
 /ClarkSnacks.MTS.EntityFramework/obj
+/node_modules
+/package-lock.json
