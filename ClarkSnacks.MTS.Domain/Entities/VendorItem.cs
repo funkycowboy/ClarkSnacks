@@ -4,13 +4,14 @@ using System.Text;
 
 namespace ClarkSnacks.MTS.Domain.Entities
 {
-    public class Item
+    public class VendorItem
     {
         public int Id { get; set; }
-        public string VendorItemId { get; set; }
-        public string Description { get; set; }
+        public int VendorId { get; set; }
+        public int ItemId { get; set; }
         public int StatusId { get; set; }
 
-        public virtual ICollection<VendorItem> VendorItems { get; set; }
+        public virtual Vendor Vendor { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

@@ -37,11 +37,12 @@ namespace ClarkSnacks.MTS.Domain.Services
         /// <summary>
         /// Get Items Vendor Id
         /// </summary>
-        /// <param name="categoryId"></param>
+        /// <param name="vendorId"></param>
         /// <returns></returns>
-        public List<Item> GetItemsByVendorId(int categoryId)
+        public List<Item> GetItemsByVendorId(int vendorId)
         {
-            return _itemRepository.Get().ToList();
+            return _itemRepository.GetVendorItems()
+                .Where(x => x.VendorId == vendorId).Select(x => x.Item).OrderBy(x => x.Description).ToList();
         }
     }
 }

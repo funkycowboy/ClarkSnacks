@@ -7,6 +7,7 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
     public class MTSDbContext : DbContext
     {
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<VendorItem> VendorItems { get; set; }
         public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
         public virtual DbSet<Item> Items { get; set; }
 
@@ -31,6 +32,33 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.Property(e => e.StatusId)
                     .IsRequired()
                     .HasColumnType("int");
+
+            });
+
+            modelBuilder.Entity<VendorItem>(entity =>
+            {
+                entity.ToTable("VendorItem");
+                
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.VendorId)
+                   .IsRequired()
+                   .HasColumnType("int");
+
+                entity.Property(e => e.ItemId)
+                   .IsRequired()
+                   .HasColumnType("int");
+
+                entity.Property(e => e.StatusId)
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                entity.HasOne(x => x.Vendor)
+                    .WithMany(x => x.VendorItems).HasForeignKey(x => x.VendorId);
+
+                entity.HasOne(x => x.Item)
+                    .WithMany(x => x.VendorItems).HasForeignKey(x => x.ItemId);
+
 
             });
 
@@ -70,7 +98,6 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.Property(e => e.StatusId)
                     .IsRequired()
                     .HasColumnType("int");
-
             });
         }
     }

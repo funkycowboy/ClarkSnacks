@@ -1,10 +1,9 @@
-export class Inspection {
-    id: number;
-    item: InspectionItem;
-    lotNumbers: string[];
+export class InspectionLot {
+    lotNumber: string;
+    itemQuantity: number;
+    comment: string;
 }
 
 export class InspectionItem {
     name: string;
-    description: string;
 }

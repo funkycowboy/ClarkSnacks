@@ -17,9 +17,9 @@ export class ItemService {
     constructor(private http: HttpClient) { }
 
     // Get all items
-    getItems(){
-        let url = this.baseurl + this.controller;
-
+    getItems(selectedSupplier:number){
+        let url = this.baseurl + this.controller + "/vendors/" + selectedSupplier;
+        debugger
         let promise = new Promise((resolve, reject) => {
             this.http.get(url)
                 .toPromise()

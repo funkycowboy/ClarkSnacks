@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit,  ChangeDetectorRef, ChangeDetectionStrategy, QueryList, ViewChildren, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit,  ChangeDetectorRef, ChangeDetectionStrategy, QueryList, ViewChildren } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 // primeng
@@ -6,7 +6,7 @@ import { SelectItem } from 'primeng/api';
 import { Table, EditableColumn, EditableRow } from 'primeng/table';
 
 // class
-import { InspectionLot, InspectionItem } from '../models/inspection';
+import { InspectionCriteria, InspectionItem } from '../models/inspection';
 
 // services
 import { VendorService } from '../services/vendor-service';
@@ -20,14 +20,9 @@ import { ItemService } from '../services/item-service';
   templateUrl: './material-inspection.component.html',
   styleUrls: ['./material-inspection.component.css']
 })
-export class MaterialInspectionComponent implements OnInit, AfterViewInit {
+export class MaterialInspectionComponent implements OnInit {
 
     @ViewChildren(EditableRow) private editablerow: QueryList<EditableRow>;
-    @ViewChildren(Table) private pTable: Table;
-    @ViewChildren('dtItem') private pTable2: QueryList<Table>;
-    @ViewChild('addNewItem', { read: false, static: false }) addNewItemButton: ElementRef;
-    @ViewChild('addNewLot', { read: false, static: false }) addNewLotButton: ElementRef;
-    
 
     // Define select list options
     resultOptions: SelectItem[];
@@ -40,8 +35,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
     selectedOverallResult: any = {};
     selectedItemType: string;
-    selectedItemDescription: string;
-    selectedSupplier: number;
+    selectedSupplier: any = {};
     approvedSupplierChecked: boolean;
     selectedDateReceived: string;
     selectedLotNumber: string;
@@ -58,9 +52,10 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     selectedQ10Option: string = "";
 
     inspectionItems: InspectionItem[] = [];
-    inspectionLots: InspectionLot[] = [];
+    inspectionCriteria: InspectionCriteria[] = [];
+    //clonedInspections: { [s: string]: Inspection; } = {};
 
-    displayDialog: boolean = false;
+    displayDialog: boolean;
 
     resultDescription: string = "";
 
@@ -81,21 +76,18 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.loadOptions();
     }
 
-    ngAfterViewInit() {
-    }
-
     ngOnInit() {
         this.configureForm();
         this.setUserCategoryValidators();
     }
 
     continue() {
+        debugger;
         this.displayDialog = true;
     }
 
     save() {
         this.displayDialog = false;
-        this.goToStep1();
     }
 
     onSubmit(value: string) {
@@ -107,7 +99,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     }
 
     showDescription(event) {
-
         debugger
         switch (event.value.code.toLowerCase()) {
             case "accepted":
@@ -170,7 +161,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
                 item: new FormControl('', Validators.required),
                 lotNumber: new FormControl('', Validators.required),
                 itemQuantity: new FormControl('', Validators.required),
-                comment: new FormControl('')
             }),
             inspectionFormStep3: new FormGroup({
                 itemTypeBagQ1: new FormControl(''),
@@ -412,68 +402,60 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             });
     }
 
-    addNewItemTableRow() {
+    //onRowEditInit(inspection: Inspection) {
+    //    this.clonedInspections[1] = { ...inspection };
+    //}
+
+    //onRowEditSave(inspection: Inspection) {
+
+    //    debugger
+    //    //if (car.year > 0) {
+    //    //    delete this.clonedCars[car.vin];
+    //    //    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Car is updated' });
+    //    //}
+    //    //else {
+    //    //    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Year is required' });
+    //    //}
+    //}
+
+    //onRowEditCancel(inspection: Inspection, index: number) {
+    //    //this.cars2[index] = this.clonedCars[car.vin];
+    //    //delete this.clonedCars[car.vin];
+    //}
+
+    loadStep2TableRow() {
+        let inspectionItem = new InspectionItem();
+        inspectionItem.name = "";
+        this.inspectionItems.push(inspectionItem);
+
+        let inspectionCriteria = new InspectionCriteria();
+        inspectionCriteria.lotNumber = "";
+        inspectionCriteria.itemQuantity = null;
+        inspectionCriteria.comment = "";
+        this.inspectionCriteria.push(inspectionCriteria);
+
+        (<any>this.editablerow).onClick();
+    }
+
+    addNewTableRow() {
         let inspectionItem = new InspectionItem();
         inspectionItem.name = "";
 
-        this.inspectionItems.push(inspectionItem);
-
-        var x = document.getElementsByClassName("add-new-lot-row");
-        var i;
-        for (i = 0; i < x.length; i++) {
-            (<any>x[i]).style.display = 'none';
-        }
-
-        if (this.inspectionLots.length == 0) {
-           this.addNewLotTableRow(null);
-        }
-    }
-
-    addNewLotTableRow(index: any) {
-      
-        let inspectionLot = new InspectionLot
-        inspectionLot.comment = "";
-        inspectionLot.itemQuantity = null;
-        inspectionLot.lotNumber = "";
-        
-        this.inspectionLots.push(inspectionLot);
-
-        var x = document.getElementsByClassName("add-new-lot-row");
-        var i;
-        for (i = 0; i < x.length; i++) {
-            (<any>x[i]).style.display = 'none';
-        }
+        return inspectionItem;
     }
 
     vendorChange(event) {
         debugger
         this.selectedSupplier = event.value;
         this.loadItems(this.selectedSupplier);
-        //this.showStep2 = true;
-
-        //if (this.inspectionItems.length == 0) {
-        //    this.addNewItemButton.nativeElement.click();
-            
-            //this.inspectionItems.splice(1, 1);
-            //thi may delete a row...not sure
-            //this.pTable2.slice(0, index).concat(this.files.slice(index + 1));
-            //or
-            //this.files = this.files.filter((val,i) => i!=index);
-        //}
-
-        // clear description
-        this.selectedItemDescription = "";
-        //this.goToStep2();
-        //this.addNewLotButton.nativeElement.click();       
     }
 
-    itemTypeChange(event) {
+    itemTypeChange(event) {       
         this.selectedItemType = event.value;
-        
-        this.selectedItemDescription = event.value;
     }
 
     lotNumberChange(event) {
+        debugger
         this.selectedLotNumber = event.value;
     }
 
@@ -487,16 +469,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.showStep1 = true;
         this.showStep2 = true;
         this.showStep3 = false;
-
-        if (this.inspectionItems.length == 0) {
-            this.addNewItemButton.nativeElement.click();
-
-            //this.inspectionItems.splice(1, 1);
-            //thi may delete a row...not sure
-            //this.pTable2.slice(0, index).concat(this.files.slice(index + 1));
-            //or
-            //this.files = this.files.filter((val,i) => i!=index);
-        }
+        this.loadStep2TableRow();
     }
 
     goToStep3() {
@@ -530,14 +503,13 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     }
 
     loadItems(selectedSupplier) {
-
+        debugger;
         this.itemOptions = [];
-        this.itemOptions.push({ label: '-Select One-', value: '' });
         this.itemService.getItems(selectedSupplier)
             .then(items => {
-                
+                debugger
                 (<any>items).forEach((item) => {
-                    this.itemOptions.push({ label: item.vendorItemId, value: item.description });
+                    this.itemOptions.push({ label: item.description, value: item.id });
                 });
             });
     }

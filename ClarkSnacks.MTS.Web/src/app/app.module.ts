@@ -15,6 +15,7 @@ import { ItemService } from './services/item-service';
 
 // directives
 import { AddRowDirective } from '../app/directives/add-row-directive';
+import { AddRowDirective2 } from '../app/directives/add-row-directive2';
 
 // components
 import { HomeComponent } from './home/home.component';
@@ -33,6 +34,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ChipsModule } from 'primeng/chips';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { SpinnerModule } from 'primeng/spinner';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import { TooltipModule } from 'primeng/tooltip';
         HomeComponent,
         MaterialInspectionComponent,
         DefaultHeaderComponent,
-        AddRowDirective
+        AddRowDirective,
+        AddRowDirective2
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TableModule,
     TooltipModule,
     InputTextareaModule,
+    SpinnerModule,
     HttpClientModule  
   ],
     providers: [

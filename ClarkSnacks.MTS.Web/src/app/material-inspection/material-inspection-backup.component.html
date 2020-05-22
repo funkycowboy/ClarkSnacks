@@ -27,7 +27,7 @@
         <label for="Supplier">Shipment Supplier: </label>
       </div>
       <div class="ui-g-2 ui-lg-3 ui-md-6 ui-sm-12">
-        <p-dropdown filter="true" (onChange)="vendorChange($event)" formControlName="supplier" name="Supplier" [options]="supplierOptions"></p-dropdown>
+        <p-dropdown (onChange)="vendorChange($event)" formControlName="supplier" name="Supplier" [options]="supplierOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
       </div>
       <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
         <label for="ApprovedSupplier">Is the supplier an approved supplier?</label>
@@ -40,94 +40,136 @@
 
   <div class="ui-g">
     <div class="ui-g-12" style="text-align: right">
-      <button pButton class="ui-button-rounded ui-button-success" type="button" icon="fa fa-arrow-circle-right" label="Continue to Step 2" (click)="goToStep2()" [disabled]="!selectedSupplier > 0"></button>
+      <button pButton type="button" icon="fa fa-arrow-circle-right" label="Continue to Step 2" (click)="goToStep2()"></button>
     </div>
   </div>
 
   <!-- Step 2: Item and Lot Number Information -->
-  <div formGroupName="inspectionFormStep2" [style.display]="showStep2 ? 'block' : 'none'">
+  <div formGroupName="inspectionFormStep2" *ngIf="showStep2">
     <p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Step 2. Provide the following shipping item and lot information.</p>
 
-    <p-table #dtItem [value]="inspectionItems" dataKey="id" [responsive]="true">
-
-      <ng-template pTemplate="body" let-inspectionItem let-rowData let-ri="rowIndex">
+    <p-table #dt [value]="inspectionItems" dataKey="id" editMode="row" [responsive]="true">
+      <ng-template pTemplate="header">
         <tr>
-          <td>
-
-            <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;<p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event)" formControlName="item" [options]="itemOptions" [(ngModel)]="inspectionItem.name">            </p-dropdown>
-            <label style="margin-left:10px;">Description:</label> <label style="font-weight: bold; margin-left:10px;color: blue;">{{selectedItemDescription}}</label>
-
-          </td>
-        </tr>
-        <tr>
-          <td>
-
-            <!-- Begin Lot Table-->
-
-            <div>
-
-              <p-table #dtLot [value]="inspectionLots" dataKey="id" [responsive]="true">
-                <ng-template pTemplate="header">
-        <tr>
-          <th style="width:33%">Lot Number</th>
-          <th style="width:33%">Item Quantity</th>
-          <th style="width:33%">Notes:</th>
-          <!--<th style="width:25%"></th>-->
+          <th style="width: 25%">Item</th>
+          <th style="width: 75%"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-inspectionLot let-rowData let-ri="rowIndex">
-        <tr>
+      <ng-template pTemplate="body" let-inspectionItem let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="rowData">
           <td>
-
-
-            <div style="display: inline-block; vertical-align:middle">
-              <input formControlName="lotNumber" (blur)="lotNumberChange($event.target)" type="text" pInputText  />
-            </div>
-
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-dropdown [filter]="true" (onChange)="itemTypeChange($event)" formControlName="item" [options]="itemOptions">
+                  <ng-template let-item pTemplate="selectedItem">                    
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                  </ng-template>
+                  <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{inspectionItem.name}}
+              </ng-template>
+            </p-cellEditor>
           </td>
           <td>
-
-            <div style="display: inline-block; vertical-align:middle">
-              <p-spinner  [min]="0" [max]="1000" formControlName="itemQuantity"></p-spinner>
-            </div>
-
+            <p-table #dt2 [value]="inspectionCriteria" dataKey="id" editMode="row" [responsive]="true">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width:33%">Lot Number</th>
+                  <th style="width:33%">Item Quantity</th>
+                  <th style="width:33%">Notes:</th>
+                  <!--<th style="width:15%"></th>-->
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-inspectionCriteria let-rowData let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="rowData">
+                  <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <div style="display: inline-block; vertical-align:middle">
+                          <input formControlName="lotNumber" (onChange)="lotNumberChange($event)" type="text" pInputText" />
+                        </div>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{inspectionCriteria.lotNumber}}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+                  <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <div style="display: inline-block; vertical-align:middle">
+                          <p-spinner [min]="0" [max]="1000" formControlName="itemQuantity"></p-spinner>
+                        </div>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{inspectionCriteria.itemQuantity}}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+                  <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <div style="display: inline-block; vertical-align:middle">
+                          <textarea pInputTextarea formControlName="comment"></textarea>
+                        </div>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{inspectionCriteria.comment}}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+                  <!--<td>-->
+                      <!--<button [table]="dt2" class="ui-button-rounded ui-button-secondary" pAddRow type="button" pButton icon="fa fa-plus" label="Add New Lot" [newRow]="addNewTableRow()"></button>-->
+                      <!--<button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)" label="Edit Item"></button>
+                      <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+                      <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>-->
+                  <!--</td>-->
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <!--<td></td>-->
+                  <td style="text-align: right">
+                    <button [table]="dt2" class="ui-button-rounded ui-button-primary" pAddRow type="button" pButton icon="fa fa-plus" label="Add New Lot" [newRow]="addNewTableRow()"></button>
+                    <!--<button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-rounded ui-button-primary" (click)="onRowEditInit(rowData)" label="Edit Item"></button>
+                    <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+                    <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>-->
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
           </td>
-          <td>
-
-            <div style="display: inline-block; vertical-align:middle">
-              <textarea pInputTextarea  formControlName="comment"></textarea>
-            </div>
-
-          </td>
+          <!--<td style="text-align:center">
+            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)" label="Add Item"></button>
+            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+            <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+          </td>-->
         </tr>
-        <tr>
-          <td style="text-align: left" colspan="3">
-            <button class="ui-button-rounded ui-button-secondary add-new-lot-row" type="button" pButton icon="fa fa-plus" label="Add New Lot" (click)="addNewLotTableRow(ri)"></button>
+      </ng-template>
 
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="3">
+            <div style="text-align: right">
+              <button [table]="dt" class="ui-button-rounded ui-button-primary" pAddRow type="button" pButton icon="fa fa-plus" label="Add New Item" [newRow]="addNewTableRow()"></button>
+            </div>
           </td>
         </tr>
       </ng-template>
     </p-table>
-  </div>
 
-  <!--End Lot Table -->
-  </td>
-  </tr>
-  </ng-template>
-  </p-table>
-
-  <div style="text-align: left; margin-top: 10px;">
-    <button #addNewItem class="ui-button-rounded ui-button-primary" type="button" pButton icon="fa fa-plus" label="Add New Item" (click)="addNewItemTableRow()"></button>&nbsp;
-  </div>
-
-  <div class="ui-g">
-    <div class="ui-g-12" style="text-align: right">
-      <button pButton class="ui-button-rounded ui-button-success" type="button" icon="fa fa-arrow-circle-right" label="Continue to Step 3" (click)="goToStep3()" [disabled]="!selectedItemType || !selectedLotNumber"></button>
+    <div class="ui-g">
+      <div class="ui-g-12" style="text-align: right">
+        <button pButton type="button" icon="fa fa-arrow-circle-right" label="Continue to Step 3" (click)="goToStep3()" [disabled]="!selectedItemType || !selectedLotNumbers"></button>
+      </div>
     </div>
   </div>
-
-  </div>
-
 
   <!-- Step 3: Inspection QUestions -->
 
@@ -142,7 +184,7 @@
 
     <!-- Inspection Criteria - Bags -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('BAG') !== -1)">
+    <div class="ui-g" *ngIf="selectedItemType == 'Bag' && showStep3">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -228,7 +270,7 @@
 
     <!-- Inspection Criteria - Cartons -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('Carton') !== -1)">
+    <div class="ui-g" *ngIf="selectedItemType == 'Carton' && showStep3">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -298,7 +340,7 @@
 
     <!-- Inspection Criteria - Overwrap Film -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('Film') !== -1)">
+    <div class="ui-g" *ngIf="selectedItemType == 'Overwrap Film' && showStep3">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -368,7 +410,7 @@
 
     <!-- Inspection Criteria - Contact Film -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('Film') !== -1)">
+    <div class="ui-g" *ngIf="selectedItemType == 'Contact Film' && showStep3">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -453,18 +495,18 @@
 
     </div>
 
-    <div class="ui-g-12" style="text-align: right" *ngIf="showStep3 && selectedItemDescription.indexOf('BAG') > -1">
-      <!--<div class="ui-g-12" style="text-align: right" *ngIf="['Contact Film','Overwrap Film','BAG','Carton'].indexOf(selectedItemDescription) > -1 && showStep3">-->
-      <div class="ui-g-12" style="white-space: nowrap">
-        <!--<button type="submit" pButton icon="fa fa-arrow-circle-right" [disabled]="!inspectionForm.valid" label="Continue"></button>-->
-        <button class="ui-button-rounded ui-button-success" type="submit" pButton icon="fa fa-arrow-circle-right" label="Continue"></button>
+    <div class="ui-g-12" style="text-align: right" *ngIf="['Contact Film','Overwrap Film','Bag','Carton'].indexOf(selectedItemType) > -1 && showStep3">
+      <div class="ui-g-1"></div>
+      <div class="ui-g-6"></div>
+      <div class="ui-g-3" style="white-space: nowrap">
+        <button type="submit" pButton icon="fa fa-arrow-circle-right" [disabled]="!inspectionForm.valid" label="Continue"></button>
       </div>
 
     </div>
 
   </div>
-</form>
 
+</form>
 
 <!-- Inspection Result Modal -->
 
@@ -476,7 +518,7 @@
       </div>
       <div class="ui-g-6 ui-sm-12">
         <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
-        <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
+        <p-selectButton multiple="multiple" name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
       </div>
     </div>
     <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
