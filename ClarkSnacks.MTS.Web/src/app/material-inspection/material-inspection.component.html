@@ -12,7 +12,7 @@
         <label for="Item">Shipment Received Date: </label>
       </div>
       <div class="ui-g-4 ui-lg-3 ui-md-6 ui-sm-12">
-        <p-calendar formControlName="dateReceived" name="DateReceived" [(ngModel)]="selectedDateReceived" showIcon="true" readonlyInput="true"></p-calendar>
+        <p-calendar  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  formControlName="dateReceived" name="DateReceived" [(ngModel)]="selectedDateReceived"  readonlyInput="true"></p-calendar>
       </div>
       <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
         <label for="Item">BOL/Shipment Number: </label>
