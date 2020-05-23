@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="ui-g-12">
+    <div class="ui-g-12 target">
       <div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
         <label for="Supplier">Shipment Supplier: </label>
       </div>
@@ -45,7 +45,7 @@
   </div>
 
   <!-- Step 2: Item and Lot Number Information -->
-  <div formGroupName="inspectionFormStep2" [style.display]="showStep2 ? 'block' : 'none'">
+  <div formGroupName="inspectionFormStep2" [style.display]="showStep2 ? 'block' : 'none'" class="step2">
     <p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Step 2. Provide the following shipping item and lot information.</p>
 
     <p-table #dtItem [value]="inspectionItems" dataKey="id" [responsive]="true">
@@ -131,7 +131,7 @@
 
   <!-- Step 3: Inspection QUestions -->
 
-  <div *ngIf="showStep3">
+  <div *ngIf="showStep3" class="step3">
     <p style="font-weight:bold">
       <span class="ui-state-default fa fa-arrow-circle-right"></span>
       Step 3: Answer the following {{selectedItemType}} inspection questions with a Yes, No or N/A.

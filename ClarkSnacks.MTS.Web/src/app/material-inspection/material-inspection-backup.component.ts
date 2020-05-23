@@ -6,7 +6,7 @@ import { SelectItem } from 'primeng/api';
 import { Table, EditableColumn, EditableRow } from 'primeng/table';
 
 // class
-import { InspectionCriteria, InspectionItem } from '../models/inspection';
+import { InspectionLot, InspectionItem } from '../models/inspection';
 
 // services
 import { VendorService } from '../services/vendor-service';
@@ -52,7 +52,7 @@ export class MaterialInspectionComponent implements OnInit {
     selectedQ10Option: string = "";
 
     inspectionItems: InspectionItem[] = [];
-    inspectionCriteria: InspectionCriteria[] = [];
+    inspectionCriteria: InspectionLot[] = [];
     //clonedInspections: { [s: string]: Inspection; } = {};
 
     displayDialog: boolean;
@@ -428,7 +428,7 @@ export class MaterialInspectionComponent implements OnInit {
         inspectionItem.name = "";
         this.inspectionItems.push(inspectionItem);
 
-        let inspectionCriteria = new InspectionCriteria();
+        let inspectionCriteria = new InspectionLot();
         inspectionCriteria.lotNumber = "";
         inspectionCriteria.itemQuantity = null;
         inspectionCriteria.comment = "";

@@ -1,6 +1,10 @@
 import { Component, OnInit, AfterViewInit,  ChangeDetectorRef, ChangeDetectionStrategy, QueryList, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { PageScrollService } from 'ngx-page-scroll-core';
+
 // primeng
 import { SelectItem } from 'primeng/api';
 import { Table, EditableColumn, EditableRow } from 'primeng/table';
@@ -76,7 +80,9 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         private ref: ChangeDetectorRef,
         private vendorService: VendorService,
         private categoryService: CategoryService,
-        private itemService: ItemService) {
+        private itemService: ItemService,
+        private pageScrollService: PageScrollService,
+        @Inject(DOCUMENT) private document: any) {
 
         this.loadOptions();
     }
@@ -86,7 +92,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.configureForm();
-        this.setUserCategoryValidators();
+        this.setUserCategoryValidators();        
     }
 
     continue() {
@@ -487,9 +493,18 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.showStep1 = true;
         this.showStep2 = true;
         this.showStep3 = false;
+        
+       
 
         if (this.inspectionItems.length == 0) {
             this.addNewItemButton.nativeElement.click();
+
+          setTimeout(() => {
+              this.pageScrollService.scroll({
+                  document: this.document,
+                  scrollTarget: '.step2',
+              });
+          });
 
             //this.inspectionItems.splice(1, 1);
             //thi may delete a row...not sure
@@ -503,6 +518,12 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.showStep1 = true;
         this.showStep2 = true;
         this.showStep3 = true;
+        setTimeout(() => {
+            this.pageScrollService.scroll({
+                document: this.document,
+                scrollTarget: '.step3',
+            });
+        });
     }
 
     isFormValid() {

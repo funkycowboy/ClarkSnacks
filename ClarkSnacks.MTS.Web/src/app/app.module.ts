@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,7 +66,8 @@ import { SpinnerModule } from 'primeng/spinner';
     TooltipModule,
     InputTextareaModule,
     SpinnerModule,
-    HttpClientModule  
+      HttpClientModule,
+      NgxPageScrollCoreModule.forRoot({ scrollOffset: 130 })
   ],
     providers: [
         VendorService,
