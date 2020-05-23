@@ -502,7 +502,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
           setTimeout(() => {
               this.pageScrollService.scroll({
                   document: this.document,
-                  scrollTarget: '.step2',
+                  scrollTarget: '.step2'
               });
           });
 
