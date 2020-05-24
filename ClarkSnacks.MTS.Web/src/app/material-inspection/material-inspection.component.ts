@@ -17,6 +17,11 @@ import { VendorService } from '../services/vendor-service';
 import { CategoryService } from '../services/category-service';
 import { ItemService } from '../services/item-service';
 
+// models
+import { Item } from '../models/item';
+import { MaterialCategory, MaterialCategoryEnum } from '../models/category'
+
+
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,6 +50,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     selectedOverallResult: any = {};
     selectedItemType: string;
     selectedItemDescription: string;
+    selectedItemCategory: string;
     selectedSupplier: number;
     approvedSupplierChecked: boolean;
     selectedDateReceived: string;
@@ -476,7 +482,9 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     itemTypeChange(event) {
         this.selectedItemType = event.value;
         
-        this.selectedItemDescription = event.value;
+        this.selectedItemDescription = event.value.description;
+        debugger
+        this.selectedItemCategory = MaterialCategoryEnum[event.value.materialCategoryId];
     }
 
     lotNumberChange(event) {
@@ -558,7 +566,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             .then(items => {
                 
                 (<any>items).forEach((item) => {
-                    this.itemOptions.push({ label: item.vendorItemId, value: item.description });
+                    this.itemOptions.push({ label: item.vendorItemId, value: { id: item.vendorItemId, description: item.description, materialCategoryId: item.materialCategoryId } });
                 });
             });
     }

@@ -52,7 +52,7 @@
 
       <ng-template pTemplate="body" let-inspectionItem let-rowData let-ri="rowIndex">
         <tr>
-          <td>
+          <td style="background-color: #ececec;">
 
             <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;<p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event)" formControlName="item" [options]="itemOptions" [(ngModel)]="inspectionItem.name">            </p-dropdown>
             <label style="margin-left:10px;">Description:</label> <label style="font-weight: bold; margin-left:10px;color: blue;">{{selectedItemDescription}}</label>
@@ -60,7 +60,7 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td style="padding:0;">
 
             <!-- Begin Lot Table-->
 
@@ -76,7 +76,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-inspectionLot let-rowData let-ri="rowIndex">
-        <tr>
+        <tr style="background-color: #ececec;">
           <td>
 
 
@@ -134,7 +134,7 @@
   <div *ngIf="showStep3" class="step3">
     <p style="font-weight:bold">
       <span class="ui-state-default fa fa-arrow-circle-right"></span>
-      Step 3: Answer the following {{selectedItemType}} inspection questions with a Yes, No or N/A.
+      Step 3: Answer the following {{selectedItemCategory}} inspection questions with a Yes, No or N/A.
     </p>
   </div>
 
@@ -142,7 +142,7 @@
 
     <!-- Inspection Criteria - Bags -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('BAG') !== -1)">
+    <div class="ui-g"  *ngIf="showStep3 && selectedItemCategory == 'Bag'">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -228,7 +228,7 @@
 
     <!-- Inspection Criteria - Cartons -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('Carton') !== -1)">
+    <div class="ui-g"  *ngIf="showStep3 && selectedItemCategory == 'Carton'">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -298,7 +298,7 @@
 
     <!-- Inspection Criteria - Overwrap Film -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('Film') !== -1)">
+    <div class="ui-g" *ngIf="showStep3 && selectedItemCategory == 'Overwrap Film' ">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
@@ -368,7 +368,7 @@
 
     <!-- Inspection Criteria - Contact Film -->
 
-    <div class="ui-g" *ngIf="showStep3 && (selectedItemDescription.indexOf('Film') !== -1)">
+    <div class="ui-g"  *ngIf="showStep3 && selectedItemCategory == 'Contact Film'">
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>

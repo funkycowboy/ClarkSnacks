@@ -54,10 +54,12 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                         .HasColumnType("int");
 
                 entity.HasOne(x => x.Vendor)
-                    .WithMany(x => x.VendorItems).HasForeignKey(x => x.VendorId);
+                    .WithMany(x => x.VendorItems)
+                    .HasForeignKey(x => x.VendorId);
 
                 entity.HasOne(x => x.Item)
-                    .WithMany(x => x.VendorItems).HasForeignKey(x => x.ItemId);
+                    .WithMany(x => x.VendorItems)
+                    .HasForeignKey(x => x.ItemId);
 
 
             });
@@ -77,6 +79,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                     .IsRequired()
                     .HasColumnType("int");
 
+                entity.HasMany(x => x.Items)
+                .WithOne(x => x.MaterialCategory)
+                .HasForeignKey(x => x.MaterialCategoryId);
+
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -85,6 +91,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
                 entity.HasKey(x => x.Id);
 
+                entity.Property(e => e.MaterialCategoryId)
+                      .IsRequired()
+                      .HasColumnType("int");
+                     
                 entity.Property(e => e.VendorItemId)
                       .IsRequired()
                       .HasColumnType("varchar")

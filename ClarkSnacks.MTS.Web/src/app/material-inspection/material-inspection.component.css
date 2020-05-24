@@ -94,6 +94,6 @@
 }
 
 /deep/ body .ui-table:nth-of-type(1) .ui-table-thead > tr > th {
-  background-color: #000;
+  background-color: darkgray;
   color: #FFF;
 }
