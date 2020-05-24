@@ -423,6 +423,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         let inspectionItem = new InspectionItem();
         inspectionItem.id = this.itemCounter;
         inspectionItem.name = "";
+        inspectionItem.description = "";
 
         // Uncomment if we are wanting to add a default inspect lot record initially
         //let inspectionLot = new InspectionLot
@@ -466,16 +467,19 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
     vendorChange(event) {
         this.selectedSupplier = event.value;
-        this.loadItems(this.selectedSupplier);         
+        this.loadItems(this.selectedSupplier);
 
         // clear description
         this.selectedItemDescription = "";   
     }
 
-    itemTypeChange(event) {
+    itemTypeChange(event: any, rowIndex: any) {
         this.selectedItemType = event.value;
-        
-        this.selectedItemDescription = event.value.description;
+
+        this.pTableItem.value[rowIndex].description = event.value.description;
+        this.pTableItem.reset();
+
+        //this.selectedItemDescription = event.value.description;
         this.selectedItemCategory = MaterialCategoryEnum[event.value.materialCategoryId];
     }
 

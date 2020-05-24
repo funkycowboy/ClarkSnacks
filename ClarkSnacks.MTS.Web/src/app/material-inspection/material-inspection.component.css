@@ -102,3 +102,7 @@ table td {
  padding:0;
  margin:0;
 }
+
+/deep/ body .ui-table .ui-table-tfoot > tr > td {
+  border: none;
+}

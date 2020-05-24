@@ -56,8 +56,8 @@
           <td colspan="4" style="background-color: #ececec;">
 
             <div style="float: left; white-space:nowrap; width:50%; border:none">
-              <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;<p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event)" [options]="itemOptions">            </p-dropdown>
-              <label style="margin-left:10px;">Description:</label> <label style="font-weight: bold; margin-left:10px;color: blue;">{{selectedItemDescription}}</label>
+              <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;<p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event,rowIndexItem)" [options]="itemOptions">            </p-dropdown>
+              <label style="margin-left:10px;">Description:</label> <label style="font-weight: bold; margin-left:10px;color: blue;">{{rowData.description}}</label>
             </div>
             <div style="float: right; width:50%;border:none; text-align:right">
 

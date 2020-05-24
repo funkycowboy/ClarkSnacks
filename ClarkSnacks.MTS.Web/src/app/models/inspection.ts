@@ -9,4 +9,5 @@ export class InspectionItem {
     id: number;
     name: string;
     inspectionLots: InspectionLot[] = [];
+    description: string;
 }
