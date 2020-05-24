@@ -487,6 +487,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.selectedLotNumber = event.value;
     }
 
+
     goToStep1() : void {
         this.showStep1 = true;
         this.showStep2 = false;
@@ -522,7 +523,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         });
     }
 
-    isFormValid() : void {
+    isFormValid() : boolean{
         return !(this.inspectionForm.valid && this.inspectionForm.get("inspectionFormStep2").dirty && this.inspectionForm.get("inspectionFormStep3").dirty) 
     }
 
