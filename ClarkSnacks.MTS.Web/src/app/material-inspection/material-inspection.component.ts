@@ -31,12 +31,8 @@ import { MaterialCategory, MaterialCategoryEnum } from '../models/category'
 })
 export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
-    @ViewChildren(EditableRow) private editablerow: QueryList<EditableRow>;
-    @ViewChildren(Table) private pTable: Table;
+  // Define ViewChilds
     @ViewChild("dtItem", { static: false }) public pTableItem: Table;
-    //@ViewChildren('dtItem') private pTableItem: Table;
-    @ViewChild("dtLot", { static: false }) public pTableLot: Table;
-    //@ViewChildren('dtLot') private pTableLot: Table;
     @ViewChild('addNewItem', { read: false, static: false }) addNewItemButton: ElementRef;
     @ViewChild('addNewLot', { read: false, static: false }) addNewLotButton: ElementRef;
     
@@ -71,7 +67,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     selectedQ10Option: string = "";
 
     inspectionItems: InspectionItem[] = [];
-    inspectionLots: InspectionLot[] = [];
 
     displayDialog: boolean = false;
 
@@ -86,8 +81,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     lotCounter: number = 0;
     itemCounter: number = 0;
 
-    dt: Table;
-
     constructor(private fb: FormBuilder,
         private ref: ChangeDetectorRef,
         private vendorService: VendorService,
@@ -99,19 +92,19 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.loadOptions();
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit() : void {
     }
 
-    ngOnInit() {
+    ngOnInit() : void {
         this.configureForm();
         this.setUserCategoryValidators();        
     }
 
-    continue() {
+    continue() : void {
         this.displayDialog = true;
     }
 
-    save() {
+    save() : void {
         this.displayDialog = false;
         this.goToStep1();
     }
@@ -120,7 +113,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.displayDialog = true;
     }
 
-    cancel() {
+    cancel() : void {
         this.displayDialog = false;
     }
 
@@ -140,7 +133,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         }
     }
 
-    loadOptions() {
+    loadOptions() : void {
 
         // Data-driven options
         this.loadVendors();
@@ -173,7 +166,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         ];
     }
 
-    configureForm() {
+    configureForm() : void {
         this.inspectionForm = new FormGroup({
             supplier: new FormControl('', Validators.required),
             approvedSupplier: new FormControl('', Validators.required),
@@ -226,7 +219,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         });
     }
 
-    setUserCategoryValidators() {
+    setUserCategoryValidators() : void {
        
         this.inspectionForm.get("inspectionFormStep2").get('item').valueChanges
             .subscribe(itemType => {
@@ -425,11 +418,20 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             });
     }
 
-    addNewItemTableRow() {
+    addNewItemTableRow() : void {
         this.itemCounter++;
         let inspectionItem = new InspectionItem();
         inspectionItem.id = this.itemCounter;
         inspectionItem.name = "";
+
+        // Uncomment if we are wanting to add a default inspect lot record initially
+        //let inspectionLot = new InspectionLot
+        //inspectionLot.id = this.lotCounter;
+        //inspectionLot.comment = "";
+        //inspectionLot.itemQuantity = null;
+        //inspectionLot.lotNumber = "";
+
+        //inspectionItem.inspectionLots.push(inspectionLot);
 
         this.pTableItem.value.push(inspectionItem);
         this.pTableItem.reset();
@@ -443,20 +445,20 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         inspectionLot.comment = "";
         inspectionLot.itemQuantity = null;
         inspectionLot.lotNumber = "";
-        
-        this.pTableLot.value.push(inspectionLot);
-        this.pTableLot.reset();
+
+        this.pTableItem.value[rowIndex].inspectionLots.push(inspectionLot)
+        this.pTableItem.reset();
     }
 
-    RemoveLot(index: any) {
-        var updatedArray = this.pTableLot.value.slice(0, index).concat(this.pTableLot.value.slice(index + 1));
+    RemoveLot(itemRowIndex: any, lotRowIndex: any) {
+        var updatesLots = this.pTableItem.value[itemRowIndex].inspectionLots.slice(0, lotRowIndex).concat(this.pTableItem.value[itemRowIndex].inspectionLots.slice(lotRowIndex + 1));
         this.lotCounter--;
-        this.pTableLot.value = updatedArray;
-        this.pTableLot.reset();
+        this.pTableItem.value[itemRowIndex].inspectionLots = updatesLots;
+        this.pTableItem.reset();
     }
 
-    RemoveItem(index: any) {
-        var updatedArray = this.pTableItem.value.slice(0, index).concat(this.pTableItem.value.slice(index + 1));
+    RemoveItem(itemRowIndex: any) {
+        var updatedArray = this.pTableItem.value.slice(0, itemRowIndex).concat(this.pTableItem.value.slice(itemRowIndex + 1));
         this.itemCounter--;
         this.pTableItem.value = updatedArray;
         this.pTableItem.reset();
@@ -481,13 +483,13 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.selectedLotNumber = event.value;
     }
 
-    goToStep1() {
+    goToStep1() : void {
         this.showStep1 = true;
         this.showStep2 = false;
         this.showStep3 = false;
     }
 
-    goToStep2() {
+    goToStep2() : void {
         this.showStep1 = true;
         this.showStep2 = true;
         this.showStep3 = false;
@@ -504,7 +506,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         }
     }
 
-    goToStep3() {
+    goToStep3() : void {
         this.showStep1 = true;
         this.showStep2 = true;
         this.showStep3 = true;
@@ -516,11 +518,11 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         });
     }
 
-    isFormValid() {
+    isFormValid() : void {
         return !(this.inspectionForm.valid && this.inspectionForm.get("inspectionFormStep2").dirty && this.inspectionForm.get("inspectionFormStep3").dirty) 
     }
 
-    loadVendors() {
+    loadVendors() : void {
         this.vendorService.getVendors()
             .then(vendors => {
                 (<any>vendors).forEach((item) => {
@@ -529,7 +531,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             });
     }
 
-    loadCategories() {
+    loadCategories() : void {
         this.categoryService.getCategories()
             .then(categories => {
                 (<any>categories).forEach((item) => {
