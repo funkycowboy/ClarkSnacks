@@ -33,7 +33,10 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
     @ViewChildren(EditableRow) private editablerow: QueryList<EditableRow>;
     @ViewChildren(Table) private pTable: Table;
-    @ViewChildren('dtItem') private pTable2: QueryList<Table>;
+    @ViewChild("dtItem", { static: false }) public pTableItem: Table;
+    //@ViewChildren('dtItem') private pTableItem: Table;
+    @ViewChild("dtLot", { static: false }) public pTableLot: Table;
+    //@ViewChildren('dtLot') private pTableLot: Table;
     @ViewChild('addNewItem', { read: false, static: false }) addNewItemButton: ElementRef;
     @ViewChild('addNewLot', { read: false, static: false }) addNewLotButton: ElementRef;
     
@@ -80,6 +83,9 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     showStep2: boolean;
     showStep3: boolean;
 
+    lotCounter: number = 0;
+    itemCounter: number = 0;
+
     dt: Table;
 
     constructor(private fb: FormBuilder,
@@ -119,8 +125,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     }
 
     showDescription(event) {
-
-        debugger
         switch (event.value.code.toLowerCase()) {
             case "accepted":
                 this.resultDescription = "All tests passed and the material is available for use.";
@@ -148,13 +152,11 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             { label: 'Rejected', value: { id: 2, name: 'Rejected', code: 'rejected' } },
             { label: 'Deviation', value: { id: 3, name: 'Deviation', code: 'deviation' } },
         ];
-
         this.resultOptions = [
             { label: 'Yes', value: { id: 1, name: 'Yes', code: 'Y' } },
             { label: 'No', value: { id: 2, name: 'No', code: 'N' } },
             { label: 'N/A', value: { id: 3, name: 'N/A', code: 'NA' } },
         ];       
-
         this.dispositionOptions = [
 
             { label: '- Select a Disposition -', value: null },
@@ -162,7 +164,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             { label: 'Disposition 2', value: { id: 2, name: 'Disposition 2', code: 'disposition2' } },
             { label: 'Disposition 3', value: { id: 3, name: 'Disposition 3', code: 'disposition3' } }
         ];
-
         this.holdStatusOptions = [
 
             { label: '- Select a Hold Status -', value: null },
@@ -425,65 +426,54 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     }
 
     addNewItemTableRow() {
+        this.itemCounter++;
         let inspectionItem = new InspectionItem();
+        inspectionItem.id = this.itemCounter;
         inspectionItem.name = "";
 
-        this.inspectionItems.push(inspectionItem);
-
-        var x = document.getElementsByClassName("add-new-lot-row");
-        var i;
-        for (i = 0; i < x.length; i++) {
-            (<any>x[i]).style.display = 'none';
-        }
-
-        if (this.inspectionLots.length == 0) {
-           this.addNewLotTableRow(null);
-        }
+        this.pTableItem.value.push(inspectionItem);
+        this.pTableItem.reset();
     }
 
-    addNewLotTableRow(index: any) {
-      
+    addNewLotTableRow(rowIndex: any) {
+
+        this.lotCounter++;
         let inspectionLot = new InspectionLot
+        inspectionLot.id = this.lotCounter;
         inspectionLot.comment = "";
         inspectionLot.itemQuantity = null;
         inspectionLot.lotNumber = "";
         
-        this.inspectionLots.push(inspectionLot);
+        this.pTableLot.value.push(inspectionLot);
+        this.pTableLot.reset();
+    }
 
-        var x = document.getElementsByClassName("add-new-lot-row");
-        var i;
-        for (i = 0; i < x.length; i++) {
-            (<any>x[i]).style.display = 'none';
-        }
+    RemoveLot(index: any) {
+        var updatedArray = this.pTableLot.value.slice(0, index).concat(this.pTableLot.value.slice(index + 1));
+        this.lotCounter--;
+        this.pTableLot.value = updatedArray;
+        this.pTableLot.reset();
+    }
+
+    RemoveItem(index: any) {
+        var updatedArray = this.pTableItem.value.slice(0, index).concat(this.pTableItem.value.slice(index + 1));
+        this.itemCounter--;
+        this.pTableItem.value = updatedArray;
+        this.pTableItem.reset();
     }
 
     vendorChange(event) {
-        debugger
         this.selectedSupplier = event.value;
-        this.loadItems(this.selectedSupplier);
-        //this.showStep2 = true;
-
-        //if (this.inspectionItems.length == 0) {
-        //    this.addNewItemButton.nativeElement.click();
-            
-            //this.inspectionItems.splice(1, 1);
-            //thi may delete a row...not sure
-            //this.pTable2.slice(0, index).concat(this.files.slice(index + 1));
-            //or
-            //this.files = this.files.filter((val,i) => i!=index);
-        //}
+        this.loadItems(this.selectedSupplier);         
 
         // clear description
-        this.selectedItemDescription = "";
-        //this.goToStep2();
-        //this.addNewLotButton.nativeElement.click();       
+        this.selectedItemDescription = "";   
     }
 
     itemTypeChange(event) {
         this.selectedItemType = event.value;
         
         this.selectedItemDescription = event.value.description;
-        debugger
         this.selectedItemCategory = MaterialCategoryEnum[event.value.materialCategoryId];
     }
 
@@ -502,8 +492,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.showStep2 = true;
         this.showStep3 = false;
         
-       
-
         if (this.inspectionItems.length == 0) {
             this.addNewItemButton.nativeElement.click();
 
@@ -513,12 +501,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
                   scrollTarget: '.step2'
               });
           });
-
-            //this.inspectionItems.splice(1, 1);
-            //thi may delete a row...not sure
-            //this.pTable2.slice(0, index).concat(this.files.slice(index + 1));
-            //or
-            //this.files = this.files.filter((val,i) => i!=index);
         }
     }
 
@@ -536,8 +518,6 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
     isFormValid() {
         return !(this.inspectionForm.valid && this.inspectionForm.get("inspectionFormStep2").dirty && this.inspectionForm.get("inspectionFormStep3").dirty) 
-          
-              
     }
 
     loadVendors() {
