@@ -6,8 +6,6 @@
 trigger:
 - master
 
-
-
 variables:
   buildConfiguration: 'Release'
   project: 'ClarkSnacks.MTS.API/ClarkSnacks.MTS.API.csproj' 
@@ -48,4 +46,4 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'publish artifacts'
   inputs:
-   ArtifactName: API
+   ArtifactName: Clark_Snacks_API
