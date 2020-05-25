@@ -1,0 +1,50 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+variables:
+  buildConfiguration: 'Release'
+  project:  'ClarkSnacks.MTS.API/*.csproj'
+
+steps:
+
+- task: UseDotNet@2
+  displayName: 'Initialize - Install dotnet core 3.1.x'
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+
+- task: NuGetToolInstaller@1
+  displayName: 'Initialize - Install Nuget'
+  inputs:
+    versionSpec: 5.5.1
+    checkLatest: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'DotNet - Restore'
+  inputs:
+    command: restore
+    projects: 'ClarkSnacks.MTS.API/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+##-----------------------------------------------------------------------------
+# Package
+- task: DotNetCoreCLI@2
+  displayName: 'Package - Clark Snacks API'
+  inputs:
+    command: publish
+    publishWebProjects: true
+    projects: 'ClarkSnacks.MTS.API/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/ClarkSnacks.MTS.API'
+    zipAfterPublish: true
+    #modifyOutputPath: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artifacts'
+  inputs:
+    pathtoPublish: $(Build.ArtifactStagingDirectory)/ClarkSnacks.MTS.API
+    ArtifactName: Clark_Snacks_API
