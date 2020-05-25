@@ -7,11 +7,46 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default'
 
 variables:
   buildConfiguration: 'Release'
+  project: 'ClarkSnacks.MTS.API/ClarkSnacks.MTS.API.csproj' 
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+
+- task: UseDotNet@2
+  displayName: 'Initialize - Install dotnet core 3.1.x'
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+
+- task: NuGetToolInstaller@1
+  displayName: 'Initialize - Install Nuget'
+  inputs:
+    versionSpec: 5.5.1
+    checkLatest: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'DotNet - Restore'
+  inputs:
+    command: restore
+    projects: '$(project)'
+    arguments: '--configuration $(buildConfiguration)'
+
+##-----------------------------------------------------------------------------
+# Package
+- task: DotNetCoreCLI@2
+  displayName: 'Package - Clak Snacks API'
+  inputs:
+    command: publish
+    publishWebProjects: true
+    projects: $(project)
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+    modifyOutputPath: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artifacts'
+  inputs:
+   ArtifactName: API
