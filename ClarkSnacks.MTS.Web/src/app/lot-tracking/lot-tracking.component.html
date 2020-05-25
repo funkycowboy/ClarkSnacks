@@ -1,0 +1,22 @@
+<h2>Lot Tracking Form</h2>
+
+<!--<form [formGroup]="trackingForm" (ngSubmit)="onSubmit(inspectionForm.value)">-->
+
+  <div class="ui-g" style="background-color: #ececec; border-radius:5px;">
+      <div class="ui-g-12">
+        <label for="Supplier">Shipment Supplier: </label>
+      </div>
+      <div class="ui-g-12">
+        <p-dropdown filter="true" formControlName="supplier" name="Supplier" (onChange)="vendorChange($event)" [options]="supplierOptions"></p-dropdown>
+      </div>
+      <div class="ui-g-12">
+        <label for="Items">Item: </label>
+      </div>
+      <div class="ui-g-12" style="width:50%;">
+        <p-dropdown [style]="{'width':'50%'}" filter="true" formControlName="item" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
+      </div>
+    </div>
+  <!--</form>-->
+
+
+*

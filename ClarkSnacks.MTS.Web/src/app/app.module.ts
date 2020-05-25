@@ -36,6 +36,7 @@ import { ChipsModule } from 'primeng/chips';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { SpinnerModule } from 'primeng/spinner';
+import { LotTrackingComponent } from './lot-tracking/lot-tracking.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { SpinnerModule } from 'primeng/spinner';
         MaterialInspectionComponent,
         DefaultHeaderComponent,
         AddRowDirective,
-        AddRowDirective2
+        AddRowDirective2,
+        LotTrackingComponent
   ],
   imports: [
     BrowserModule,

@@ -50,7 +50,7 @@ export class DefaultHeaderComponent implements OnInit {
 
                     {
                         label: 'Process Lots',
-                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/track-lots']
+                        icon: 'fa fa-arrow-circle-right', 'routerLink': ['/lot-tracking']
                        
                     }
                 ]

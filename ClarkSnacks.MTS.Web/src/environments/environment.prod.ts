@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+    production: true,
+    clarkSnacksUrl: "https://clarksnacks-api.azurewebsites.net/api/"
 };
