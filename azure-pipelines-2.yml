@@ -8,7 +8,7 @@ trigger:
 
 variables:
   buildConfiguration: 'Release'
-  project: 'ClarkSnacks.MTS.API/ClarkSnacks.MTS.API' 
+  project:  'ClarkSnacks.MTS.API/*.csproj'
 
 steps:
 
@@ -28,7 +28,7 @@ steps:
   displayName: 'DotNet - Restore'
   inputs:
     command: restore
-    projects: '$(project)'
+    projects: 'ClarkSnacks.MTS.API/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 ##-----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: true
-    projects: $(project)
+    projects: 'ClarkSnacks.MTS.API/*.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
     modifyOutputPath: false
