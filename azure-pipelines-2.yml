@@ -46,4 +46,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'publish artifacts'
   inputs:
-   ArtifactName: Clark_Snacks_API
+    pathtoPublish: $(Build.ArtifactStagingDirectory)/ClarkSnacks.MTS.API
+    ArtifactName: Clark_Snacks_API
