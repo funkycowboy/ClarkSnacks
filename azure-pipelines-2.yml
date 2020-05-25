@@ -36,7 +36,7 @@ steps:
 ##-----------------------------------------------------------------------------
 # Package
 - task: DotNetCoreCLI@2
-  displayName: 'Package - Clak Snacks API'
+  displayName: 'Package - Clark Snacks API'
   inputs:
     command: publish
     publishWebProjects: true
