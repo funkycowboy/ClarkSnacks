@@ -58,11 +58,9 @@
 
             <div style="float: left; white-space:nowrap; width:50%; border:none">
               <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;<p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event,rowIndexItem)" [options]="itemOptions">            </p-dropdown>
-              <label style="margin-left:10px;">Description:</label> <label style="font-weight: bold; margin-left:10px;color: blue;">{{rowData.description}}</label>
+              &nbsp;<label>Item Quantity:</label>&nbsp;&nbsp;<span style="font-weight:bold">{{rowData.totalQuantity}}</span>
             </div>
-            <div style="float: right; width:50%;border:none; text-align:right">
-
-              <div style="margin-right:25px; display:inline-block"><label>Total Item Quantity:</label>&nbsp;&nbsp;<span style="font-weight:bold">{{rowData.totalQuantity}}</span></div>
+            <div style="float: right; width:50%;border:none; text-align:right">              
 
               <a href="#" [pRowToggler]="rowData" style="margin-right: 15px;">
                 <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i><label> View Lots</label>

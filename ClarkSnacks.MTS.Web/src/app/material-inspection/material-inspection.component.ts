@@ -601,7 +601,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             .then(items => {
                 
                 (<any>items).forEach((item) => {
-                    this.itemOptions.push({ label: item.vendorItemId, value: { id: item.vendorItemId, description: item.description, materialCategoryId: item.materialCategoryId } });
+                    this.itemOptions.push({ label: item.vendorItemId + " - " + item.description, value: { id: item.vendorItemId, description: item.description, materialCategoryId: item.materialCategoryId } });
                 });
             });
     }
