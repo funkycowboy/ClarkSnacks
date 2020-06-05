@@ -6,7 +6,7 @@ import { DOCUMENT } from '@angular/common';
 import { PageScrollService } from 'ngx-page-scroll-core';
 
 // primeng
-import { SelectItem } from 'primeng/api';
+import { SelectItem, ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Table, EditableColumn, EditableRow } from 'primeng/table';
 
 // class
@@ -14,7 +14,7 @@ import { InspectionLot, InspectionItem } from '../models/inspection';
 
 // services
 import { VendorService } from '../services/vendor-service';
-import { CategoryService } from '../services/category-service';
+import { MaterialCategoryService } from '../services/material-category-service';
 import { ItemService } from '../services/item-service';
 
 // models
@@ -27,7 +27,8 @@ import { MaterialCategory, MaterialCategoryEnum } from '../models/category'
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-material-inspection',
   templateUrl: './material-inspection.component.html',
-  styleUrls: ['./material-inspection.component.css']
+    styleUrls: ['./material-inspection.component.css'],
+    providers: [ConfirmationService, MessageService]
 })
 export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
@@ -81,13 +82,17 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     lotCounter: number = 0;
     itemCounter: number = 0;
 
+    msgs: Message[] = [];
+
     constructor(private fb: FormBuilder,
         private ref: ChangeDetectorRef,
         private vendorService: VendorService,
-        private categoryService: CategoryService,
+        private materialCategoryService: MaterialCategoryService,
         private itemService: ItemService,
         private pageScrollService: PageScrollService,
-        @Inject(DOCUMENT) private document: any) {
+        @Inject(DOCUMENT) private document: any,
+        private confirmationService: ConfirmationService,
+        private messageService: MessageService) {
 
         this.loadOptions();
     }
@@ -451,18 +456,48 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.pTableItem.reset();
     }
 
-    RemoveLot(itemRowIndex: any, lotRowIndex: any) {
-        var updatesLots = this.pTableItem.value[itemRowIndex].inspectionLots.slice(0, lotRowIndex).concat(this.pTableItem.value[itemRowIndex].inspectionLots.slice(lotRowIndex + 1));
-        this.lotCounter--;
-        this.pTableItem.value[itemRowIndex].inspectionLots = updatesLots;
-        this.pTableItem.reset();
+    removeLot(itemRowIndex: any, lotRowIndex: any) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to remove the lot?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
+                this.messageService.add({ severity: 'info', summary: 'Task Completed', detail: 'The lot has been removed.' });                
+
+                var updatesLots = this.pTableItem.value[itemRowIndex].inspectionLots.slice(0, lotRowIndex).concat(this.pTableItem.value[itemRowIndex].inspectionLots.slice(lotRowIndex + 1));
+                this.lotCounter--;
+                this.pTableItem.value[itemRowIndex].inspectionLots = updatesLots;
+                this.pTableItem.reset();
+
+                this.updateItemQuantity(itemRowIndex);
+            },
+            reject: () => {
+                this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+            }
+        });
     }
 
-    RemoveItem(itemRowIndex: any) {
-        var updatedArray = this.pTableItem.value.slice(0, itemRowIndex).concat(this.pTableItem.value.slice(itemRowIndex + 1));
-        this.itemCounter--;
-        this.pTableItem.value = updatedArray;
-        this.pTableItem.reset();
+    removeItem(itemRowIndex: any) {
+
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to remove the item?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                //this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
+                this.messageService.add({ severity: 'info', summary: 'Task Completed', detail: 'The item has been removed.' });
+
+
+                var updatedArray = this.pTableItem.value.slice(0, itemRowIndex).concat(this.pTableItem.value.slice(itemRowIndex + 1));
+                this.itemCounter--;
+                this.pTableItem.value = updatedArray;
+                this.pTableItem.reset();
+            },
+            reject: () => {
+                this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+            }
+        });
     }
 
     vendorChange(event) {
@@ -487,6 +522,19 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
         this.selectedLotNumber = event.value;
     }
 
+    quantityChange(event: any, rowIndex: any) {
+        this.updateItemQuantity(rowIndex);
+    }
+
+    updateItemQuantity(rowIndex: any): void {
+        let lotCount: number = 0;
+        this.pTableItem.value[rowIndex].inspectionLots.forEach((lot) => {
+            lotCount = lotCount + lot.itemQuantity;
+        });
+
+        this.pTableItem.value[rowIndex].totalQuantity = lotCount;
+        this.pTableItem.reset();
+    }
 
     goToStep1() : void {
         this.showStep1 = true;
@@ -537,7 +585,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
     }
 
     loadCategories() : void {
-        this.categoryService.getCategories()
+        this.materialCategoryService.getMaterialCategories()
             .then(categories => {
                 (<any>categories).forEach((item) => {
                     this.itemTypeOptions.push({ label: item.name, value: item.id });

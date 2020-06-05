@@ -1,5 +1,6 @@
 <h2>Material Inspection Form</h2>
-
+<!--<p-messages [value]="msgs"></p-messages>-->
+<p-toast position="top-right"></p-toast>
 <!-- Step1 : Shipment Information -->
 <p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Step 1. Provide the following shipment information.</p>
 
@@ -61,11 +62,12 @@
             </div>
             <div style="float: right; width:50%;border:none; text-align:right">
 
+              <div style="margin-right:25px; display:inline-block"><label>Total Item Quantity:</label>&nbsp;&nbsp;<span style="font-weight:bold">{{rowData.totalQuantity}}</span></div>
+
               <a href="#" [pRowToggler]="rowData" style="margin-right: 15px;">
                 <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i><label> View Lots</label>
               </a>
-
-              <button class="ui-button-rounded ui-button-secondary" style="width:150px;background-color: darkgray; color: #fff" type="button" pButton icon="fa fa-trash" label="Remove Item" (click)="RemoveItem(rowIndexItem)"></button>
+              <button class="ui-button-rounded ui-button-secondary" style="width:150px;background-color: darkgray; color: #fff" type="button" pButton icon="fa fa-trash" label="Remove Item" (click)="removeItem(rowIndexItem)"></button>
             </div>
           </td>
 
@@ -94,7 +96,7 @@
           </td>
           <td style="text-align:center">
             <div style="display: inline-block; vertical-align:middle">
-              <p-spinner [min]="0" [max]="1000"></p-spinner>
+              <p-spinner [min]="0" [max]="1000" (onBlur)="quantityChange($event,rowIndexLot2)" [ngModelOptions]="{standalone: true}" [(ngModel)]="rowData.itemQuantity"></p-spinner>
             </div>
           </td>
           <td style="text-align:center">
@@ -103,7 +105,7 @@
             </div>
           </td>
           <td style="vertical-align:middle; text-align:right">
-            <button class="ui-button-rounded ui-button-secondary" style="width:150px;background-color: darkgray; color: #fff" type="button" pButton icon="fa fa-trash" label="Remove Lot" (click)="RemoveLot(rowIndexLot2, rowIndexLot)"></button>
+            <button class="ui-button-rounded ui-button-secondary" style="width:150px;background-color: darkgray; color: #fff" type="button" pButton icon="fa fa-trash" label="Remove Lot" (click)="removeLot(rowIndexLot2, rowIndexLot)"></button>
           </td>
         </tr>
       </ng-template>
@@ -530,5 +532,8 @@
     <button type="button" pButton icon="fa fa-check" label="Save" (click)="save()"></button>
   </p-footer>
 </p-dialog>
+
+<!-- Confirm Dialogs -->
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 
 

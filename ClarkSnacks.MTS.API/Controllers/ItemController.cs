@@ -63,5 +63,21 @@ namespace ClarkSnacks.MTS.API.Controllers
                 return StatusCode(500, ex);
             }
         }
+
+        [HttpGet]
+        [Route("material-category/{materialCategoryId}")]
+        public ActionResult<string> GetByMaterialCategoryIdId([FromRoute] int materialCategoryId)
+        {
+            try
+            {
+                var result = _itemService.GetItemsByMaterialCategoryId(materialCategoryId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
     }
 }

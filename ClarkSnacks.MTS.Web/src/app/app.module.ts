@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 
 // services
 import { VendorService } from './services/vendor-service';
-import { CategoryService } from './services/category-service';
+import { MaterialCategoryService } from './services/material-category-service';
 import { ItemService } from './services/item-service';
 
 // directives
@@ -37,6 +37,11 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { SpinnerModule } from 'primeng/spinner';
 import { LotTrackingComponent } from './lot-tracking/lot-tracking.component';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -69,12 +74,17 @@ import { LotTrackingComponent } from './lot-tracking/lot-tracking.component';
     InputTextareaModule,
     SpinnerModule,
       HttpClientModule,
-      NgxPageScrollCoreModule.forRoot({ scrollOffset: 130 })
+      NgxPageScrollCoreModule.forRoot({ scrollOffset: 130 }),
+      ConfirmDialogModule,
+      MessageModule,
+      MessagesModule,
+      ToastModule
   ],
     providers: [
         VendorService,
-        CategoryService,
-        ItemService
+        MaterialCategoryService,
+        ItemService,
+        ConfirmationService
     ],
   bootstrap: [AppComponent]
 })

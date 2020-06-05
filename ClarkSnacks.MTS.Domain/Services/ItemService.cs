@@ -35,7 +35,7 @@ namespace ClarkSnacks.MTS.Domain.Services
         }
 
         /// <summary>
-        /// Get Items Vendor Id
+        /// Get Items by Vendor Id
         /// </summary>
         /// <param name="vendorId"></param>
         /// <returns></returns>
@@ -43,6 +43,17 @@ namespace ClarkSnacks.MTS.Domain.Services
         {
             return _itemRepository.GetVendorItems()
                 .Where(x => x.VendorId == vendorId).Select(x => x.Item).OrderBy(x => x.Description).ToList();
+        }
+
+        /// <summary>
+        /// Get Items by MaterialCategoryId
+        /// </summary>
+        /// <param name="materialCategoryId"></param>
+        /// <returns></returns>
+        public List<Item> GetItemsByMaterialCategoryId(int materialCategoryId)
+        {
+            return _itemRepository.Get()
+                .Where(x => x.MaterialCategoryId == materialCategoryId).ToList();
         }
     }
 }

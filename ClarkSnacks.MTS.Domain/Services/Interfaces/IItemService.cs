@@ -8,5 +8,6 @@ namespace ClarkSnacks.MTS.Domain.Services.Interfaces
         List<Item> GetAllItems();
         Item GetItemById(int Id);
         List<Item> GetItemsByVendorId(int categoryId);
+        List<Item> GetItemsByMaterialCategoryId(int materialCategoryId);
     }
 }

@@ -10,14 +10,75 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
         public virtual DbSet<VendorItem> VendorItems { get; set; }
         public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
         public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Lot> Lots { get; set; }
 
         public MTSDbContext(DbContextOptions<MTSDbContext> options)
           : base(options)
         {
         }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Item>(entity =>
+            {
+                entity.ToTable("Item");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.MaterialCategoryId)
+                      .IsRequired()
+                      .HasColumnType("int");
+
+                entity.Property(e => e.VendorItemId)
+                      .IsRequired()
+                      .HasColumnType("varchar")
+                      .HasMaxLength(50);
+
+                entity.Property(e => e.Description)
+                       .IsRequired()
+                       .HasColumnType("varchar")
+                       .HasMaxLength(1000);
+
+                entity.Property(e => e.StatusId)
+                    .IsRequired()
+                    .HasColumnType("int");
+            });
+
+            modelBuilder.Entity<Lot>(entity =>
+            {
+                entity.ToTable("Lot");
+
+                entity.HasKey(x => x.Id);
+
+                entity.HasOne(x => x.Item)
+                .WithMany(x => x.Lots)
+                .HasForeignKey(x => x.ItemId);
+            });
+
+
+            modelBuilder.Entity<MaterialCategory>(entity =>
+            {
+                entity.ToTable("l_MaterialCategory");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.Name)
+                       .IsRequired()
+                       .HasColumnType("varchar")
+                       .HasMaxLength(255);
+
+                entity.Property(e => e.StatusId)
+                    .IsRequired()
+                    .HasColumnType("int");
+
+                entity.HasMany(x => x.Items)
+                .WithOne(x => x.MaterialCategory)
+                .HasForeignKey(x => x.MaterialCategoryId);
+
+            });
+
             modelBuilder.Entity<Vendor>(entity =>
             {
                 entity.ToTable("Vendor");
@@ -38,7 +99,7 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
             modelBuilder.Entity<VendorItem>(entity =>
             {
                 entity.ToTable("VendorItem");
-                
+
                 entity.HasKey(x => x.Id);
 
                 entity.Property(e => e.VendorId)
@@ -62,52 +123,6 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                     .HasForeignKey(x => x.ItemId);
 
 
-            });
-
-            modelBuilder.Entity<MaterialCategory>(entity =>
-            {
-                entity.ToTable("l_MaterialCategory");
-
-                entity.HasKey(x => x.Id);
-
-                entity.Property(e => e.Name)
-                       .IsRequired()
-                       .HasColumnType("varchar")
-                       .HasMaxLength(255);
-
-                entity.Property(e => e.StatusId)
-                    .IsRequired()
-                    .HasColumnType("int");
-
-                entity.HasMany(x => x.Items)
-                .WithOne(x => x.MaterialCategory)
-                .HasForeignKey(x => x.MaterialCategoryId);
-
-            });
-
-            modelBuilder.Entity<Item>(entity =>
-            {
-                entity.ToTable("Item");
-
-                entity.HasKey(x => x.Id);
-
-                entity.Property(e => e.MaterialCategoryId)
-                      .IsRequired()
-                      .HasColumnType("int");
-                     
-                entity.Property(e => e.VendorItemId)
-                      .IsRequired()
-                      .HasColumnType("varchar")
-                      .HasMaxLength(50);
-
-                entity.Property(e => e.Description)
-                       .IsRequired()
-                       .HasColumnType("varchar")
-                       .HasMaxLength(1000);
-
-                entity.Property(e => e.StatusId)
-                    .IsRequired()
-                    .HasColumnType("int");
             });
         }
     }

@@ -2,21 +2,58 @@
 
 <!--<form [formGroup]="trackingForm" (ngSubmit)="onSubmit(inspectionForm.value)">-->
 
-  <div class="ui-g" style="background-color: #ececec; border-radius:5px;">
+<div class="ui-g" style="background-color: #ececec; border-radius:5px;">
+  <!--<div class="ui-g-12">
+    <label for="Supplier">Shipment Supplier: </label>
+  </div>
+  <div class="ui-g-12">
+    <p-dropdown filter="true" name="Supplier" (onChange)="vendorChange($event)" [options]="supplierOptions"></p-dropdown>
+  </div>-->
+  <div class="ui-g-12">
+    <label for="Supplier">Material Category: </label>
+  </div>
+  <div class="ui-g-12 ui-fluid">
+    <p-dropdown filter="true" name="MaterialCategory" (onChange)="materialCategoryChange($event)" [options]="materialCategoryOptions"></p-dropdown>
+  </div>
+  <div class="ui-g-12 ui-inputgroup ui-g ui-fluid" style="padding:0" *ngIf="selectedMaterialCategory">
+    <div class="ui-g-12">
+      <label for="Items">Item: </label>
+    </div>
+    <div class="ui-g-12 ui-fluid">
+      <p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g-12 ui-inputgroup ui-g" style="padding:0" *ngIf="selectedItem">
+    <div class="ui-g-12">
+      <label for="Items">Select or enter a new Lot Number:</label>
+    </div>
+    <div class="ui-g-12">
+      <p-dropdown [style]="{'width':'75%'}" filter="true" [options]="lotOptions" editable="true" (onChange)="lotNumberChange($event)"></p-dropdown>
+      <span class="fa fa-search" style="margin-left:15px;font-size: 24px; color: blue" (click)="showLabelInfo()" title="Where can I find the Lot Number?"></span>
+      <!--<span style="margin-left:15px;">Where can I find the Lot Number?</span>-->
+    </div>
+    <div class="ui-g-12" *ngIf="lotNumberManuallyEntered" style="padding:0">
       <div class="ui-g-12">
-        <label for="Supplier">Shipment Supplier: </label>
+        <label for="Items">Confirm the entered lot number:</label>
       </div>
       <div class="ui-g-12">
-        <p-dropdown filter="true" formControlName="supplier" name="Supplier" (onChange)="vendorChange($event)" [options]="supplierOptions"></p-dropdown>
-      </div>
-      <div class="ui-g-12">
-        <label for="Items">Item: </label>
-      </div>
-      <div class="ui-g-12" style="width:50%;">
-        <p-dropdown [style]="{'width':'50%'}" filter="true" formControlName="item" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
+        <input pInputText type="text" style="width:75%" />
+        <!--<span class="fa fa-question-circle" style="margin-left:15px;font-size: 24px; color: blue" (click)="showLabelInfo()"></span>-->
       </div>
     </div>
-  <!--</form>-->
+  </div>
 
+</div>
 
-*
+<!--</form>-->
+<p-dialog header="Supplier Label Information" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true">
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12">
+    <img src="assets/supplier-labels/{{selectedSupplierLabelImageName}}.jpg" />
+  </div>
+</div>
+
+<p-footer>
+  <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>&nbsp;
+</p-footer>
+</p-dialog>

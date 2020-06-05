@@ -10,9 +10,10 @@
     <None Remove="src\app\models\category.ts" />
     <None Remove="src\app\models\inspection.ts" />
     <None Remove="src\app\models\item.ts" />
+    <None Remove="src\app\models\lot.ts" />
     <None Remove="src\app\models\vendor.ts" />
-    <None Remove="src\app\services\category-service.ts" />
     <None Remove="src\app\services\item-service.ts" />
+    <None Remove="src\app\services\material-category-service.ts" />
     <None Remove="src\app\services\vendor-service.ts" />
   </ItemGroup>
 
@@ -36,12 +37,13 @@
     <TypeScriptCompile Include="src\app\models\category.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\lot.ts" />
     <TypeScriptCompile Include="src\app\models\vendor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\inspection.ts" />
     <TypeScriptCompile Include="src\app\services\item-service.ts" />
-    <TypeScriptCompile Include="src\app\services\category-service.ts" />
+    <TypeScriptCompile Include="src\app\services\material-category-service.ts" />
     <TypeScriptCompile Include="src\app\services\vendor-service.ts" />
   </ItemGroup>
 

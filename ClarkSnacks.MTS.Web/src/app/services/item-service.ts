@@ -16,7 +16,7 @@ export class ItemService {
 
     constructor(private http: HttpClient) { }
 
-    // Get all items
+    // Get items by vendor
     getItems(selectedSupplier:number){
         let url = this.baseurl + this.controller + "/vendors/" + selectedSupplier;
         debugger
@@ -26,6 +26,21 @@ export class ItemService {
                 .then(
                     res => {resolve(res);},
                     msg => {reject(msg);}
+                );
+        });
+        return promise;
+    }
+
+    // Get items by material category
+    getItemsByMaterialCategory(materialCategoryId: number) {
+        let url = this.baseurl + this.controller + "/material-category/" + materialCategoryId;
+        debugger
+        let promise = new Promise((resolve, reject) => {
+            this.http.get(url)
+                .toPromise()
+                .then(
+                    res => { resolve(res); },
+                    msg => { reject(msg); }
                 );
         });
         return promise;

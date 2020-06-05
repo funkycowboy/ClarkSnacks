@@ -10,14 +10,14 @@ import { environment } from '../../environments/environment';
 // models
 
 @Injectable()
-export class CategoryService {
+export class MaterialCategoryService {
     private baseurl = environment.clarkSnacksUrl;
     private controller = "MaterialCategory";
 
     constructor(private http: HttpClient) { }
 
     // Get all categories
-    getCategories(){
+    getMaterialCategories(){
         let url = this.baseurl + this.controller;
 
         let promise = new Promise((resolve, reject) => {

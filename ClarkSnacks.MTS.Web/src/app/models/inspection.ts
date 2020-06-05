@@ -10,4 +10,5 @@ export class InspectionItem {
     name: string;
     inspectionLots: InspectionLot[] = [];
     description: string;
+    totalQuantity: number;
 }
