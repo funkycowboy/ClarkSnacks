@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DOCUMENT } from '@angular/common';
-import { SelectItem } from 'primeng/api';
+import { SelectItem, MessageService } from 'primeng/api';
 
 // models
 import { Lot } from '../models/lot';
@@ -17,7 +17,8 @@ import { PageScrollService } from 'ngx-page-scroll-core';
 @Component({
   selector: 'app-lot-tracking',
   templateUrl: './lot-tracking.component.html',
-  styleUrls: ['./lot-tracking.component.css']
+    styleUrls: ['./lot-tracking.component.css'],
+    providers: [MessageService]
 })
 export class LotTrackingComponent implements OnInit {
 
@@ -38,31 +39,60 @@ export class LotTrackingComponent implements OnInit {
 
     displayDialog: boolean;
 
+    lotTrackingForm: FormGroup;
 
     constructor(private fb: FormBuilder,
         private vendorService: VendorService,
         private materialCategoryService: MaterialCategoryService,
         private itemService: ItemService,
         private pageScrollService: PageScrollService,
-        @Inject(DOCUMENT) private document: any) {
+        @Inject(DOCUMENT) private document: any,
+        private messageService: MessageService) {
     }
 
     ngOnInit() {
+        this.configureForm();
+        this.setUserCategoryValidators();
         this.loadOptions();
   }
+
+    configureForm(): void {
+        this.lotTrackingForm = new FormGroup({
+            materialCategory: new FormControl('', Validators.required),
+            item: new FormControl('', Validators.required),
+            lotNumber: new FormControl('', Validators.required),
+            lotNumberConfirm: new FormControl(''),                       
+        });
+    }
+
+    setUserCategoryValidators(): void {
+
+        this.lotTrackingForm.get('lotNumber').valueChanges
+            .subscribe(x => {                
+                if (typeof x === 'string') {
+                    debugger
+                    this.lotTrackingForm.get('lotNumberConfirm').setValidators([Validators.required]);
+                    this.selectedLotNumber = x;
+                    this.lotNumberManuallyEntered = true;
+                } else {
+                    this.lotTrackingForm.get('lotNumberConfirm').clearValidators();
+                    this.lotTrackingForm.get('lotNumberConfirm').updateValueAndValidity();
+                }
+            });
+    }
 
     materialCategoryChange(event): void {
         this.selectedMaterialCategory = event.value;;
         this.loadItems(this.selectedMaterialCategory);
     }
 
-    //vendorChange(event) {
-    //    debugger
-    //    this.selectedSupplier = event.value;
-    //    this.selectedSupplierLabelImageName = event.value.name.replace(" ", "-").toLowerCase();
-    //    this.loadLots(this.selectedSupplier.id);
-    //    this.loadItems(this.selectedSupplier.id);
-    //}
+    vendorChange(event) {
+        debugger
+        this.selectedSupplier = event.value;
+        this.selectedSupplierLabelImageName = event.value.name.replace(" ", "-").toLowerCase();
+        this.loadLots(this.selectedSupplier.id);
+        this.loadItems(this.selectedSupplier.id);
+    }
 
     itemChange(event: any) {
         this.selectedItem = event.value.id;
@@ -71,6 +101,7 @@ export class LotTrackingComponent implements OnInit {
     }
 
     lotNumberChange(event): void {
+        debugger;
         if (typeof event.value === 'string') {
             this.selectedLotNumber = event.value;
             this.lotNumberManuallyEntered = true;
@@ -124,9 +155,9 @@ export class LotTrackingComponent implements OnInit {
             });
     }
 
-
     loadLots(selectedItem) : void {
 
+        this.lots = [];
         this.lotOptions = [];
         this.lotOptions.push({ label: '-Select One-', value: '' });
 
@@ -147,5 +178,15 @@ export class LotTrackingComponent implements OnInit {
         });
 
     }
+
+    validateLotNumber(event: any): void {
+        if (event.target.value !== this.selectedLotNumber) {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'The entered lot numbers do not match.' });     
+        }
+    }
+
+    //islotTrackingFormValid(): boolean {
+    //    return !this.lotTrackingForm.valid;
+    //}
 
 }
