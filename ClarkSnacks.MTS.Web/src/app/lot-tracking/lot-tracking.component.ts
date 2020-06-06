@@ -12,6 +12,7 @@ import { VendorService } from '../services/vendor-service';
 import { MaterialCategoryService } from '../services/material-category-service';
 import { ItemService } from '../services/item-service';
 import { PageScrollService } from 'ngx-page-scroll-core';
+import { InspectionItem, InspectionLot } from '../models/inspection';
 
 
 @Component({
@@ -35,11 +36,21 @@ export class LotTrackingComponent implements OnInit {
     selectedLotNumber: string;
     lotNumberManuallyEntered: boolean;
 
+
     lots: Lot[] = [];
+    lotLogs: Lot[] = [];
+    cols: any[];
 
     displayDialog: boolean;
 
     lotTrackingForm: FormGroup;
+
+    showLotLog: boolean;
+
+    //paging
+    first = 0;
+    rows = 10;
+
 
     constructor(private fb: FormBuilder,
         private vendorService: VendorService,
@@ -54,6 +65,7 @@ export class LotTrackingComponent implements OnInit {
         this.configureForm();
         this.setUserCategoryValidators();
         this.loadOptions();
+        this.loadLotLog();
   }
 
     configureForm(): void {
@@ -66,7 +78,7 @@ export class LotTrackingComponent implements OnInit {
     }
 
     setUserCategoryValidators(): void {
-
+        debugger
         this.lotTrackingForm.get('lotNumber').valueChanges
             .subscribe(x => {                
                 if (typeof x === 'string') {
@@ -82,8 +94,10 @@ export class LotTrackingComponent implements OnInit {
     }
 
     materialCategoryChange(event): void {
-        this.selectedMaterialCategory = event.value;;
+        debugger;
+        this.selectedMaterialCategory = event.value.id;;
         this.loadItems(this.selectedMaterialCategory);
+        this.selectedSupplierLabelImageName = "belmark";
     }
 
     vendorChange(event) {
@@ -137,7 +151,7 @@ export class LotTrackingComponent implements OnInit {
         this.materialCategoryService.getMaterialCategories()
             .then(categories => {
                 (<any>categories).forEach((item) => {
-                    this.materialCategoryOptions.push({ label: item.name, value: item.id });
+                    this.materialCategoryOptions.push({ label: item.name, value: { id: item.id, name: item.name } });
                 });
             });
     }
@@ -159,7 +173,6 @@ export class LotTrackingComponent implements OnInit {
 
         this.lots = [];
         this.lotOptions = [];
-        this.lotOptions.push({ label: '-Select One-', value: '' });
 
         let lot = new Lot();
         lot.id = 123;
@@ -179,14 +192,57 @@ export class LotTrackingComponent implements OnInit {
 
     }
 
+    loadLotLog(): void {
+
+        this.cols = [
+            { field: 'dateReceived', header: 'Date/Time Logged' },
+            { field: 'materialCategory', header: 'Material' },
+            { field: 'lotNumber', header: 'Lot Number' },
+            { field: 'itemName', header: 'Item Name' }
+        ];
+       this.showLotLog = true;
+    }
+
     validateLotNumber(event: any): void {
         if (event.target.value !== this.selectedLotNumber) {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'The entered lot numbers do not match.' });     
         }
     }
 
-    //islotTrackingFormValid(): boolean {
-    //    return !this.lotTrackingForm.valid;
-    //}
+    onSubmit(value: any) {
+        debugger
 
+        let lot = new Lot();
+        lot.dateReceived = new Date().toLocaleString();
+        lot.materialCategory = value.materialCategory.name;
+        lot.lotNumber = (typeof value.lotNumber === 'string') ? value.lotNumber : value.lotNumber.lotNumber;
+        lot.itemName = value.item.description;
+
+        this.lotLogs.push(lot);
+
+        this.showLotLog = true;
+
+        this.lotTrackingForm.reset();
+    }
+
+    //Paging
+    next() {
+        this.first = this.first + this.rows;
+    }
+
+    prev() {
+        this.first = this.first - this.rows;
+    }
+
+    reset() {
+        this.first = 0;
+    }
+
+    isLastPage(): boolean {
+        return this.first === (this.lots.length - this.rows);
+    }
+
+    isFirstPage(): boolean {
+        return this.first === 0;
+    }
 }

@@ -42,6 +42,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { SidebarModule } from 'primeng/sidebar';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { ToastModule } from 'primeng/toast';
       ConfirmDialogModule,
       MessageModule,
       MessagesModule,
-      ToastModule
+      ToastModule,
+      SidebarModule
   ],
     providers: [
         VendorService,

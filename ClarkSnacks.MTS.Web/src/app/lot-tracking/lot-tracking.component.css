@@ -2,3 +2,8 @@ label
 {
   font-weight:bold;
 }
+
+/deep/.ui-sortable-column {
+  padding:10px;
+  background-color: #ececec;
+}
