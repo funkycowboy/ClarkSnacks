@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ClarkSnacks.MTS.Domain.Entities
+namespace ClarkSnacks.MTS.API.wwwroot
 {
-    public class Lot
+    public class LotsResponseSvm
     {
         public int Id { get; set; }
         public string LotNumber { get; set; }
         public int Quantity { get; set; }
         public int ItemId { get; set; }
+        public string ItemDescription { get; set; }
         public DateTime DateReceived { get; set; }
         public string BOLShipmentNumber { get; set; }
         public int VendorId { get; set; }
+        public string VendorName { get; set; }
+        public string MaterialCategoryName { get; set; }
         public int StatusId { get; set; }
-        public DateTime DateCreated { get; set; }
-        public int CreatedByUserId { get; set; }
-
-        public virtual Item Item { get; set; }
-        public virtual Vendor Vendor { get; set; }
-
+        public string StatusName { get; set; }
     }
 }

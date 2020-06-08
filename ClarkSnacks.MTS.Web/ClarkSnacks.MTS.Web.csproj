@@ -13,6 +13,7 @@
     <None Remove="src\app\models\lot.ts" />
     <None Remove="src\app\models\vendor.ts" />
     <None Remove="src\app\services\item-service.ts" />
+    <None Remove="src\app\services\lot-service.ts" />
     <None Remove="src\app\services\material-category-service.ts" />
     <None Remove="src\app\services\vendor-service.ts" />
   </ItemGroup>
@@ -42,6 +43,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\inspection.ts" />
+    <TypeScriptCompile Include="src\app\services\lot-service.ts" />
     <TypeScriptCompile Include="src\app\services\item-service.ts" />
     <TypeScriptCompile Include="src\app\services\material-category-service.ts" />
     <TypeScriptCompile Include="src\app\services\vendor-service.ts" />

@@ -1,4 +1,5 @@
-﻿using ClarkSnacks.MTS.EntityFramework.Context;
+﻿using ClarkSnacks.MTS.API.Mapping;
+using ClarkSnacks.MTS.EntityFramework.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,10 @@ namespace ClarkSnacks.MTS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            // Fix issue with looping
+            services.AddControllers().AddNewtonsoftJson(x => 
+                x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             //Add EF DataContext
             services.AddDbContext<MTSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
@@ -41,6 +46,13 @@ namespace ClarkSnacks.MTS.API
                         Version = "1.0"
                 });
             });
+
+            // Setup AutoMapper
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ServiceMappingProfile());
+            });
+            services.AddSingleton(config.CreateMapper());
 
             // Enable Cors
             services.AddCors(options =>

@@ -10,3 +10,9 @@ export class Lot {
     bolShipmentNumber
     StatusId: number;
 }
+
+export class ProcessedLot {
+    id: number;
+    lotId: string;
+    processedByUserId: number;
+}

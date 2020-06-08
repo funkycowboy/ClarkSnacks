@@ -1,11 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, ViewChild, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DOCUMENT } from '@angular/common';
 import { SelectItem, MessageService } from 'primeng/api';
 
+import { Table, EditableColumn, EditableRow } from 'primeng/table';
+
 // models
-import { Lot } from '../models/lot';
+import { Lot, ProcessedLot } from '../models/lot';
 
 // services
 import { VendorService } from '../services/vendor-service';
@@ -13,6 +15,7 @@ import { MaterialCategoryService } from '../services/material-category-service';
 import { ItemService } from '../services/item-service';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import { InspectionItem, InspectionLot } from '../models/inspection';
+import { LotService } from '../services/lot-service';
 
 
 @Component({
@@ -22,6 +25,8 @@ import { InspectionItem, InspectionLot } from '../models/inspection';
     providers: [MessageService]
 })
 export class LotTrackingComponent implements OnInit {
+
+    @ViewChild("dtLotLog", { static: false }) public pLotLog: Table;
 
     supplierOptions: SelectItem[] = [];
     itemOptions: SelectItem[] = [];
@@ -37,8 +42,8 @@ export class LotTrackingComponent implements OnInit {
     lotNumberManuallyEntered: boolean;
 
 
-    lots: Lot[] = [];
-    lotLogs: Lot[] = [];
+    lots: any[] = [];
+    lotLogs: ProcessedLot[] = [];
     cols: any[];
 
     displayDialog: boolean;
@@ -56,6 +61,7 @@ export class LotTrackingComponent implements OnInit {
         private vendorService: VendorService,
         private materialCategoryService: MaterialCategoryService,
         private itemService: ItemService,
+        private lotService: LotService,
         private pageScrollService: PageScrollService,
         @Inject(DOCUMENT) private document: any,
         private messageService: MessageService) {
@@ -66,6 +72,14 @@ export class LotTrackingComponent implements OnInit {
         this.setUserCategoryValidators();
         this.loadOptions();
         this.loadLotLog();
+
+        this.cols = [
+            { field: 'dateProcessed', header: 'Date/Time Logged' },
+            { field: 'materialCategoryName', header: 'Material' },
+            { field: 'lotNumber', header: 'Lot Number' },
+            { field: 'itemDescription', header: 'Item Name' }
+        ];
+
   }
 
     configureForm(): void {
@@ -171,36 +185,29 @@ export class LotTrackingComponent implements OnInit {
 
     loadLots(selectedItem) : void {
 
-        this.lots = [];
-        this.lotOptions = [];
+        this.lotService.getLots()
+            .then(lots => {
+                this.lots = <any>lots;
+                this.lots.filter((lot) => lot.itemId == selectedItem).forEach((lot) => {
+                    this.lotOptions.push({ label: lot.lotNumber, value: { id: lot.id, lotNumber: lot.lotNumber, itemId: lot.itemId } });
+                });
+            });
 
-        let lot = new Lot();
-        lot.id = 123;
-        lot.lotNumber = "LT123456";
-        lot.itemId = 290;
-        lot.vendorId = 2;
-        lot.dateReceived = Date.now.toString();
-        lot.quantity = 100;
-        lot.bolShipmentNumber = "x6s4x5sx15"
-        lot.StatusId = 1;
-
-        this.lots.push(lot);
-
-        this.lots.filter((lot) => lot.itemId == selectedItem).forEach((lot) => {
-            this.lotOptions.push({ label: lot.lotNumber, value: { id: lot.id, lotNumber: lot.lotNumber, itemId: lot.itemId} });
-        });
+        
 
     }
 
     loadLotLog(): void {
 
-        this.cols = [
-            { field: 'dateReceived', header: 'Date/Time Logged' },
-            { field: 'materialCategory', header: 'Material' },
-            { field: 'lotNumber', header: 'Lot Number' },
-            { field: 'itemName', header: 'Item Name' }
-        ];
-       this.showLotLog = true;
+       this.lotService.getProcessedLots()
+           .then(lots => {
+                    debugger
+                    this.lotLogs = (<any>lots);
+                });
+
+        this.showLotLog = true;
+
+        //this.pLotLog.reset();
     }
 
     validateLotNumber(event: any): void {
@@ -210,17 +217,15 @@ export class LotTrackingComponent implements OnInit {
     }
 
     onSubmit(value: any) {
-        debugger
 
-        let lot = new Lot();
-        lot.dateReceived = new Date().toLocaleString();
-        lot.materialCategory = value.materialCategory.name;
-        lot.lotNumber = (typeof value.lotNumber === 'string') ? value.lotNumber : value.lotNumber.lotNumber;
-        lot.itemName = value.item.description;
+        let processedLot = new ProcessedLot();
+        processedLot.lotId = value.lotNumber.id,
+        processedLot.processedByUserId = 1;
 
-        this.lotLogs.push(lot);
+        this.lotService.saveProcessedLot(processedLot);
+        this.lotLogs.push(processedLot);
 
-        this.showLotLog = true;
+        this.loadLotLog();
 
         this.lotTrackingForm.reset();
     }

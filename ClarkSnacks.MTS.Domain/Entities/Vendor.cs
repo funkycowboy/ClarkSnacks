@@ -9,11 +9,14 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public Vendor()
         {
             VendorItems = new HashSet<VendorItem>();
+            Lots = new HashSet<Lot>();
+            ;
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public int StatusId { get; set; }
 
         public virtual ICollection<VendorItem> VendorItems { get; set; }
+        public virtual ICollection<Lot> Lots { get; set; }
     }
 }

@@ -43,6 +43,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { SidebarModule } from 'primeng/sidebar';
+import { LotService } from './services/lot-service';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { SidebarModule } from 'primeng/sidebar';
         VendorService,
         MaterialCategoryService,
         ItemService,
+        LotService,
         ConfirmationService
     ],
   bootstrap: [AppComponent]

@@ -33,7 +33,7 @@
         <label for="Items">Select or enter a new Lot Number:</label>
       </div>
       <div class="ui-g-12 ui-fluid">
-        <p-dropdown formControlName="lotNumber" filter="true" [options]="lotOptions" editable="true" (onChange)="lotNumberChange($event)"></p-dropdown>
+        <p-dropdown formControlName="lotNumber" filter="true" [options]="lotOptions" (onChange)="lotNumberChange($event)"></p-dropdown>
       </div>
       <div class="ui-g-12" *ngIf="lotNumberManuallyEntered" style="padding:0">
         <div class="ui-g-12">
@@ -66,7 +66,7 @@
 <p-sidebar [(visible)]="showLotLog" position="bottom" modal="true" styleClass="ui-sidebar-md">
 
   <h3 style="margin-top: 0">Lot Log</h3>
-  <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [paginator]="true" [rows]="10" [showCurrentPageReport]="false"
+  <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [paginator]="true" [rows]="4" [showCurrentPageReport]="false"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
     <ng-template pTemplate="header" let-columns>
       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -77,16 +77,16 @@
     <ng-template pTemplate="body" let-rowData let-rowIndexLot="rowIndex">
       <tr style="background-color: #ececec;">
         <td style="text-align:center">
-          {{rowData.dateReceived}}
+          {{rowData.dateProcessed}}
         </td>
         <td style="text-align:center">
-          {{rowData.materialCategory}}
+          {{rowData.materialCategoryName}}
         </td>
         <td style="text-align:center">
           {{rowData.lotNumber}}
         </td>
         <td style="text-align:center">
-          {{rowData.itemName}}
+          {{rowData.itemDescription}}
         </td>
       </tr>
     </ng-template>

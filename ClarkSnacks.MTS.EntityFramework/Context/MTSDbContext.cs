@@ -6,11 +6,12 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 {
     public class MTSDbContext : DbContext
     {
-        public virtual DbSet<Vendor> Vendors { get; set; }
-        public virtual DbSet<VendorItem> VendorItems { get; set; }
         public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Lot> Lots { get; set; }
+        public virtual DbSet<ProcessedLot> ProcessedLots { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<VendorItem> VendorItems { get; set; }
 
         public MTSDbContext(DbContextOptions<MTSDbContext> options)
           : base(options)
@@ -52,11 +53,18 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
                 entity.HasKey(x => x.Id);
 
-                entity.HasOne(x => x.Item)
-                .WithMany(x => x.Lots)
-                .HasForeignKey(x => x.ItemId);
-            });
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
+                entity.HasOne(x => x.Item)
+                    .WithMany(x => x.Lots)
+                    .HasForeignKey(x => x.ItemId);
+
+                entity.HasOne(x => x.Vendor)
+                   .WithMany(x => x.Lots)
+                   .HasForeignKey(x => x.VendorId);
+            });
 
             modelBuilder.Entity<MaterialCategory>(entity =>
             {
@@ -124,6 +132,17 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
 
             });
+
+            modelBuilder.Entity<ProcessedLot>(entity =>
+            {
+                entity.ToTable("ProcessedLot");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.DateProcessed)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+                });
         }
     }
 }
