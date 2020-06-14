@@ -5,6 +5,7 @@ export class Lot {
     itemId: number;
     itemName: string;
     vendorId: number;
+    vendorName: string;
     dateReceived: string;
     quantity: number;
     bolShipmentNumber

@@ -10,38 +10,38 @@
     <div class="ui-g-12">
       <p-dropdown filter="true" name="Supplier" (onChange)="vendorChange($event)" [options]="supplierOptions"></p-dropdown>
     </div>-->
+
     <div class="ui-g-12">
-      <label for="Supplier">Production Line: </label> <span style="color: blue">Line 1</span>
+      <div class="ui-g-2">
+        <label for="Supplier">Production Line: </label> <span style="color: blue">Line 1</span>
+      </div>
+      <div class="ui-g-10">
+
+      </div>
     </div>
     <div class="ui-g-12">
-      <label for="Supplier">Material Category: </label>
-      <span class="fa fa-search" style="margin-left:15px;font-size: 24px; color: blue" (click)="showLabelInfo()" title="Where can I find the Lot Number?"></span>
+      <div class="ui-g-2">
+        <label for="Supplier">Material Category: </label>
+        <span class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
+      </div>
+      <div class="ui-g-10 ui-fluid">
+        <p-dropdown formControlName="materialCategory" filter="true" name="MaterialCategory" (onChange)="materialCategoryChange($event)" [options]="materialCategoryOptions"></p-dropdown>
+      </div>
     </div>
-    <div class="ui-g-12 ui-fluid">
-      <p-dropdown formControlName="materialCategory" filter="true" name="MaterialCategory" (onChange)="materialCategoryChange($event)" [options]="materialCategoryOptions"></p-dropdown>
-    </div>
-    <div class="ui-g-12 ui-inputgroup ui-g ui-fluid" style="padding:0" *ngIf="selectedMaterialCategory">
-      <div class="ui-g-12">
+    <div class="ui-g-12" *ngIf="selectedMaterialCategory">
+      <div class="ui-g-2">
         <label for="Items">Item: </label>
       </div>
-      <div class="ui-g-12 ui-fluid">
+      <div class="ui-g-10 ui-fluid">
         <p-dropdown formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
       </div>
     </div>
-    <div class="ui-g-12 ui-inputgroup ui-g" style="padding:0" *ngIf="selectedItem">
-      <div class="ui-g-12">
-        <label for="Items">Select or enter a new Lot Number:</label>
+    <div class="ui-g-12" *ngIf="selectedItem">
+      <div class="ui-g-2">
+        <label for="Items">Lot Number:</label>
       </div>
-      <div class="ui-g-12 ui-fluid">
-        <p-dropdown formControlName="lotNumber" filter="true" [options]="lotOptions" (onChange)="lotNumberChange($event)"></p-dropdown>
-      </div>
-      <div class="ui-g-12" *ngIf="lotNumberManuallyEntered" style="padding:0">
-        <div class="ui-g-12">
-          <label for="Items">Confirm Lot Number:</label>
-        </div>
-        <div class="ui-g-12 ui-fluid">
-          <input formControlName="lotNumberConfirm" pInputText type="text" (blur)="validateLotNumber($event)" />
-        </div>
+      <div class="ui-g-10 ui-fluid">
+        <p-dropdown formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>
       </div>
     </div>
     <div class="ui-g-12" style="text-align:right">
@@ -52,24 +52,23 @@
 </form>
 
 <p-dialog header="Supplier Label Information" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true">
-<div class="ui-g ui-fluid">
-  <div class="ui-g-12">
-    <img src="assets/supplier-labels/belmark.jpg" />
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <img src="assets/supplier-labels/belmark.jpg" />
+    </div>
   </div>
-</div>
 
-<p-footer>
-  <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>&nbsp;
-</p-footer>
+  <p-footer>
+    <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>&nbsp;
+  </p-footer>
 </p-dialog>
 
-<p-sidebar [(visible)]="showLotLog" position="bottom" modal="true" styleClass="ui-sidebar-md">
-
-  <h3 style="margin-top: 0">Lot Log</h3>
-  <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [paginator]="true" [rows]="4" [showCurrentPageReport]="false"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+<!--<p-sidebar [(visible)]="showLotLog" position="bottom" modal="true" styleClass="ui-sidebar-md">-->
+<div class="footer">
+  <!--<h3 style="margin-top: 0">Lot Log</h3>-->
+  <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [scrollable]="true" scrollHeight="150px">
     <ng-template pTemplate="header" let-columns>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="text-align:center">
         {{col.header}}
         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
       </th>
@@ -83,10 +82,13 @@
           {{rowData.materialCategoryName}}
         </td>
         <td style="text-align:center">
+          {{rowData.itemDescription}}
+        </td>
+        <td style="text-align:center">
           {{rowData.lotNumber}}
         </td>
         <td style="text-align:center">
-          {{rowData.itemDescription}}
+          <button class="ui-button-rounded ui-button-danger" type="button" pButton icon="fa fa-trash" label="Delete" (click)="DeleteProcessedLot(rowIndexLot)"></button>
         </td>
       </tr>
     </ng-template>
@@ -98,5 +100,23 @@
       </tr>
     </ng-template>
   </p-table>
+</div>
+<!--</p-sidebar>-->
+<!-- Supplier Image-->
+<!--<p-galleria [(value)]="supplierShippingLabelImages" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}" [numVisible]="5">
+  <ng-template pTemplate="item" let-item>
+    <img [src]="item.previewImageSrc" style="width: 100%; display: block;" />
+  </ng-template>
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="p-grid p-nogutter p-justify-center">
+      <img [src]="item.thumbnailImageSrc" style="display: block;" />
+    </div>
+  </ng-template>
+  <ng-template pTemplate="caption" let-item>
+    <h4 style="margin-bottom: .5rem; color: #ffffff;">{{item.title}}</h4>
+    <p>{{item.alt}}</p>
+  </ng-template>
+</p-galleria>-->
+<!-- Confirm Dialogs -->
 
-</p-sidebar>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

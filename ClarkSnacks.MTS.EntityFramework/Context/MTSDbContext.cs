@@ -142,7 +142,12 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.Property(e => e.DateProcessed)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-                });
+
+                entity.Property(e => e.IsActive)
+                   .HasColumnType("bit")
+                   .HasDefaultValueSql("(1)");
+            });
+       
         }
     }
 }

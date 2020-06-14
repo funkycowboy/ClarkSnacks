@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { VendorService } from './services/vendor-service';
 import { MaterialCategoryService } from './services/material-category-service';
 import { ItemService } from './services/item-service';
+import { LotService } from './services/lot-service';
 
 // directives
 import { AddRowDirective } from '../app/directives/add-row-directive';
@@ -43,7 +44,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { SidebarModule } from 'primeng/sidebar';
-import { LotService } from './services/lot-service';
+import { GalleriaModule } from 'primeng/galleria';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { LotService } from './services/lot-service';
       MessageModule,
       MessagesModule,
       ToastModule,
-      SidebarModule
+      SidebarModule,
+      GalleriaModule
   ],
     providers: [
         VendorService,

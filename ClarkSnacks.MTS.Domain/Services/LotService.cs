@@ -30,7 +30,7 @@ namespace ClarkSnacks.MTS.Domain.Services
         /// <returns></returns>
         public List<ProcessedLot> GetProcessedLots()
         {
-            return _lotRepository.GetProcessedLots().ToList();
+            return _lotRepository.GetProcessedLots().Where(x => x.IsActive).OrderByDescending(x => x.DateProcessed).ToList();
         }
 
         /// <summary>
@@ -84,6 +84,21 @@ namespace ClarkSnacks.MTS.Domain.Services
             _lotRepository.SaveChanges();
 
             return newProcessedLot;
+        }
+
+        /// <summary>
+        /// Delete Process Lot
+        /// </summary>
+        public void DeleteProcessedLot(int processedLotId)
+        {
+            var existingProcessLot = _lotRepository.GetProcessedLots().Where(x => x.Id == processedLotId).FirstOrDefault();
+
+            if(existingProcessLot != null)
+            {
+                existingProcessLot.IsActive = false;
+            }
+
+            _lotRepository.SaveChanges();
         }
     }
 }

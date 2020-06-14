@@ -62,8 +62,22 @@ export class LotService {
         let url = this.baseurl + this.controller + "/ProcessLot";
         debugger;
         let promise = new Promise((resolve, reject) => {
-            //this.http.post(url, JSON.stringify(processedLot))
            this.http.post(url, JSON.stringify(processedLot), this.httpOptions)
+                .toPromise()
+                .then(
+                    res => { resolve(res); },
+                    msg => { reject(msg); }
+                );
+        });
+        return promise;
+    }
+
+    // Delete Processed Lot
+    deleteProcessedLot(processedLotId: number) {
+        let url = this.baseurl + this.controller + "/ProcessedLot/" + processedLotId;
+        debugger;
+        let promise = new Promise((resolve, reject) => {
+            this.http.delete(url)
                 .toPromise()
                 .then(
                     res => { resolve(res); },

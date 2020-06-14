@@ -10,6 +10,7 @@ namespace ClarkSnacks.MTS.Domain.Services.Interfaces
         Lot CreateLot(Lot lot);
         ProcessedLot CreateProcessedLot(ProcessedLot processedlot);
         List<ProcessedLot> GetProcessedLots();
+        void DeleteProcessedLot(int processedLotId);
 
     }
 }

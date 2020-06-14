@@ -58,6 +58,15 @@ namespace ClarkSnacks.MTS.EntityFramework.Repositories
         }
 
         /// <summary>
+        /// Delete Processed Lot
+        /// </summary>
+        /// <param name="processedLot"></param>
+        public void DeleteProcessedLot(ProcessedLot processedLot)
+        {
+            _context.Remove(processedLot);
+        }
+
+        /// <summary>
         /// Save changes
         /// </summary>
         public void SaveChanges()

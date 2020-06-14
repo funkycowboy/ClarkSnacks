@@ -1,10 +1,14 @@
 import { Component, ViewChild, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+declare var require: any
+var moment = require('moment-timezone');
+
 import { DOCUMENT } from '@angular/common';
-import { SelectItem, MessageService } from 'primeng/api';
+import { SelectItem, MessageService, ConfirmationService } from 'primeng/api';
 
 import { Table, EditableColumn, EditableRow } from 'primeng/table';
+import { GalleriaModule } from 'primeng/galleria';
 
 // models
 import { Lot, ProcessedLot } from '../models/lot';
@@ -50,12 +54,15 @@ export class LotTrackingComponent implements OnInit {
 
     lotTrackingForm: FormGroup;
 
-    showLotLog: boolean;
+    //showLotLog: boolean;
 
     //paging
     first = 0;
     rows = 10;
 
+    responsiveOptions: any[]
+
+    supplierShippingLabelImages: any[] = [];
 
     constructor(private fb: FormBuilder,
         private vendorService: VendorService,
@@ -64,7 +71,24 @@ export class LotTrackingComponent implements OnInit {
         private lotService: LotService,
         private pageScrollService: PageScrollService,
         @Inject(DOCUMENT) private document: any,
-        private messageService: MessageService) {
+        private confirmationService: ConfirmationService,
+        private messageService: MessageService,
+    ) {
+
+        this.responsiveOptions =[
+            {
+                breakpoint: '1024px',
+                numVisible: 5
+            },
+            {
+                breakpoint: '768px',
+                numVisible: 3
+            },
+            {
+                breakpoint: '560px',
+                numVisible: 1
+            }
+        ];
     }
 
     ngOnInit() {
@@ -72,22 +96,24 @@ export class LotTrackingComponent implements OnInit {
         this.setUserCategoryValidators();
         this.loadOptions();
         this.loadLotLog();
+        this.loadImages();
 
         this.cols = [
             { field: 'dateProcessed', header: 'Date/Time Logged' },
             { field: 'materialCategoryName', header: 'Material' },
+            { field: 'itemDescription', header: 'Item Name' },
             { field: 'lotNumber', header: 'Lot Number' },
-            { field: 'itemDescription', header: 'Item Name' }
-        ];
+            { field: '', header: '' }
 
+        ];
+        
   }
 
     configureForm(): void {
         this.lotTrackingForm = new FormGroup({
             materialCategory: new FormControl('', Validators.required),
             item: new FormControl('', Validators.required),
-            lotNumber: new FormControl('', Validators.required),
-            lotNumberConfirm: new FormControl(''),                       
+            lotNumber: new FormControl('', Validators.required)
         });
     }
 
@@ -96,15 +122,21 @@ export class LotTrackingComponent implements OnInit {
         this.lotTrackingForm.get('lotNumber').valueChanges
             .subscribe(x => {                
                 if (typeof x === 'string') {
-                    debugger
-                    this.lotTrackingForm.get('lotNumberConfirm').setValidators([Validators.required]);
                     this.selectedLotNumber = x;
                     this.lotNumberManuallyEntered = true;
-                } else {
-                    this.lotTrackingForm.get('lotNumberConfirm').clearValidators();
-                    this.lotTrackingForm.get('lotNumberConfirm').updateValueAndValidity();
-                }
+                } 
             });
+    }
+
+    loadImages(): void {
+
+        let image = new Object();
+        (<any>image).previewImageSrc = "/assets/supplier-labels/belnmark.jpg";
+        (<any>image).thumbnailImageSrc = "/assets/supplier-labels/belnmark.jpg";
+        (<any>image).title = "Belmark";
+        (<any>image).alt = "Belmark Shipping Label";
+
+        this.supplierShippingLabelImages.push(image);
     }
 
     materialCategoryChange(event): void {
@@ -164,9 +196,12 @@ export class LotTrackingComponent implements OnInit {
     loadMaterialCategories(): void {
         this.materialCategoryService.getMaterialCategories()
             .then(categories => {
+                this.materialCategoryOptions.push({ label: '-Select One-', value: '' });
                 (<any>categories).forEach((item) => {
                     this.materialCategoryOptions.push({ label: item.name, value: { id: item.id, name: item.name } });
                 });
+
+                this.materialCategoryOptions
             });
     }
 
@@ -178,7 +213,10 @@ export class LotTrackingComponent implements OnInit {
             .then(items => {
 
                 (<any>items).forEach((item) => {
-                    this.itemOptions.push({ label: item.vendorItemId + " - " + item.description, value: { id: item.id, vendorId: item.vendorItemId, description: item.description, materialCategoryId: item.materialCategoryId } });
+                    this.itemOptions.push({
+                        label: item.vendorItemId + " - "  + item.description,
+                        value: { id: item.id, vendorId: item.vendorItemId, description: item.description, materialCategoryId: item.materialCategoryId }
+                    });
                 });
             });
     }
@@ -188,8 +226,14 @@ export class LotTrackingComponent implements OnInit {
         this.lotService.getLots()
             .then(lots => {
                 this.lots = <any>lots;
+                this.lots.push({ label: '-Select One-', value: '' });
                 this.lots.filter((lot) => lot.itemId == selectedItem).forEach((lot) => {
-                    this.lotOptions.push({ label: lot.lotNumber, value: { id: lot.id, lotNumber: lot.lotNumber, itemId: lot.itemId } });
+                    debugger
+                    let test = moment.utc(lot.dateReceived).tz("America/New_York");
+                    this.lotOptions.push({
+                        label: lot.lotNumber + " - " + lot.vendorName + " - " + moment.utc(lot.dateReceived).tz("America/New_York").format("MM/DD/YYYY, hh:mm a"),
+                        value: { id: lot.id, lotNumber: lot.lotNumber, itemId: lot.itemId }
+                    });
                 });
             });
 
@@ -201,13 +245,14 @@ export class LotTrackingComponent implements OnInit {
 
        this.lotService.getProcessedLots()
            .then(lots => {
-                    debugger
-                    this.lotLogs = (<any>lots);
-                });
-
-        this.showLotLog = true;
-
-        //this.pLotLog.reset();
+               this.lotLogs = (<any>lots);
+               this.lotLogs.forEach((x) => {
+                   (<any>x).dateProcessed = moment.utc((<any>x).dateProcessed).tz("America/New_York").format("MM/DD/YYYY, hh:mm a")
+               })
+               this.pLotLog.reset();
+               this.lotTrackingForm.reset();
+              
+        });
     }
 
     validateLotNumber(event: any): void {
@@ -222,12 +267,37 @@ export class LotTrackingComponent implements OnInit {
         processedLot.lotId = value.lotNumber.id,
         processedLot.processedByUserId = 1;
 
-        this.lotService.saveProcessedLot(processedLot);
-        this.lotLogs.push(processedLot);
+        this.lotService.saveProcessedLot(processedLot)
+            .then(() => {
+                this.messageService.add({ severity: 'info', summary: 'Confirmation', detail: 'The selected lot has been processed.' });
 
-        this.loadLotLog();
+                this.loadLotLog();
+            });
 
-        this.lotTrackingForm.reset();
+        // Clear out select lists
+        this.itemOptions = this.itemOptions.filter(x => x.value === '');
+        this.lotOptions = this.lotOptions.filter(x => x.value === '');
+    }
+
+    DeleteProcessedLot(index: number): void {
+
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to remove the selected entry?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.lotService.deleteProcessedLot(this.lotLogs[index].id)
+                    .then(() => {
+                        this.messageService.add({ severity: 'info', summary: 'Confirmation', detail: 'The selected lot entry has been removed.' });
+
+                        this.loadLotLog();
+                    });
+            },
+            reject: () => {
+            }
+        });
+
+       
     }
 
     //Paging

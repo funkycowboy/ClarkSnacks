@@ -10,5 +10,6 @@ namespace ClarkSnacks.MTS.Domain.Repositories.Interfaces
         void AddProcessedLot(ProcessedLot processedLot);
         IQueryable<ProcessedLot> GetProcessedLots();
         void SaveChanges();
+        void DeleteProcessedLot(ProcessedLot processedLot);
     }
 }

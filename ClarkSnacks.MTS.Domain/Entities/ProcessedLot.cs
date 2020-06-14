@@ -10,6 +10,7 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public int LotId { get; set; }
         public int ProcessedByUserId { get; set; }
         public DateTime DateProcessed { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual Lot Lot { get; set; }
     }

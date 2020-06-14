@@ -106,5 +106,21 @@ namespace ClarkSnacks.MTS.API.Controllers
                 return StatusCode(500, ex);
             }
         }
+
+        [HttpDelete]
+        [Route("ProcessedLot/{processedLotId}")]
+        public ActionResult<string> DeleteProcessedLot([FromRoute] int processedLotId)
+        {
+            try
+            {
+                _lotService.DeleteProcessedLot(processedLotId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
     }
 }
