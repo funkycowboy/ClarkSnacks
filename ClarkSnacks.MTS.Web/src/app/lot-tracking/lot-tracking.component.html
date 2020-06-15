@@ -64,7 +64,7 @@
 </p-dialog>
 
 <div class="footer">
-  <label style="color: #fff">Filter by: </label><p-selectButton [options]="materialCategoryOptionsForLog" (onChange)="filterByMaterialCategory($event)"></p-selectButton>
+  <label style="color: #fff; margin:0px 10px;">Filter by: </label><p-selectButton [options]="materialCategoryOptionsForLog" (onChange)="filterByMaterialCategory($event)"></p-selectButton>
   <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [scrollable]="true" scrollHeight="150px">
     <!--<ng-template pTemplate="caption">
       <div style="text-align: right">
