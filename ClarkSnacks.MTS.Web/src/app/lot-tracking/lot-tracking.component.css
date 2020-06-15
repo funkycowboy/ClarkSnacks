@@ -5,7 +5,8 @@ label
 
 /deep/.ui-sortable-column {
   padding:10px;
-  background-color: #ececec;
+  background-color: #430606;
+  color: #fff;
 }
 
 /deep/ .footer {
@@ -21,4 +22,8 @@ label
 /deep/ .search-button{
   width: 150px;
   margin: 3px 3px !important;
+}
+
+/deep/ body .ui-table .ui-sortable-column .ui-sortable-column-icon {
+  color: #fff;
 }
