@@ -36,6 +36,7 @@ export class LotTrackingComponent implements OnInit {
     itemOptions: SelectItem[] = [];
     lotOptions: SelectItem[] = [];
     materialCategoryOptions: SelectItem[] = [];
+    materialCategoryOptionsForLog: SelectItem[] = [];
 
     selectedItem: string;
     selectedItemDescription: string;
@@ -45,7 +46,6 @@ export class LotTrackingComponent implements OnInit {
     selectedLotNumber: string;
     lotNumberManuallyEntered: boolean;
 
-
     lots: any[] = [];
     lotLogs: ProcessedLot[] = [];
     cols: any[];
@@ -54,14 +54,7 @@ export class LotTrackingComponent implements OnInit {
 
     lotTrackingForm: FormGroup;
 
-    //showLotLog: boolean;
-
-    //paging
-    first = 0;
-    rows = 10;
-
     responsiveOptions: any[]
-
     supplierShippingLabelImages: any[] = [];
 
     constructor(private fb: FormBuilder,
@@ -96,17 +89,8 @@ export class LotTrackingComponent implements OnInit {
         this.setUserCategoryValidators();
         this.loadOptions();
         this.loadLotLog();
-        this.loadImages();
-
-        this.cols = [
-            { field: 'dateProcessed', header: 'Date/Time Logged' },
-            { field: 'materialCategoryName', header: 'Material' },
-            { field: 'itemDescription', header: 'Item Name' },
-            { field: 'lotNumber', header: 'Lot Number' },
-            { field: '', header: '' }
-
-        ];
-        
+        this.loadVendorLableImages();
+        this.initializeLotLogHeaders();
   }
 
     configureForm(): void {
@@ -115,6 +99,16 @@ export class LotTrackingComponent implements OnInit {
             item: new FormControl('', Validators.required),
             lotNumber: new FormControl('', Validators.required)
         });
+    }
+
+    initializeLotLogHeaders(): void {
+        this.cols = [
+            { field: 'dateProcessed', header: 'Date/Time Logged' },
+            { field: 'materialCategoryName', header: 'Material' },
+            { field: 'itemDescription', header: 'Item Name' },
+            { field: 'lotNumber', header: 'Lot Number' },
+            { field: '', header: '' }
+        ];
     }
 
     setUserCategoryValidators(): void {
@@ -128,7 +122,7 @@ export class LotTrackingComponent implements OnInit {
             });
     }
 
-    loadImages(): void {
+    loadVendorLableImages(): void {
 
         let image = new Object();
         (<any>image).previewImageSrc = "/assets/supplier-labels/belnmark.jpg";
@@ -200,8 +194,8 @@ export class LotTrackingComponent implements OnInit {
                 (<any>categories).forEach((item) => {
                     this.materialCategoryOptions.push({ label: item.name, value: { id: item.id, name: item.name } });
                 });
-
-                this.materialCategoryOptions
+                debugger
+                this.materialCategoryOptionsForLog = this.materialCategoryOptions.filter(x => x.value !== "");
             });
     }
 
@@ -279,7 +273,7 @@ export class LotTrackingComponent implements OnInit {
         this.lotOptions = this.lotOptions.filter(x => x.value === '');
     }
 
-    DeleteProcessedLot(index: number): void {
+    deleteProcessedLot(index: number): void {
 
         this.confirmationService.confirm({
             message: 'Are you sure that you want to remove the selected entry?',
@@ -300,24 +294,8 @@ export class LotTrackingComponent implements OnInit {
        
     }
 
-    //Paging
-    next() {
-        this.first = this.first + this.rows;
-    }
-
-    prev() {
-        this.first = this.first - this.rows;
-    }
-
-    reset() {
-        this.first = 0;
-    }
-
-    isLastPage(): boolean {
-        return this.first === (this.lots.length - this.rows);
-    }
-
-    isFirstPage(): boolean {
-        return this.first === 0;
+    filterByMaterialCategory(event: any) {
+        debugger
+        this.pLotLog.filter(event.value.name, "materialCategoryName", "");
     }
 }

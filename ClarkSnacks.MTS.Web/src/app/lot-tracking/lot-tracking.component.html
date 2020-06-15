@@ -63,10 +63,15 @@
   </p-footer>
 </p-dialog>
 
-<!--<p-sidebar [(visible)]="showLotLog" position="bottom" modal="true" styleClass="ui-sidebar-md">-->
 <div class="footer">
-  <!--<h3 style="margin-top: 0">Lot Log</h3>-->
+  <label style="color: #fff">Filter by: </label><p-selectButton [options]="materialCategoryOptionsForLog" (onChange)="filterByMaterialCategory($event)"></p-selectButton>
   <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [scrollable]="true" scrollHeight="150px">
+    <!--<ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dtLotLog.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+    </ng-template>-->
     <ng-template pTemplate="header" let-columns>
       <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="text-align:center">
         {{col.header}}
@@ -88,7 +93,7 @@
           {{rowData.lotNumber}}
         </td>
         <td style="text-align:center">
-          <button class="ui-button-rounded ui-button-danger" type="button" pButton icon="fa fa-trash" label="Delete" (click)="DeleteProcessedLot(rowIndexLot)"></button>
+          <button class="ui-button-rounded ui-button-danger" type="button" pButton icon="fa fa-trash" label="Delete" (click)="deleteProcessedLot(rowIndexLot)"></button>
         </td>
       </tr>
     </ng-template>
