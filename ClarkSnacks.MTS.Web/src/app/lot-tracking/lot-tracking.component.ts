@@ -12,14 +12,15 @@ import { GalleriaModule } from 'primeng/galleria';
 
 // models
 import { Lot, ProcessedLot } from '../models/lot';
+import { InspectionItem, InspectionLot } from '../models/inspection';
 
 // services
 import { VendorService } from '../services/vendor-service';
 import { MaterialCategoryService } from '../services/material-category-service';
 import { ItemService } from '../services/item-service';
 import { PageScrollService } from 'ngx-page-scroll-core';
-import { InspectionItem, InspectionLot } from '../models/inspection';
 import { LotService } from '../services/lot-service';
+import { OperatorService } from '../services/operator-service';
 
 
 @Component({
@@ -37,8 +38,9 @@ export class LotTrackingComponent implements OnInit {
     lotOptions: SelectItem[] = [];
     materialCategoryOptions: SelectItem[] = [];
     materialCategoryOptionsForLog: SelectItem[] = [];
+    operatorOptions: SelectItem[] = [];
 
-    selectedItem: string;
+    selectedItem: any;
     selectedItemDescription: string;
     selectedMaterialCategory: any;
     selectedSupplier: any;
@@ -61,6 +63,7 @@ export class LotTrackingComponent implements OnInit {
         private vendorService: VendorService,
         private materialCategoryService: MaterialCategoryService,
         private itemService: ItemService,
+        private operatorService: OperatorService,
         private lotService: LotService,
         private pageScrollService: PageScrollService,
         @Inject(DOCUMENT) private document: any,
@@ -95,6 +98,7 @@ export class LotTrackingComponent implements OnInit {
 
     configureForm(): void {
         this.lotTrackingForm = new FormGroup({
+            operator: new FormControl('', Validators.required),
             materialCategory: new FormControl('', Validators.required),
             item: new FormControl('', Validators.required),
             lotNumber: new FormControl('', Validators.required)
@@ -175,6 +179,7 @@ export class LotTrackingComponent implements OnInit {
     }
 
     loadOptions(): void {
+        this.loadOperators();
         this.loadMaterialCategories();
     }
 
@@ -183,6 +188,21 @@ export class LotTrackingComponent implements OnInit {
             .then(vendors => {
                 (<any>vendors).forEach((vendor) => {
                     this.supplierOptions.push({ label: vendor.name, value: { id: vendor.id, name: vendor.name} });
+                });
+            });
+    }
+
+    loadOperators(): void {
+        this.operatorOptions = [];
+        this.operatorOptions.push({ label: '-Select One-', value: '' });
+        this.operatorService.getOperators()
+            .then(operators => {
+
+                (<any>operators).forEach((operator) => {
+                    this.operatorOptions.push({
+                        label: operator.employeeNumber + " - " + operator.employeeName,
+                        value: operator.id
+                    });
                 });
             });
     }
@@ -216,6 +236,8 @@ export class LotTrackingComponent implements OnInit {
     }
 
     loadLots(selectedItem) : void {
+
+        this.lotOptions = this.lotOptions.filter(x => x.value === '');
 
         this.lotService.getLots()
             .then(lots => {
@@ -258,19 +280,29 @@ export class LotTrackingComponent implements OnInit {
     onSubmit(value: any) {
 
         let processedLot = new ProcessedLot();
-        processedLot.lotId = value.lotNumber.id,
+        processedLot.lotId = value.lotNumber.id;
+        processedLot.lotNumber = this.selectedLotNumber;
         processedLot.processedByUserId = 1;
+        processedLot.itemId = this.selectedItem;
+        processedLot.processedByUserId = 1 //hardcode fo now
+
+        processedLot.lotManuallyEntered = this.lotNumberManuallyEntered;
 
         this.lotService.saveProcessedLot(processedLot)
             .then(() => {
                 this.messageService.add({ severity: 'info', summary: 'Confirmation', detail: 'The selected lot has been processed.' });
 
+                // refresh table
                 this.loadLotLog();
-            });
 
-        // Clear out select lists
-        this.itemOptions = this.itemOptions.filter(x => x.value === '');
-        this.lotOptions = this.lotOptions.filter(x => x.value === '');
+                // Clear out select lists
+                this.itemOptions = this.itemOptions.filter(x => x.value === '');
+                this.lotOptions = this.lotOptions.filter(x => x.value === '');
+                this.lotTrackingForm.reset();
+
+                //reset
+                this.lotNumberManuallyEntered = false;
+            });
     }
 
     deleteProcessedLot(index: number): void {

@@ -6,9 +6,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 {
     public class MTSDbContext : DbContext
     {
-        public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Lot> Lots { get; set; }
+        public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
+        public virtual DbSet<Operator> Operators { get; set; }
         public virtual DbSet<ProcessedLot> ProcessedLots { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorItem> VendorItems { get; set; }
@@ -21,7 +22,6 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Item>(entity =>
             {
                 entity.ToTable("Item");
@@ -64,6 +64,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.HasOne(x => x.Vendor)
                    .WithMany(x => x.Lots)
                    .HasForeignKey(x => x.VendorId);
+
+                entity.HasOne(x => x.Operator)
+                   .WithMany(x => x.Lots)
+                   .HasForeignKey(x => x.CreatedByUserId);
             });
 
             modelBuilder.Entity<MaterialCategory>(entity =>
@@ -85,6 +89,33 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 .WithOne(x => x.MaterialCategory)
                 .HasForeignKey(x => x.MaterialCategoryId);
 
+            });
+
+            modelBuilder.Entity<Operator>(entity =>
+            {
+                entity.ToTable("Operator");
+
+                entity.HasKey(x => x.Id);
+
+            });
+
+            modelBuilder.Entity<ProcessedLot>(entity =>
+            {
+                entity.ToTable("ProcessedLot");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.DateProcessed)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive)
+                   .HasColumnType("bit")
+                   .HasDefaultValueSql("(1)");
+
+                entity.HasOne(x => x.Operator)
+                   .WithMany(x => x.ProcessedLots)
+                   .HasForeignKey(x => x.ProcessedByUserId);
             });
 
             modelBuilder.Entity<Vendor>(entity =>
@@ -132,22 +163,6 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
 
             });
-
-            modelBuilder.Entity<ProcessedLot>(entity =>
-            {
-                entity.ToTable("ProcessedLot");
-
-                entity.HasKey(x => x.Id);
-
-                entity.Property(e => e.DateProcessed)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.IsActive)
-                   .HasColumnType("bit")
-                   .HasDefaultValueSql("(1)");
-            });
-       
         }
     }
 }

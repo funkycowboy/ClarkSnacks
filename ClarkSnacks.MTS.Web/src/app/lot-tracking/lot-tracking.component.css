@@ -27,3 +27,7 @@ label
 /deep/ body .ui-table .ui-sortable-column .ui-sortable-column-icon {
   color: #fff;
 }
+
+/deep/ .ui-dropdown {
+  min-width: 300px !important;
+}

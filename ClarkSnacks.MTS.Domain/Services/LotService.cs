@@ -1,4 +1,5 @@
-﻿using ClarkSnacks.MTS.Domain.Entities;
+﻿using ClarkSnacks.MTS.Domain.Dtos;
+using ClarkSnacks.MTS.Domain.Entities;
 using ClarkSnacks.MTS.Domain.Repositories.Interfaces;
 using ClarkSnacks.MTS.Domain.Services.Interfaces;
 using System.Collections.Generic;
@@ -71,13 +72,35 @@ namespace ClarkSnacks.MTS.Domain.Services
         /// </summary>
         /// <param name="processedLot"></param>
         /// <returns></returns>
-        public ProcessedLot CreateProcessedLot(ProcessedLot processedLot)
+        public ProcessedLot CreateProcessedLot(ProcessedLotDto processedLot)
         {
+            // new ProcessedLot
             var newProcessedLot = new ProcessedLot
             {
                 LotId = processedLot.LotId,
-                ProcessedByUserId = 1
+                ProcessedByUserId = processedLot.ProcessedByUserId
             };
+
+            // Check if lot was manually entered
+            if (processedLot.LotManuallyEntered)
+            {
+                // new Lot
+                var newLot = new Lot
+                {
+                    LotNumber = processedLot.LotNumber,
+                    ItemId = processedLot.ItemId,
+                    ManuallyEntered = true,
+                    CreatedByUserId = processedLot.ProcessedByUserId
+                };
+
+                // Add Lot
+                _lotRepository.Add(newLot);
+
+                _lotRepository.SaveChanges();
+
+                // overwrite LotId to newly create lotid
+                newProcessedLot.LotId = newLot.Id;
+            }         
 
             _lotRepository.AddProcessedLot(newProcessedLot);
 

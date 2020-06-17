@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClarkSnacks.MTS.API.wwwroot;
+using ClarkSnacks.MTS.Domain.Dtos;
 using ClarkSnacks.MTS.Domain.Entities;
 using ClarkSnacks.MTS.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -96,7 +97,7 @@ namespace ClarkSnacks.MTS.API.Controllers
         {
             try
             {
-                var processedLot = _mapper.Map<ProcessedLotRequestSvm, ProcessedLot>(request);
+                var processedLot = _mapper.Map<ProcessedLotRequestSvm, ProcessedLotDto>(request);
                 var result = _lotService.CreateProcessedLot(processedLot);
 
                 return Ok(result);

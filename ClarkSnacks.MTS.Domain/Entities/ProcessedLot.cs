@@ -13,5 +13,6 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public bool IsActive { get; set; }
 
         public virtual Lot Lot { get; set; }
+        public virtual Operator Operator { get; set; }
     }
 }

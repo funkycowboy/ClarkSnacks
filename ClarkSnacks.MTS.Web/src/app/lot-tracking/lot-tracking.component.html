@@ -1,24 +1,28 @@
 <p-toast position="top-right"></p-toast>
-<h2>Lot Tracking Form</h2>
+<!--<h3>Lot Tracking Form</h3>-->
 
 <form [formGroup]="lotTrackingForm" (ngSubmit)="onSubmit(lotTrackingForm.value)">
 
   <div class="ui-g" style="background-color: #ececec; border-radius:5px; padding: 15px;">
     <!--<div class="ui-g-12">
-      <label for="Supplier">Shipment Supplier: </label>
-    </div>
-    <div class="ui-g-12">
-      <p-dropdown filter="true" name="Supplier" (onChange)="vendorChange($event)" [options]="supplierOptions"></p-dropdown>
-    </div>-->
+    <label for="Supplier">Shipment Supplier: </label>
+  </div>
+  <div class="ui-g-12">
+    <p-dropdown filter="true" name="Supplier" (onChange)="vendorChange($event)" [options]="supplierOptions"></p-dropdown>
+  </div>-->
 
-    <div class="ui-g-12">
-      <div class="ui-g-2">
-        <label for="Supplier">Production Line: </label> <span style="color: blue">Line 1</span>
+    <div class="ui-g-12" style="padding-top:0px">
+      <div class="ui-g-2" style="padding-top:0px">
+        <label for="Operator">Operator: </label>
       </div>
-      <div class="ui-g-10">
+      <div class="ui-g-10" style="padding-top:0px" >
 
-      </div>
-    </div>
+          <p-dropdown formControlName="operator" filter="true" name="Operator" [options]="operatorOptions"></p-dropdown>&nbsp;
+
+          <label for="Supplier">Production Line: </label> <span style="color: blue">Line 1</span>
+       </div>
+     </div>
+   
     <div class="ui-g-12">
       <div class="ui-g-2">
         <label for="Supplier">Material Category: </label>
@@ -31,6 +35,7 @@
     <div class="ui-g-12" *ngIf="selectedMaterialCategory">
       <div class="ui-g-2">
         <label for="Items">Item: </label>
+        <span class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
       </div>
       <div class="ui-g-10 ui-fluid">
         <p-dropdown formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
@@ -64,13 +69,13 @@
 </p-dialog>
 
 <div class="footer">
-  <div style="float: left">
+  <div style="display:inline-block; width: 50%">
     <label style="color: #fff; margin:0px 10px;">Processed Lot Log</label>
   </div>
-  <div style="float: right">
+  <div style="display:inline-block; width: 50%; text-align:right">
     <label style="color: #fff; margin:0px 10px; font-weight: normal">Filter by: </label><p-selectButton [options]="materialCategoryOptionsForLog" (onChange)="filterByMaterialCategory($event)"></p-selectButton>
   </div>
-  <div style="clear: both">
+  <div>
     <p-table #dtLotLog [value]="lotLogs" [columns]="cols" dataKey="id" [responsive]="true" [scrollable]="true" scrollHeight="150px">
       <!--<ng-template pTemplate="caption">
       <div style="text-align: right">

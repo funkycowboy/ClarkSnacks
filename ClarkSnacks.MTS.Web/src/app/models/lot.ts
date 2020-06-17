@@ -15,5 +15,9 @@ export class Lot {
 export class ProcessedLot {
     id: number;
     lotId: string;
+    lotNumber: string;
     processedByUserId: number;
+    lotManuallyEntered: boolean;
+    itemId: number;
+    operatorId: number;
 }

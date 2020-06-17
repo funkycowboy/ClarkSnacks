@@ -1,4 +1,5 @@
-﻿using ClarkSnacks.MTS.Domain.Entities;
+﻿using ClarkSnacks.MTS.Domain.Dtos;
+using ClarkSnacks.MTS.Domain.Entities;
 using System.Collections.Generic;
 
 namespace ClarkSnacks.MTS.Domain.Services.Interfaces
@@ -8,7 +9,7 @@ namespace ClarkSnacks.MTS.Domain.Services.Interfaces
         List<Lot> GetAllLots();
         Lot GetLotById(int Id);
         Lot CreateLot(Lot lot);
-        ProcessedLot CreateProcessedLot(ProcessedLot processedlot);
+        ProcessedLot CreateProcessedLot(ProcessedLotDto processedlot);
         List<ProcessedLot> GetProcessedLots();
         void DeleteProcessedLot(int processedLotId);
 

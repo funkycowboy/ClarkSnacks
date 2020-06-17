@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace ClarkSnacks.MTS.API.wwwroot
+namespace ClarkSnacks.MTS.Domain.Dtos
 {
-    public class ProcessedLotRequestSvm
+    public class ProcessedLotDto
     {
         public int LotId { get; set; }
         public string LotNumber { get; set; }

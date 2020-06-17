@@ -11,10 +11,12 @@
     <None Remove="src\app\models\inspection.ts" />
     <None Remove="src\app\models\item.ts" />
     <None Remove="src\app\models\lot.ts" />
+    <None Remove="src\app\models\operator.ts" />
     <None Remove="src\app\models\vendor.ts" />
     <None Remove="src\app\services\item-service.ts" />
     <None Remove="src\app\services\lot-service.ts" />
     <None Remove="src\app\services\material-category-service.ts" />
+    <None Remove="src\app\services\operator-service.ts" />
     <None Remove="src\app\services\vendor-service.ts" />
   </ItemGroup>
 
@@ -32,6 +34,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\directives\add-row-directive.ts" />
+    <TypeScriptCompile Include="src\app\models\operator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\item.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -43,6 +48,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\inspection.ts" />
+    <TypeScriptCompile Include="src\app\services\operator-service.ts" />
     <TypeScriptCompile Include="src\app\services\lot-service.ts" />
     <TypeScriptCompile Include="src\app\services\item-service.ts" />
     <TypeScriptCompile Include="src\app\services\material-category-service.ts" />

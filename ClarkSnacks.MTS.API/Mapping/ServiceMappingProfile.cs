@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClarkSnacks.MTS.API.wwwroot;
+using ClarkSnacks.MTS.Domain.Dtos;
 using ClarkSnacks.MTS.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,10 @@ namespace ClarkSnacks.MTS.API.Mapping
                 .ForMember(dst => dst.MaterialCategoryName, opt => opt.MapFrom(src => src.Lot.Item.MaterialCategory.Name))
                 .ForMember(dst => dst.LotNumber, opt => opt.MapFrom(src => src.Lot.LotNumber))
                 .ForMember(dst => dst.DateProcessed, opt => opt.MapFrom(src => src.DateProcessed.ToString("MMMM dd, h:mm tt")));
+
+            CreateMap<ProcessedLotRequestSvm, ProcessedLotDto>();
+
+            CreateMap<Operator, OperatorResponseSvm>();
         }
     }
 }
