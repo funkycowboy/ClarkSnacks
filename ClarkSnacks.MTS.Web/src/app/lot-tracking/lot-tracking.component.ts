@@ -249,7 +249,7 @@ export class LotTrackingComponent implements OnInit {
 
                     let labelValue = lot.vendorName == null
                       ? lot.lotNumber + " [lot manually entered]"
-                      : lot.lotNumber + " - " + lot.vendorName + " - " + moment.utc(lot.dateReceived).tz("America/New_York").format("MM/DD/YYYY, hh:mm a"),
+                      : lot.lotNumber + " - " + lot.vendorName + " - " + moment.utc(lot.dateReceived).tz("America/New_York").format("MM/DD/YYYY, hh:mm a")
 
                     this.lotOptions.push({
                         label: labelValue,
