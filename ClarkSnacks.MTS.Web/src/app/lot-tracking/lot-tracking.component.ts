@@ -47,6 +47,7 @@ export class LotTrackingComponent implements OnInit {
     selectedSupplierLabelImageName: string;
     selectedLotNumber: string;
     lotNumberManuallyEntered: boolean;
+    selectedOperator: any;
 
     lots: any[] = [];
     lotLogs: ProcessedLot[] = [];
@@ -108,6 +109,7 @@ export class LotTrackingComponent implements OnInit {
     initializeLotLogHeaders(): void {
         this.cols = [
             { field: 'dateProcessed', header: 'Date/Time Logged' },
+            { field: 'operatorId', header: 'Operator' },
             { field: 'materialCategoryName', header: 'Material' },
             { field: 'itemDescription', header: 'Item Name' },
             { field: 'lotNumber', header: 'Lot Number' },
@@ -138,28 +140,29 @@ export class LotTrackingComponent implements OnInit {
     }
 
     materialCategoryChange(event): void {
-        debugger;
-        this.selectedMaterialCategory = event.value.id;;
+        this.selectedMaterialCategory = event.value.id;
         this.loadItems(this.selectedMaterialCategory);
         this.selectedSupplierLabelImageName = "belmark";
     }
 
-    vendorChange(event) {
+    operatorChange(event): void {
         debugger
+        this.selectedOperator = event.value;
+    }
+
+    vendorChange(event): void {
         this.selectedSupplier = event.value;
         this.selectedSupplierLabelImageName = event.value.name.replace(" ", "-").toLowerCase();
         this.loadLots(this.selectedSupplier.id);
         this.loadItems(this.selectedSupplier.id);
     }
 
-    itemChange(event: any) {
+    itemChange(event: any): void {
         this.selectedItem = event.value.id;
         this.loadLots(this.selectedItem)
-        //this.selectedItemCategory = MaterialCategoryEnum[event.value.materialCategoryId];
     }
 
     lotNumberChange(event): void {
-        debugger;
         if (typeof event.value === 'string') {
             this.selectedLotNumber = event.value;
             this.lotNumberManuallyEntered = true;
@@ -214,7 +217,6 @@ export class LotTrackingComponent implements OnInit {
                 (<any>categories).forEach((item) => {
                     this.materialCategoryOptions.push({ label: item.name, value: { id: item.id, name: item.name } });
                 });
-                debugger
                 this.materialCategoryOptionsForLog = this.materialCategoryOptions.filter(x => x.value !== "");
             });
     }
@@ -244,10 +246,13 @@ export class LotTrackingComponent implements OnInit {
                 this.lots = <any>lots;
                 this.lots.push({ label: '-Select One-', value: '' });
                 this.lots.filter((lot) => lot.itemId == selectedItem).forEach((lot) => {
-                    debugger
-                    let test = moment.utc(lot.dateReceived).tz("America/New_York");
+
+                    let labelValue = lot.vendorName == null
+                      ? lot.lotNumber + " [lot manually entered]"
+                      : lot.lotNumber + " - " + lot.vendorName + " - " + moment.utc(lot.dateReceived).tz("America/New_York").format("MM/DD/YYYY, hh:mm a"),
+
                     this.lotOptions.push({
-                        label: lot.lotNumber + " - " + lot.vendorName + " - " + moment.utc(lot.dateReceived).tz("America/New_York").format("MM/DD/YYYY, hh:mm a"),
+                        label: labelValue,
                         value: { id: lot.id, lotNumber: lot.lotNumber, itemId: lot.itemId }
                     });
                 });
@@ -278,13 +283,12 @@ export class LotTrackingComponent implements OnInit {
     }
 
     onSubmit(value: any) {
-
+        debugger
         let processedLot = new ProcessedLot();
         processedLot.lotId = value.lotNumber.id;
         processedLot.lotNumber = this.selectedLotNumber;
-        processedLot.processedByUserId = 1;
         processedLot.itemId = this.selectedItem;
-        processedLot.processedByUserId = 1 //hardcode fo now
+        processedLot.processedByUserId = this.selectedOperator
 
         processedLot.lotManuallyEntered = this.lotNumberManuallyEntered;
 
@@ -302,6 +306,9 @@ export class LotTrackingComponent implements OnInit {
 
                 //reset
                 this.lotNumberManuallyEntered = false;
+                this.selectedMaterialCategory = null;
+                this.selectedItem = null;
+
             });
     }
 
@@ -327,7 +334,6 @@ export class LotTrackingComponent implements OnInit {
     }
 
     filterByMaterialCategory(event: any) {
-        debugger
         this.pLotLog.filter(event.value.name, "materialCategoryName", "");
     }
 }

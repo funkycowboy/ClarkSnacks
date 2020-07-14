@@ -26,7 +26,8 @@ namespace ClarkSnacks.MTS.API.Mapping
                 .ForMember(dst => dst.ItemDescription, opt => opt.MapFrom(src => src.Lot.Item.Description))
                 .ForMember(dst => dst.MaterialCategoryName, opt => opt.MapFrom(src => src.Lot.Item.MaterialCategory.Name))
                 .ForMember(dst => dst.LotNumber, opt => opt.MapFrom(src => src.Lot.LotNumber))
-                .ForMember(dst => dst.DateProcessed, opt => opt.MapFrom(src => src.DateProcessed.ToString("MMMM dd, h:mm tt")));
+                .ForMember(dst => dst.DateProcessed, opt => opt.MapFrom(src => src.DateProcessed.ToString("MMMM dd, h:mm tt")))
+                 .ForMember(dst => dst.ProcessedByUserName, opt => opt.MapFrom(src => src.Lot.Operator.EmployeeName));
 
             CreateMap<ProcessedLotRequestSvm, ProcessedLotDto>();
 

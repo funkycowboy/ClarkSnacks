@@ -17,7 +17,7 @@
       </div>
       <div class="ui-g-10" style="padding-top:0px" >
 
-          <p-dropdown formControlName="operator" filter="true" name="Operator" [options]="operatorOptions"></p-dropdown>&nbsp;
+          <p-dropdown formControlName="operator" filter="true" name="Operator" (onChange)="operatorChange($event)" [options]="operatorOptions"></p-dropdown>&nbsp;
 
           <label for="Supplier">Production Line: </label> <span style="color: blue">Line 1</span>
        </div>
@@ -70,7 +70,7 @@
 
 <div class="footer">
   <div style="display:inline-block; width: 50%">
-    <label style="color: #fff; margin:0px 10px;">Processed Lot Log</label>
+    <label style="color: #fff; margin:0px 10px;">Processed Lots Log</label>
   </div>
   <div style="display:inline-block; width: 50%; text-align:right">
     <label style="color: #fff; margin:0px 10px; font-weight: normal">Filter by: </label><p-selectButton [options]="materialCategoryOptionsForLog" (onChange)="filterByMaterialCategory($event)"></p-selectButton>
@@ -100,6 +100,9 @@
         <tr style="background-color: #ececec;">
           <td style="text-align:center">
             {{rowData.dateProcessed}}
+          </td>
+          <td style="text-align:center">
+            {{rowData.processedByUserName}}
           </td>
           <td style="text-align:center">
             {{rowData.materialCategoryName}}
