@@ -139,15 +139,36 @@ export class LotTrackingComponent implements OnInit {
         this.supplierShippingLabelImages.push(image);
     }
 
-    materialCategoryChange(event): void {
-        this.selectedMaterialCategory = event.value.id;
-        this.loadItems(this.selectedMaterialCategory);
-        this.selectedSupplierLabelImageName = "belmark";
-    }
+    // Begin Change Events
 
     operatorChange(event): void {
         debugger
         this.selectedOperator = event.value;
+    }
+
+    materialCategoryChange(event): void {
+        let lastLotLogged = <any>this.lotLogs[0];
+        if (lastLotLogged.materialCategoryName !== event.value.name) {
+            this.confirmationService.confirm({
+                message: 'The material category selected is different than the material of the last lot processed. Are you sure you want to continue?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.selectedMaterialCategory = event.value.id;
+                    this.loadItems(this.selectedMaterialCategory);
+                    this.selectedSupplierLabelImageName = "belmark";
+                },
+                reject: () => {
+                    this.selectedMaterialCategory = null;
+                    this.selectedItem = null;
+                    this.selectedLotNumber = null;
+                }
+            });
+        } else {
+            this.selectedMaterialCategory = event.value.id;
+            this.loadItems(this.selectedMaterialCategory);
+            this.selectedSupplierLabelImageName = "belmark";
+        }
     }
 
     vendorChange(event): void {
@@ -158,8 +179,26 @@ export class LotTrackingComponent implements OnInit {
     }
 
     itemChange(event: any): void {
-        this.selectedItem = event.value.id;
-        this.loadLots(this.selectedItem)
+        debugger
+        let lastLotLogged = <any>this.lotLogs[0];
+        if (lastLotLogged.itemDescription !== event.value.description) {
+            this.confirmationService.confirm({
+                message: 'The item selected is different than the item of the last lot processed. Are you sure you want to continue?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.selectedItem = event.value.id;
+                    this.loadLots(this.selectedItem)
+                },
+                reject: () => {
+                    this.selectedItem = null;
+                    this.selectedLotNumber = null;
+                }
+            });
+        } else {
+            this.selectedItem = event.value.id;
+            this.loadLots(this.selectedItem)
+        }
     }
 
     lotNumberChange(event): void {
@@ -168,6 +207,10 @@ export class LotTrackingComponent implements OnInit {
             this.lotNumberManuallyEntered = true;
         }
     }
+
+    // End Change Events
+
+    // Begin dialog methods
 
     showLabelInfo(): void {
         this.showLabelInfoDialog();
@@ -180,6 +223,10 @@ export class LotTrackingComponent implements OnInit {
     closeLabelInfoDialog() : void {
         this.displayDialog = false;
     }
+
+    // End dialog methods
+
+    // Begin load data methods
 
     loadOptions(): void {
         this.loadOperators();
@@ -257,9 +304,6 @@ export class LotTrackingComponent implements OnInit {
                     });
                 });
             });
-
-        
-
     }
 
     loadLotLog(): void {
@@ -275,6 +319,9 @@ export class LotTrackingComponent implements OnInit {
               
         });
     }
+
+    // End load data methods
+
 
     validateLotNumber(event: any): void {
         if (event.target.value !== this.selectedLotNumber) {
