@@ -1,5 +1,7 @@
 import { Component, ViewChild, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
 
 declare var require: any
 var moment = require('moment-timezone');
@@ -62,6 +64,8 @@ export class LotTrackingComponent implements OnInit {
     responsiveOptions: any[]
     supplierShippingLabelImages: any[] = [];
 
+    productionLine: string;
+
     constructor(private fb: FormBuilder,
         private vendorService: VendorService,
         private materialCategoryService: MaterialCategoryService,
@@ -72,6 +76,7 @@ export class LotTrackingComponent implements OnInit {
         @Inject(DOCUMENT) private document: any,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
+        private route: ActivatedRoute
     ) {
 
         this.responsiveOptions =[
@@ -97,6 +102,8 @@ export class LotTrackingComponent implements OnInit {
         this.loadLotLog();
         this.loadVendorLableImages();
         this.initializeLotLogHeaders();
+        debugger
+        this.productionLine = this.route.snapshot.queryParamMap.get("pl")
   }
 
     configureForm(): void {

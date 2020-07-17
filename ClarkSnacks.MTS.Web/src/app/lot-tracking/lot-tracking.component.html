@@ -19,7 +19,7 @@
 
         <p-dropdown formControlName="operator" filter="true" name="Operator" (onChange)="operatorChange($event)" [options]="operatorOptions"></p-dropdown>&nbsp;
 
-        <label for="Supplier" style="font-weight: normal">Production Line: </label> <span style="color: blue">Line 1</span>
+        <label for="Supplier" style="font-weight: normal">Line: </label> <span style="color: blue">{{productionLine}}</span>
       </div>
     </div>
 

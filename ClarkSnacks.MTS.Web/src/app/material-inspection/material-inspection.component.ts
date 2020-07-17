@@ -84,6 +84,8 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
 
     msgs: Message[] = [];
 
+    selectedQuestionAnswer: number;
+
     constructor(private fb: FormBuilder,
         private ref: ChangeDetectorRef,
         private vendorService: VendorService,
@@ -593,7 +595,7 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             });
     }
 
-    loadItems(selectedSupplier) {
+    loadItems(selectedSupplier): void {
 
         this.itemOptions = [];
         this.itemOptions.push({ label: '-Select One-', value: '' });
@@ -605,4 +607,8 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
                 });
             });
     }
+
+    //demo(): void {
+    //    this.selectedQuestionAnswer = 1;
+    //}
 }
