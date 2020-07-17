@@ -20,4 +20,5 @@ export class ProcessedLot {
     processedByUserName: string;
     lotManuallyEntered: boolean;
     itemId: number;
+    lastCaseOnPalette: boolean;
 }

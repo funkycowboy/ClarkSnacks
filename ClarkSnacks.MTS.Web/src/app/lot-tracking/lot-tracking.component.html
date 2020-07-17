@@ -15,14 +15,14 @@
       <div class="ui-g-2" style="padding-top:0px">
         <label for="Operator">Operator: </label>
       </div>
-      <div class="ui-g-10" style="padding-top:0px" >
+      <div class="ui-g-10" style="padding-top:0px">
 
-          <p-dropdown formControlName="operator" filter="true" name="Operator" (onChange)="operatorChange($event)" [options]="operatorOptions"></p-dropdown>&nbsp;
+        <p-dropdown formControlName="operator" filter="true" name="Operator" (onChange)="operatorChange($event)" [options]="operatorOptions"></p-dropdown>&nbsp;
 
-          <label for="Supplier">Production Line: </label> <span style="color: blue">Line 1</span>
-       </div>
-     </div>
-   
+        <label for="Supplier" style="font-weight: normal">Production Line: </label> <span style="color: blue">Line 1</span>
+      </div>
+    </div>
+
     <div class="ui-g-12">
       <div class="ui-g-2">
         <label for="Supplier">Material Category: </label>
@@ -47,6 +47,14 @@
       </div>
       <div class="ui-g-10 ui-fluid">
         <p-dropdown formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12" *ngIf="selectedLotNumber">
+      <div class="ui-g-2">
+        <label for="lastCaseOnPalette">Last case on the pallette?:</label>
+      </div>
+      <div class="ui-g-10">
+          <p-inputSwitch formControlName="lastCaseOnPalette"  [(ngModel)]="lastCaseOnPaletteChecked">></p-inputSwitch>
       </div>
     </div>
     <div class="ui-g-12" style="text-align:right">

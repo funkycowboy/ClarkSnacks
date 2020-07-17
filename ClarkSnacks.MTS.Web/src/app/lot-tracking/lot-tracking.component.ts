@@ -49,6 +49,8 @@ export class LotTrackingComponent implements OnInit {
     lotNumberManuallyEntered: boolean;
     selectedOperator: any;
 
+    lastCaseOnPaletteChecked: boolean;
+
     lots: any[] = [];
     lotLogs: ProcessedLot[] = [];
     cols: any[];
@@ -102,7 +104,8 @@ export class LotTrackingComponent implements OnInit {
             operator: new FormControl('', Validators.required),
             materialCategory: new FormControl('', Validators.required),
             item: new FormControl('', Validators.required),
-            lotNumber: new FormControl('', Validators.required)
+            lotNumber: new FormControl('', Validators.required),
+            lastCaseOnPalette: new FormControl('')
         });
     }
 
@@ -202,9 +205,12 @@ export class LotTrackingComponent implements OnInit {
     }
 
     lotNumberChange(event): void {
+        debugger
         if (typeof event.value === 'string') {
             this.selectedLotNumber = event.value;
             this.lotNumberManuallyEntered = true;
+        } else {
+            this.selectedLotNumber = event.value.lotNumber;
         }
     }
 
@@ -335,8 +341,8 @@ export class LotTrackingComponent implements OnInit {
         processedLot.lotId = value.lotNumber.id;
         processedLot.lotNumber = this.selectedLotNumber;
         processedLot.itemId = this.selectedItem;
-        processedLot.processedByUserId = this.selectedOperator
-
+        processedLot.processedByUserId = this.selectedOperator;
+        processedLot.lastCaseOnPalette = this.lastCaseOnPaletteChecked;
         processedLot.lotManuallyEntered = this.lotNumberManuallyEntered;
 
         this.lotService.saveProcessedLot(processedLot)
@@ -354,7 +360,9 @@ export class LotTrackingComponent implements OnInit {
                 //reset
                 this.lotNumberManuallyEntered = false;
                 this.selectedMaterialCategory = null;
+                this.selectedLotNumber = null;
                 this.selectedItem = null;
+
 
             });
     }

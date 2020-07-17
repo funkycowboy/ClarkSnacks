@@ -78,7 +78,8 @@ namespace ClarkSnacks.MTS.Domain.Services
             var newProcessedLot = new ProcessedLot
             {
                 LotId = processedLot.LotId,
-                ProcessedByUserId = processedLot.ProcessedByUserId
+                ProcessedByUserId = processedLot.ProcessedByUserId,
+                LastCaseOnPalette = processedLot.LastCaseOnPalette
             };
 
             // Check if lot was manually entered

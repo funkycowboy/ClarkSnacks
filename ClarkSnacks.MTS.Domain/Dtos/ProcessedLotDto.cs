@@ -9,6 +9,7 @@ namespace ClarkSnacks.MTS.Domain.Dtos
         public int LotId { get; set; }
         public string LotNumber { get; set; }
         public bool LotManuallyEntered { get; set; }
+        public bool? LastCaseOnPalette { get; set; }
         public int ItemId { get; set; }
         public int ProcessedByUserId { get; set; }
     }

@@ -11,6 +11,7 @@ namespace ClarkSnacks.MTS.API.wwwroot
         public string LotNumber { get; set; }
         public bool LotManuallyEntered { get; set; }
         public int ItemId { get; set; }
+        public bool LastCaseOnPalette { get; set; }
         public int ProcessedByUserId { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace ClarkSnacks.MTS.Domain.Entities
         {
             VendorItems = new HashSet<VendorItem>();
             Lots = new HashSet<Lot>();
-            ;
         }
         public int Id { get; set; }
         public string Name { get; set; }
