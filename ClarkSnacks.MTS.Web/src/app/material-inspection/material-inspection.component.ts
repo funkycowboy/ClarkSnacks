@@ -608,7 +608,5 @@ export class MaterialInspectionComponent implements OnInit, AfterViewInit {
             });
     }
 
-    //demo(): void {
-    //    this.selectedQuestionAnswer = 1;
-    //}
+    
 }
