@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    clarkSnacksUrl: "https://localhost:44372/api/"
+    clarkSnacksUrl: "https://localhost:44387/api/"
 };
 
 /*

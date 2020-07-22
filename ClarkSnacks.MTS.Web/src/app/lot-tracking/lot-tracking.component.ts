@@ -157,28 +157,9 @@ export class LotTrackingComponent implements OnInit {
     }
 
     materialCategoryChange(event): void {
-        let lastLotLogged = <any>this.lotLogs[0];
-        if (lastLotLogged.materialCategoryName !== event.value.name) {
-            this.confirmationService.confirm({
-                message: 'The material category selected is different than the material of the last lot processed. Are you sure you want to continue?',
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.selectedMaterialCategory = event.value.id;
-                    this.loadItems(this.selectedMaterialCategory);
-                    this.selectedSupplierLabelImageName = "belmark";
-                },
-                reject: () => {
-                    this.selectedMaterialCategory = null;
-                    this.selectedItem = null;
-                    this.selectedLotNumber = null;
-                }
-            });
-        } else {
-            this.selectedMaterialCategory = event.value.id;
-            this.loadItems(this.selectedMaterialCategory);
-            this.selectedSupplierLabelImageName = "belmark";
-        }
+      this.selectedMaterialCategory = event.value.id;
+      this.loadItems(this.selectedMaterialCategory);
+      this.selectedSupplierLabelImageName = "belmark";
     }
 
     vendorChange(event): void {
@@ -202,7 +183,8 @@ export class LotTrackingComponent implements OnInit {
                 },
                 reject: () => {
                     this.selectedItem = null;
-                    this.selectedLotNumber = null;
+                  this.selectedLotNumber = null;
+                  this.lotTrackingForm.get('item').setValue(null);
                 }
             });
         } else {
@@ -212,13 +194,36 @@ export class LotTrackingComponent implements OnInit {
     }
 
     lotNumberChange(event): void {
-        debugger
+
+      let lastLotLogged = <any>this.lotLogs[0];
+      if (lastLotLogged.lotNumber !== event.value.lotNumber) {
+        this.confirmationService.confirm({
+          message: 'The lot number entered/selected is different from the last lot processed. Are you sure you want to continue?',
+          header: 'Confirmation',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            if (typeof event.value === 'string') {
+              this.selectedLotNumber = event.value;
+              this.lotNumberManuallyEntered = true;
+            } else {
+              this.selectedLotNumber = event.value.lotNumber;
+            }
+          },
+          reject: () => {
+            this.selectedLotNumber = null;
+            this.lotTrackingForm.get('lotNumber').setValue(null);
+          }
+        });
+      } else {
         if (typeof event.value === 'string') {
-            this.selectedLotNumber = event.value;
-            this.lotNumberManuallyEntered = true;
+          this.selectedLotNumber = event.value;
+          this.lotNumberManuallyEntered = true;
         } else {
-            this.selectedLotNumber = event.value.lotNumber;
+          this.selectedLotNumber = event.value.lotNumber;
         }
+      }
+
+        
     }
 
     // End Change Events
@@ -324,7 +329,8 @@ export class LotTrackingComponent implements OnInit {
        this.lotService.getProcessedLots()
            .then(lots => {
                this.lotLogs = (<any>lots);
-               this.lotLogs.forEach((x) => {
+             this.lotLogs.forEach((x) => {
+                 debugger
                    (<any>x).dateProcessed = moment.utc((<any>x).dateProcessed).tz("America/New_York").format("MM/DD/YYYY, hh:mm a")
                })
                this.pLotLog.reset();
@@ -334,7 +340,6 @@ export class LotTrackingComponent implements OnInit {
     }
 
     // End load data methods
-
 
     validateLotNumber(event: any): void {
         if (event.target.value !== this.selectedLotNumber) {
