@@ -58,7 +58,8 @@
       </div>
     </div>
     <div class="ui-g-12" style="text-align:right">
-      <button class="ui-button-rounded ui-button-success" type="submit" pButton icon="fa fa-arrow-circle-right" label="Log Lot" [disabled]="!lotTrackingForm.valid"></button>
+      <button class="ui-button-rounded" type="submit" pButton icon="fa fa-arrow-circle-right" label="Log Lot"
+              [ngClass]="{'ui-button-success':lotTrackingForm.valid,'ui-button-secondary':!lotTrackingForm.valid}" [disabled]="!lotTrackingForm.valid"></button>
     </div>
   </div>
 
@@ -78,7 +79,7 @@
 
 <div class="footer">
   <div style="display:inline-block; width: 50%">
-    <label style="color: #fff; margin:0px 10px;">Processed Lots Log</label>
+    <label style="color: #fff; margin:0px 10px;">Processed Lot Log</label>
   </div>
   <div style="display:inline-block; width: 50%; text-align:right">
     <label style="color: #fff; margin:0px 10px; font-weight: normal">Filter by: </label><p-selectButton [options]="materialCategoryOptionsForLog" (onChange)="filterByMaterialCategory($event)"></p-selectButton>
