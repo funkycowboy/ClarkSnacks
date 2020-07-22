@@ -11,6 +11,7 @@ namespace ClarkSnacks.MTS.API.wwwroot
         public string LotNumber { get; set; }
         public string ItemDescription { get; set; }
         public string MaterialCategoryName { get; set; }
+        public string VendorItemId { get; set; }
         public string DateProcessed { get; set; }
         public int ProcessedByUserId { get; set; }
         public string ProcessedByUserName { get; set; }

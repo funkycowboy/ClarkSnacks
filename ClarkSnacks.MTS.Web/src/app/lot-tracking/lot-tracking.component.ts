@@ -331,7 +331,8 @@ export class LotTrackingComponent implements OnInit {
                this.lotLogs = (<any>lots);
              this.lotLogs.forEach((x) => {
                  debugger
-                   (<any>x).dateProcessed = moment.utc((<any>x).dateProcessed).tz("America/New_York").format("MM/DD/YYYY, hh:mm a")
+               (<any>x).dateProcessed = moment.utc((<any>x).dateProcessed).tz("America/New_York").format("MM/DD/YYYY, hh:mm a");
+               (<any>x).itemDescription = (<any>x).vendorItemId + " - " + (<any>x).itemDescription
                })
                this.pLotLog.reset();
                this.lotTrackingForm.reset();
