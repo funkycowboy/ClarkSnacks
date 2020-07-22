@@ -160,6 +160,9 @@ export class LotTrackingComponent implements OnInit {
       this.selectedMaterialCategory = event.value.id;
       this.loadItems(this.selectedMaterialCategory);
       this.selectedSupplierLabelImageName = "belmark";
+
+      // filter lot log
+      this.pLotLog.filter(event.value.name, "materialCategoryName", "");
     }
 
     vendorChange(event): void {
@@ -402,6 +405,7 @@ export class LotTrackingComponent implements OnInit {
     }
 
     filterByMaterialCategory(event: any) {
-        this.pLotLog.filter(event.value.name, "materialCategoryName", "");
+      debugger
+      this.pLotLog.filter(event.value.name, "materialCategoryName", "");
     }
 }
