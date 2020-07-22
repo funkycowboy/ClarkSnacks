@@ -34,3 +34,7 @@
 /deep/ body {
   margin:0;
 }
+
+  /deep/ body .ui-button.ui-state-default.ui-button-secondary, body .ui-buttonset.ui-button-secondary {
+      background-color: gray;
+  }
