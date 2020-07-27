@@ -18,10 +18,10 @@ export class LotService {
     httpOptions: any;
 
     constructor(private http: HttpClient) {
-        this.httpOptions = this.getHttpOptons();
+        this.httpOptions = this.getHttpOptions();
     }
 
-    getHttpOptons() {
+    getHttpOptions() {
         return this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json'

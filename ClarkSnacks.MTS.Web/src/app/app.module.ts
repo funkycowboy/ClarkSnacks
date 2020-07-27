@@ -15,6 +15,8 @@ import { MaterialCategoryService } from './services/material-category-service';
 import { ItemService } from './services/item-service';
 import { LotService } from './services/lot-service';
 import { OperatorService } from './services/operator-service';
+import { InspectionService } from './services/inspection-service';
+
 
 // directives
 import { AddRowDirective } from '../app/directives/add-row-directive';
@@ -92,7 +94,8 @@ import { GalleriaModule } from 'primeng/galleria';
         ItemService,
         OperatorService,
         LotService,
-        ConfirmationService
+        ConfirmationService,
+        InspectionService
     ],
   bootstrap: [AppComponent]
 })

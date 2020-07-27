@@ -13,6 +13,7 @@ import { MaterialCategoryService } from '../services/material-category-service';
 // services
 import { VendorService } from '../services/vendor-service';
 import { inspect } from 'util';
+import { InspectionService } from '../services/inspection-service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,7 +25,7 @@ import { inspect } from 'util';
 
 export class MaterialInspectionComponent implements OnInit {
 
-  // Define ViewChilds
+    // Define ViewChilds
     @ViewChild("dtItem", { static: false }) public pTableItem: Table;
     @ViewChild('addNewItem', { read: false, static: false }) addNewItemButton: ElementRef;
     @ViewChild('addNewLot', { read: false, static: false }) addNewLotButton: ElementRef;
@@ -86,7 +87,8 @@ export class MaterialInspectionComponent implements OnInit {
         private pageScrollService: PageScrollService,
         @Inject(DOCUMENT) private document: any,
         private confirmationService: ConfirmationService,
-        private messageService: MessageService) {
+        private messageService: MessageService,
+        private inspectionService: InspectionService) {
 
         this.loadOptions();
     }
@@ -99,122 +101,6 @@ export class MaterialInspectionComponent implements OnInit {
 
     continue() : void {
         this.displayDialog = true;
-    }
-
-    onSubmit(value: NgForm) {
-      debugger;
-      let inspection = new Inspection();
-
-      // Set shipment information
-      inspection.bolShipmentNumber = this.inspectionForm.get("bolShipmentNumber").value;
-      inspection.dateReceived = this.inspectionForm.get("dateReceived").value;
-      inspection.supplier = this.inspectionForm.get("supplier").value;
-      inspection.isApprovedSupplier = this.inspectionForm.get("approvedSupplier").value;
-
-      // Set Item/Lot information
-      let inspectionItems = this.pTableItem.value;
-      inspection.items = inspectionItems;
-
-      // Set Questions
-      let questions = new InspectionQuestions();
-
-      //--Cartons
-      questions.cartonQuestion1 = this.inspectionForm.get(" cartonQuestion1").value;
-      questions.cartonQuestion2 = this.inspectionForm.get(" cartonQuestion2").value;
-      questions.cartonQuestion3 = this.inspectionForm.get(" cartonQuestion3").value;
-      questions.cartonQuestion4 = this.inspectionForm.get(" cartonQuestion4").value;
-      questions.cartonQuestion5 = this.inspectionForm.get(" cartonQuestion5").value;
-      questions.cartonQuestion6 = this.inspectionForm.get(" cartonQuestion6").value;
-      questions.cartonQuestion7 = this.inspectionForm.get(" cartonQuestion7").value;
-      questions.cartonQuestion8 = this.inspectionForm.get(" cartonQuestion8").value;
-      questions.cartonQuestion1Comment = this.inspectionForm.get("cartonQuestion1Comment").value;
-      questions.cartonQuestion2Comment = this.inspectionForm.get("cartonQuestion2Comment").value;
-      questions.cartonQuestion3Comment = this.inspectionForm.get("cartonQuestion3Comment").value;
-      questions.cartonQuestion4Comment = this.inspectionForm.get("cartonQuestion4Comment").value;
-      questions.cartonQuestion5Comment = this.inspectionForm.get("cartonQuestion5Comment").value;
-      questions.cartonQuestion6Comment = this.inspectionForm.get("cartonQuestion6Comment").value;
-      questions.cartonQuestion7Comment = this.inspectionForm.get("cartonQuestion7Comment").value;
-      questions.cartonQuestion8Comment = this.inspectionForm.get("cartonQuestion8Comment").value;;
-
-      //--Bags
-      questions.bagQuestion1 = this.inspectionForm.get("bagQuestion1").value;
-      questions.bagQuestion2 = this.inspectionForm.get("bagQuestion2").value;
-      questions.bagQuestion3 = this.inspectionForm.get("bagQuestion3").value;
-      questions.bagQuestion4 = this.inspectionForm.get("bagQuestion4").value;
-      questions.bagQuestion5 = this.inspectionForm.get("bagQuestion5").value;
-      questions.bagQuestion6 = this.inspectionForm.get("bagQuestion6").value;
-      questions.bagQuestion7 = this.inspectionForm.get("bagQuestion7").value;
-      questions.bagQuestion8 = this.inspectionForm.get("bagQuestion8").value;
-      questions.bagQuestion9 = this.inspectionForm.get("bagQuestion9").value;
-      questions.bagQuestion10 = this.inspectionForm.get("bagQuestion10").value;
-      questions.bagQuestion1Comment = this.inspectionForm.get("bagQuestion1Comment").value;
-      questions.bagQuestion2Comment = this.inspectionForm.get("bagQuestion2Comment").value;
-      questions.bagQuestion3Comment = this.inspectionForm.get("bagQuestion3Comment").value;
-      questions.bagQuestion4Comment = this.inspectionForm.get("bagQuestion4Comment").value;
-      questions.bagQuestion5Comment = this.inspectionForm.get("bagQuestion5Comment").value;
-      questions.bagQuestion6Comment = this.inspectionForm.get("bagQuestion6Comment").value;
-      questions.bagQuestion7Comment = this.inspectionForm.get("bagQuestion7Comment").value;
-      questions.bagQuestion8Comment = this.inspectionForm.get("bagQuestion8Comment").value;
-      questions.bagQuestion9Comment = this.inspectionForm.get("bagQuestion9Comment").value;
-      questions.bagQuestion10Comment = this.inspectionForm.get("bagQuestion10Comment").value;
-
-      //--Contact Film
-      questions.contactFilmQuestion1 = this.inspectionForm.get("contactFilmQuestion1").value;
-      questions.contactFilmQuestion2 = this.inspectionForm.get("contactFilmQuestion2").value;
-      questions.contactFilmQuestion3 = this.inspectionForm.get("contactFilmQuestion3").value;
-      questions.contactFilmQuestion4 = this.inspectionForm.get("contactFilmQuestion4").value;
-      questions.contactFilmQuestion5 = this.inspectionForm.get("contactFilmQuestion5").value;
-      questions.contactFilmQuestion6 = this.inspectionForm.get("contactFilmQuestion6").value;
-      questions.contactFilmQuestion7 = this.inspectionForm.get("contactFilmQuestion7").value;
-      questions.contactFilmQuestion8 = this.inspectionForm.get("contactFilmQuestiion8").value;
-      questions.contactFilmQuestion9 = this.inspectionForm.get("contactFilmQuestion9").value;
-      questions.contactFilmQuestion10 = this.inspectionForm.get("contactFilmQuestion10").value;
-      questions.contactFilmQuestion1Comment = this.inspectionForm.get("contactFilmQuestion1Comment").value;
-      questions.contactFilmQuestion2Comment = this.inspectionForm.get("contactFilmQuestion2Comment").value;
-      questions.contactFilmQuestion3Comment = this.inspectionForm.get("contactFilmQuestion3Comment").value;
-      questions.contactFilmQuestion4Comment = this.inspectionForm.get("contactFilmQuestion4Comment").value;
-      questions.contactFilmQuestion5Comment = this.inspectionForm.get("contactFilmQuestion5Comment").value;
-      questions.contactFilmQuestion6Comment = this.inspectionForm.get("contactFilmQuestion6Comment").value;
-      questions.contactFilmQuestion7Comment = this.inspectionForm.get("contactFilmQuestion7Comment").value;
-      questions.contactFilmQuestion8Comment = this.inspectionForm.get("contactFilmQuestion8Comment").value;
-      questions.contactFilmQuestion9Comment = this.inspectionForm.get("contactFilmQuestion9Comment").value;
-      questions.contactFilmQuestion10Comment = this.inspectionForm.get("contactFilmQuestion10Comment").value;
-
-      //--Overwrap Film
-      questions.overwrapFilmQuestion1 = this.inspectionForm.get("overwrapFilmQuestion1").value;
-      questions.overwrapFilmQuestion2 = this.inspectionForm.get("overwrapFilmQuestion2").value;
-      questions.overwrapFilmQuestion3 = this.inspectionForm.get("overwrapFilmQuestion3").value;
-      questions.overwrapFilmQuestion4 = this.inspectionForm.get("overwrapFilmQuestion4").value;
-      questions.overwrapFilmQuestion5 = this.inspectionForm.get("overwrapFilmQuestion5").value;
-      questions.overwrapFilmQuestion6 = this.inspectionForm.get("overwrapFilmQuestion6").value;
-      questions.overwrapFilmQuestion7 = this.inspectionForm.get("overwrapFilmQuestion7").value;
-      questions.overwrapFilmQuestion8 = this.inspectionForm.get("overwrapFilmQuestiion8").value;
-      questions.overwrapFilmQuestion1Comment = this.inspectionForm.get("overwrapFilmQuestion1Comment").value;
-      questions.overwrapFilmQuestion2Comment = this.inspectionForm.get("overwrapFilmQuestion2Comment").value;
-      questions.overwrapFilmQuestion3Comment = this.inspectionForm.get("overwrapFilmQuestion3Comment").value;
-      questions.overwrapFilmQuestion4Comment = this.inspectionForm.get("overwrapFilmQuestion4Comment").value;
-      questions.overwrapFilmQuestion5Comment = this.inspectionForm.get("overwrapFilmQuestion5Comment").value;
-      questions.overwrapFilmQuestion6Comment = this.inspectionForm.get("overwrapFilmQuestion6Comment").value;
-      questions.overwrapFilmQuestion7Comment = this.inspectionForm.get("overwrapFilmQuestion7Comment").value;
-      questions.overwrapFilmQuestion8Comment = this.inspectionForm.get("overwrapFilmQuestion8Comment").value;
-
-      inspection.questions = questions;
-
-      // Set results/disposition
-
-      inspection.result = this.inspectionForm.get("result").value;
-      inspection.disposition = this.inspectionForm.get("disposition").value;
-      inspection.deviationNumber = this.inspectionForm.get("deviationNumber").value;
-      inspection.holdStatus = this.inspectionForm.get("holdStatus").value;
-      inspection.measuresToPreventRelease = this.inspectionForm.get("measuresToPreventRelease").value;
-
-      // Uncomment 
-      //this.displayDialog = false;
-      //this.goToStep1();
-    }
-
-    cancel() : void {
-        this.displayDialog = false;
     }
 
     showDescription(event) {
@@ -571,33 +457,36 @@ export class MaterialInspectionComponent implements OnInit {
 
       this.inspectionForm.get("inspectionFormStep4").get('result').valueChanges
         .subscribe(x => {
-          debugger
-          switch (x.name)
-          {
-            case "Accepted":
-              this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').setValidators(null);
-              this.inspectionForm.get("inspectionFormStep4").get('disposition').setValidators(null);
-              this.inspectionForm.get("inspectionFormStep4").get('holdStatus').setValidators(null);
-              this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').setValidators(null);
-              break;
-            case "Rejected":
-              this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').setValidators(null);
-              this.inspectionForm.get("inspectionFormStep4").get('disposition').setValidators([Validators.required]);
-              this.inspectionForm.get("inspectionFormStep4").get('holdStatus').setValidators([Validators.required]);
-              this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').setValidators([Validators.required]);
-              break;
-            case "Deviation":
-              this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').setValidators([Validators.required]);
-              this.inspectionForm.get("inspectionFormStep4").get('disposition').setValidators(null);
-              this.inspectionForm.get("inspectionFormStep4").get('holdStatus').setValidators([Validators.required]);
-              this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').setValidators([Validators.required]);
-              break;
-          }
+          
+          if (x.name) {
+            
 
-          this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').updateValueAndValidity();
-          this.inspectionForm.get("inspectionFormStep4").get('disposition').updateValueAndValidity();
-          this.inspectionForm.get("inspectionFormStep4").get('holdStatus').updateValueAndValidity();
-          this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').updateValueAndValidity();
+            switch (x.name.toLowerCase()) {
+              case "accepted":
+                this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').setValidators(null);
+                this.inspectionForm.get("inspectionFormStep4").get('disposition').setValidators(null);
+                this.inspectionForm.get("inspectionFormStep4").get('holdStatus').setValidators(null);
+                this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').setValidators(null);
+                break;
+              case "rejected":
+                this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').setValidators(null);
+                this.inspectionForm.get("inspectionFormStep4").get('disposition').setValidators([Validators.required]);
+                this.inspectionForm.get("inspectionFormStep4").get('holdStatus').setValidators([Validators.required]);
+                this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').setValidators([Validators.required]);
+                break;
+              case "deviation":
+                this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').setValidators([Validators.required]);
+                this.inspectionForm.get("inspectionFormStep4").get('disposition').setValidators(null);
+                this.inspectionForm.get("inspectionFormStep4").get('holdStatus').setValidators([Validators.required]);
+                this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').setValidators([Validators.required]);
+                break;
+            }
+
+            this.inspectionForm.get("inspectionFormStep4").get('deviationNumber').updateValueAndValidity();
+            this.inspectionForm.get("inspectionFormStep4").get('disposition').updateValueAndValidity();
+            this.inspectionForm.get("inspectionFormStep4").get('holdStatus').updateValueAndValidity();
+            this.inspectionForm.get("inspectionFormStep4").get('measuresToPreventRelease').updateValueAndValidity();
+          }
         });
     }
 
@@ -743,8 +632,8 @@ export class MaterialInspectionComponent implements OnInit {
         });
     }
 
-  goToStep4(): void {
-      debugger
+    goToStep4(): void {
+      
       this.showStep1 = true;
       this.showStep2 = true;
       this.showStep3 = true;
@@ -796,5 +685,140 @@ export class MaterialInspectionComponent implements OnInit {
 
     isFormValid(): boolean {
       return !(this.inspectionForm.valid && this.inspectionForm.get("inspectionFormStep2").dirty && this.inspectionForm.get("inspectionFormStep3").dirty)
+  }
+
+    onSubmit(value: NgForm) {
+      ;
+      let inspection = new Inspection();
+
+      // Set shipment information
+      inspection.bolShipmentNumber = this.inspectionForm.get("bolShipmentNumber").value;
+      inspection.dateReceived = this.inspectionForm.get("dateReceived").value;
+      inspection.supplier = this.inspectionForm.get("supplier").value;
+      inspection.isApprovedSupplier = this.inspectionForm.get("approvedSupplier").value;
+
+      // Set Item/Lot information
+      let inspectionItems = this.pTableItem.value;
+      inspection.items = inspectionItems;
+
+      // Set Questions
+      let questions = new InspectionQuestions();
+
+      //--Cartons
+      questions.cartonQuestion1 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion1").value;
+      questions.cartonQuestion2 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion2").value;
+      questions.cartonQuestion3 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion3").value;
+      questions.cartonQuestion4 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion4").value;
+      questions.cartonQuestion5 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion5").value;
+      questions.cartonQuestion6 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion6").value;
+      questions.cartonQuestion7 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion7").value;
+      questions.cartonQuestion8 = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion8").value;
+      questions.cartonQuestion1Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion1Comment").value;
+      questions.cartonQuestion2Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion2Comment").value;
+      questions.cartonQuestion3Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion3Comment").value;
+      questions.cartonQuestion4Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion4Comment").value;
+      questions.cartonQuestion5Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion5Comment").value;
+      questions.cartonQuestion6Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion6Comment").value;
+      questions.cartonQuestion7Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion7Comment").value;
+      questions.cartonQuestion8Comment = this.inspectionForm.get("inspectionFormStep3").get("cartonQuestion8Comment").value;;
+
+      //--Bags
+      questions.bagQuestion1 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion1").value;
+      questions.bagQuestion2 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion2").value;
+      questions.bagQuestion3 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion3").value;
+      questions.bagQuestion4 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion4").value;
+      questions.bagQuestion5 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion5").value;
+      questions.bagQuestion6 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion6").value;
+      questions.bagQuestion7 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion7").value;
+      questions.bagQuestion8 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion8").value;
+      questions.bagQuestion9 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion9").value;
+      questions.bagQuestion10 = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion10").value;
+      questions.bagQuestion1Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion1Comment").value;
+      questions.bagQuestion2Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion2Comment").value;
+      questions.bagQuestion3Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion3Comment").value;
+      questions.bagQuestion4Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion4Comment").value;
+      questions.bagQuestion5Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion5Comment").value;
+      questions.bagQuestion6Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion6Comment").value;
+      questions.bagQuestion7Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion7Comment").value;
+      questions.bagQuestion8Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion8Comment").value;
+      questions.bagQuestion9Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion9Comment").value;
+      questions.bagQuestion10Comment = this.inspectionForm.get("inspectionFormStep3").get("bagQuestion10Comment").value;
+
+      //--Contact Film
+      questions.contactFilmQuestion1 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion1").value;
+      questions.contactFilmQuestion2 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion2").value;
+      questions.contactFilmQuestion3 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion3").value;
+      questions.contactFilmQuestion4 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion4").value;
+      questions.contactFilmQuestion5 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion5").value;
+      questions.contactFilmQuestion6 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion6").value;
+      questions.contactFilmQuestion7 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion7").value;
+      questions.contactFilmQuestion8 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion8").value;
+      questions.contactFilmQuestion9 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion9").value;
+      questions.contactFilmQuestion10 = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion10").value;
+      questions.contactFilmQuestion1Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion1Comment").value;
+      questions.contactFilmQuestion2Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion2Comment").value;
+      questions.contactFilmQuestion3Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion3Comment").value;
+      questions.contactFilmQuestion4Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion4Comment").value;
+      questions.contactFilmQuestion5Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion5Comment").value;
+      questions.contactFilmQuestion6Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion6Comment").value;
+      questions.contactFilmQuestion7Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion7Comment").value;
+      questions.contactFilmQuestion8Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion8Comment").value;
+      questions.contactFilmQuestion9Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion9Comment").value;
+      questions.contactFilmQuestion10Comment = this.inspectionForm.get("inspectionFormStep3").get("contactFilmQuestion10Comment").value;
+
+      //--Overwrap Film
+      questions.overwrapFilmQuestion1 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion1").value;
+      questions.overwrapFilmQuestion2 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion2").value;
+      questions.overwrapFilmQuestion3 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion3").value;
+      questions.overwrapFilmQuestion4 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion4").value;
+      questions.overwrapFilmQuestion5 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion5").value;
+      questions.overwrapFilmQuestion6 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion6").value;
+      questions.overwrapFilmQuestion7 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion7").value;
+      questions.overwrapFilmQuestion8 = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion8").value;
+      questions.overwrapFilmQuestion1Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion1Comment").value;
+      questions.overwrapFilmQuestion2Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion2Comment").value;
+      questions.overwrapFilmQuestion3Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion3Comment").value;
+      questions.overwrapFilmQuestion4Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion4Comment").value;
+      questions.overwrapFilmQuestion5Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion5Comment").value;
+      questions.overwrapFilmQuestion6Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion6Comment").value;
+      questions.overwrapFilmQuestion7Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion7Comment").value;
+      questions.overwrapFilmQuestion8Comment = this.inspectionForm.get("inspectionFormStep3").get("overwrapFilmQuestion8Comment").value;
+
+      inspection.questions = questions;
+
+      // Set results/disposition
+
+      let result = this.inspectionForm.get("inspectionFormStep4").get("result").value;
+      inspection.result = result.name;
+      switch (result.code) {
+        case "accepted":
+          inspection.disposition = null;
+          inspection.deviationNumber = null
+          inspection.holdStatus = null;
+          inspection.measuresToPreventRelease = null;
+          break;
+        case "rejected":
+          inspection.disposition = this.inspectionForm.get("inspectionFormStep4").get("disposition").value;
+          inspection.deviationNumber = null;
+          inspection.holdStatus = this.inspectionForm.get("inspectionFormStep4").get("holdStatus").value;
+          inspection.measuresToPreventRelease = this.inspectionForm.get("inspectionFormStep4").get("measuresToPreventRelease").value;
+          break;
+
+        case "deviation":
+          inspection.disposition = null;
+          inspection.deviationNumber = this.inspectionForm.get("inspectionFormStep4").get("deviationNumber").value;
+          inspection.holdStatus = this.inspectionForm.get("inspectionFormStep4").get("holdStatus").value;
+          inspection.measuresToPreventRelease = this.inspectionForm.get("inspectionFormStep4").get("measuresToPreventRelease").value;
+          break;
+      }
+
+      this.inspectionService.saveInspection
+      // Uncomment
+      //this.displayDialog = false;
+      //this.goToStep1();
+    }
+
+    cancel(): void {
+      this.displayDialog = false;
     }
 }
