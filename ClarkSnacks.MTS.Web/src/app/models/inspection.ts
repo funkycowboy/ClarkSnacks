@@ -39,7 +39,7 @@ export class InspectionQuestions {
   cartonQuestion4: string;
   cartonQuestion4Comment: string;
   cartonQuestion5: string;
-  cartonQuestion5Comment: string;
+  cartonQuestion5Comment: string;;
   cartonQuestion6: string;
   cartonQuestion6Comment: string;
   cartonQuestion7: string;
