@@ -3,7 +3,7 @@
 <p-toast position="top-right"></p-toast>
 <!-- Step1 : Shipment Information -->
 <p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Step 1. Provide the following shipment information.</p>
-
+<!--Valid Form: {{inspectionForm.valid}}-->
 <form [formGroup]="inspectionForm" (ngSubmit)="onSubmit(inspectionForm.value)">
 
   <div class="ui-g" style="background-color: #ececec; border-radius:5px;">
@@ -57,10 +57,11 @@
           <td colspan="4" style="background-color: #ececec;">
 
             <div style="float: left; white-space:nowrap; width:50%; border:none">
-              <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;<p-dropdown [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event,rowIndexItem)" [options]="itemOptions">            </p-dropdown>
+              <label style="font-weight:bold" for="Item">Vendor Item Id:</label>&nbsp;
+              <p-dropdown formControlName="item" [style]="{'width':'50%'}" filter="true" (onChange)="itemTypeChange($event,rowIndexItem)" [options]="itemOptions" [(ngModel)]="rowData.item"></p-dropdown>
               &nbsp;<label>Item Quantity:</label>&nbsp;&nbsp;<span style="font-weight:bold">{{rowData.totalQuantity}}</span>
             </div>
-            <div style="float: right; width:50%;border:none; text-align:right">              
+            <div style="float: right; width:50%;border:none; text-align:right">
 
               <a href="#" [pRowToggler]="rowData" style="margin-right: 15px;">
                 <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i><label> View Lots</label>
@@ -89,7 +90,7 @@
         <tr style="background-color: #ececec;">
           <td style="text-align:center">
             <div style="display: inline-block; vertical-align:middle">
-              <input (blur)="lotNumberChange($event.target)" type="text" pInputText />
+              <input (blur)="lotNumberChange($event.target)" type="text" pInputText [ngModelOptions]="{standalone: true}" [(ngModel)]="rowData.lotNumber" />
             </div>
           </td>
           <td style="text-align:center">
@@ -117,7 +118,7 @@
     </p-table>
     </td>
     </tr>
-    </ng-template>  
+    </ng-template>
     <ng-template pTemplate="footer">
       <tr>
         <td colspan="4">
@@ -137,7 +138,6 @@
 
   </div>
 
-
   <!-- Step 3: Inspection QUestions -->
 
   <div *ngIf="showStep3" class="step3">
@@ -156,81 +156,81 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ1" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion1Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ2" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion2Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ3" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion3Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ4" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion4Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the individual cases of bags marked with item number and tracking number (lot)?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ5" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion5Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is a Certificate of Conformance available for each item & lot on the shipment?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ6" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestionQ6" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion6Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the Certificate of Conformance acceptable? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ7" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestionQ7" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion7Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ8" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestionQ8" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion8Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the bag printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ9" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestionQ9" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion9Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the bag construction match the standard on file, in regards to physical characteristics (paper type, size) functionality (gusset, glue, bottom seal)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeBagQ10" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="bagQuestionQ10" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion10Comment"></textarea></div>
       </div>
 
     </div>
@@ -242,65 +242,65 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ1" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion1Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ2" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion2Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ3" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion3Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers and quantities of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ4" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion4Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the individual cases of cartons marked with item number?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ5" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion5Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ6" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion6" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion6Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the carton printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard, especially net weight & allergen/ingredient statements)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ7" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion7" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion7Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the carton construction match the standard on file, in regards to physical characteristics (paper type, size, coatings) and functionality (flaps, glue, scoring)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeCartonQ8" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="cartonQuestion8" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion8Comment"></textarea></div>
       </div>
 
     </div>
@@ -312,65 +312,65 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ1" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion1Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ2" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion2Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ3" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion3Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ4" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion4Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the cores marked with item number and quantity?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ5" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion5Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ6" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion6" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion6Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the overwrap printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard, especially net weight & allergen/ingredient statements)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ7" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion7" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion7Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the overwrap construction match the standard on file, in regards to physical characteristics (film type, size, coatings) and functionality (seal area free of coating, wind direction is correct)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeOverwrapFilmQ8" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion8" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion8Comment"></textarea></div>
       </div>
 
     </div>
@@ -382,156 +382,161 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ1" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion1Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ2" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion2Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ3" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion3Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ4" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion4Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the rolls marked with item number, tracking number and quantity of impressions?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ5" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion5Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is a Certificate of Conformance available for each item & lot on the shipment?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ6" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion6" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea pla12cceholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea pla12cceholder="Comments" formControlName="contactFilmQuestion6Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the Certificate of Conformance acceptable?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ7" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion7" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion7Comment"></textarea></div>
       </div>
 
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Has 1 impression been collected for each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ8" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion8" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion8Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the film printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ9" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion9" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion9Comment"></textarea></div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the film construction match the standard on file, in regards to physical characteristics (film type, width, thickness)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="itemTypeContactFilmQ10" [options]="resultOptions" [(ngModel)]="selectedQuestionAnswer"></p-selectButton>
+          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion10" [options]="resultOptions"></p-selectButton>
         </div>
-        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments"></textarea></div>
+        <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion10Comment"></textarea></div>
       </div>
 
     </div>
 
-    <div class="ui-g-12" style="text-align: right" *ngIf="showStep3 && selectedItemDescription.indexOf('BAG') > -1">
-      <!--<div class="ui-g-12" style="text-align: right" *ngIf="['Contact Film','Overwrap Film','BAG','Carton'].indexOf(selectedItemDescription) > -1 && showStep3">-->
+    <div class="ui-g-12" style="text-align: right" *ngIf="(['Contact Film','Overwrap Film','Bag','Carton'].indexOf(selectedItemCategory) > -1) && showStep3 && inspectionForm.valid">
       <div class="ui-g-12" style="white-space: nowrap">
-        <!--<button type="submit" pButton icon="fa fa-arrow-circle-right" [disabled]="!inspectionForm.valid" label="Continue"></button>-->
-        <button class="ui-button-rounded ui-button-success" type="submit" pButton icon="fa fa-arrow-circle-right" label="Continue"></button>
+        <button class="ui-button-rounded ui-button-success" type="button" pButton icon="fa fa-arrow-circle-right" label="Continue to Step 4" (click)="goToStep4()"></button>
+      </div>
+    </div>
+    
+    <!-- Uncomment to debug
+    <p>
+      <em>
+        Item Cat: {{['Contact Film','Overwrap Film','Bag','Carton'].indexOf(selectedItemCategory) > -1}}<br />
+        Show Step: {{showStep3}}<br />
+        Form Valid: {{inspectionForm.valid}}
+      </em>
+    </p>-->
+  </div>
+
+  <!-- Inspection Result Modal -->
+
+  <div formGroupName="inspectionFormStep4">
+
+    <p-dialog header="Step 4: Confirm Inspection" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="name">Select an inspection result:</label>
+          </div>
+          <div class="ui-g-6 ui-sm-12">
+            <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
+            <p-selectButton formControlName="result" name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
+          </div>
+        </div>
+        <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+          <p style="font-weight: bold">Please provide the additional information below.</p>
+        </div>
+        <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
+          <div class="ui-g-4">
+            <label for="name">Disposition:</label>
+          </div>
+          <div class="ui-g-6 ui-sm-12">
+            <p-dropdown formControlName="disposition" name="Disposition" [options]="dispositionOptions"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'deviation'">
+          <div class="ui-g-4">
+            <label for="name">Deviation #:</label>
+          </div>
+          <div class="ui-g-6 ui-sm-12">
+            <input formControlName="deviationNumber" #deviationnumber type="text" pInputText />
+          </div>
+        </div>
+        <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+          <div class="ui-g-4">
+            <label for="name">Hold Status:</label>
+          </div>
+          <div class="ui-g-6 ui-sm-12">
+            <p-dropdown formControlName="holdStatus" name="HoldStatus" [options]="holdStatusOptions"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12" *ngIf="selectedOverallResult && selectedOverallResult.code != 'accepted'">
+          <div class="ui-g-4">
+            <label for="name">Measure(s) to prevent release:</label>
+          </div>
+          <div class="ui-g-6 ui-sm-12">
+            <textarea formControlName="measuresToPreventRelease" pInputTextarea></textarea>
+          </div>
+        </div>
       </div>
 
+      <p-footer>
+        <button type="button" pButton icon="fa fa-times" label="Cancel" (click)="cancel()"></button>&nbsp;
+        <button type="submit" pButton icon="fa fa-check" label="Save" [disabled]="!inspectionForm.valid"></button>
+      </p-footer>
+    </p-dialog>
     </div>
-
-  </div>
 </form>
-
-
-<!-- Inspection Result Modal -->
-
-<p-dialog header="Confirm Inspection" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true">
-  <div class="ui-g ui-fluid">
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="name">Select an inspection result:</label>
-      </div>
-      <div class="ui-g-6 ui-sm-12">
-        <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
-        <p-selectButton name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
-      </div>
-    </div>
-    <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
-      <p style="font-weight: bold">Please provide the additional information below.</p>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
-      <div class="ui-g-4">
-        <label for="name">Disposition:</label>
-      </div>
-      <div class="ui-g-6 ui-sm-12">
-        <p-dropdown name="Disposition" [options]="dispositionOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'deviation'">
-      <div class="ui-g-4">
-        <label for="name">Deviation #:</label>
-      </div>
-      <div class="ui-g-6 ui-sm-12">
-        <input #deviationnumber type="text" pInputText />
-      </div>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
-      <div class="ui-g-4">
-        <label for="name">Hold Status:</label>
-      </div>
-      <div class="ui-g-6 ui-sm-12">
-        <p-dropdown name="HoldStatus" [options]="holdStatusOptions" [(ngModel)]="selectedSupplier"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedOverallResult && selectedOverallResult.code != 'accepted'">
-      <div class="ui-g-4">
-        <label for="name">Measure(s) to prevent release:</label>
-      </div>
-      <div class="ui-g-6 ui-sm-12">
-        <textarea pInputTextarea></textarea>
-      </div>
-    </div>
-  </div>
-
-  <p-footer>
-    <button type="button" pButton icon="fa fa-times" label="Cancel" (click)="cancel()"></button>&nbsp;
-    <button type="button" pButton icon="fa fa-check" label="Save" (click)="save()"></button>
-  </p-footer>
-</p-dialog>
 
 <!-- Confirm Dialogs -->
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
-
-
