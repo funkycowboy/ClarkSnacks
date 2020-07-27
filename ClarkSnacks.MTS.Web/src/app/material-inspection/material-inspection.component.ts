@@ -812,10 +812,15 @@ export class MaterialInspectionComponent implements OnInit {
           break;
       }
 
-      this.inspectionService.saveInspection
-      // Uncomment
-      //this.displayDialog = false;
-      //this.goToStep1();
+      // Save inspection
+      this.inspectionService.saveInspection(inspection)
+        .then(() => {
+          this.messageService.add({ severity: 'info', summary: 'Confirmation', detail: 'The inspection has been saved.' });
+          this.displayDialog = false;
+          this.goToStep1();
+        },() => {
+            this.messageService.add({ severity: 'error', summary: 'Confirmation', detail: 'There was an error saving the inspection.' });
+        });
     }
 
     cancel(): void {

@@ -23,7 +23,7 @@ export class InspectionService {
     }
 
     // Save Inspection
-    saveProcessedLot(inspection: Inspection) {
+    saveInspection(inspection: Inspection) {
         let url = this.baseurl + this.controller;
         debugger;
         let promise = new Promise((resolve, reject) => {
