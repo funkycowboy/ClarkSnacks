@@ -139,16 +139,19 @@ export class MaterialInspectionComponent implements OnInit {
         this.dispositionOptions = [
 
             { label: '- Select a Disposition -', value: null },
-            { label: 'Disposition 1', value: { id: 1, name: 'Disposition 1', code: 'disposition1' } },
-            { label: 'Disposition 2', value: { id: 2, name: 'Disposition 2', code: 'disposition2' } },
-            { label: 'Disposition 3', value: { id: 3, name: 'Disposition 3', code: 'disposition3' } }
+            { label: 'Use As Is', value: 1},
+            { label: 'Customer Approval To Use', value: 2},
+            { label: 'Dispose', value: 3},
+            { label: 'Rework', value: 4},
+            { label: 'Return To Supplier', value: 5},
+            { label: 'Other', value: 6}
         ];
         this.holdStatusOptions = [
 
             { label: '- Select a Hold Status -', value: null },
-            { label: 'Hold Status 1', value: { id: 1, name: 'Hold Status 1', code: 'Hold Status 1' } },
-            { label: 'Hold Status 2', value: { id: 2, name: 'Hold Status 2', code: 'Hold Status 2' } },
-            { label: 'Hold Status 3', value: { id: 3, name: 'Hold Status 3', code: 'Hold Status 3' } }
+            { label: 'Level 1', value: 1},
+            { label: 'Level 2', value: 2},
+            { label: 'Not Applicable', value: 3}
         ];
     }
 

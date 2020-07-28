@@ -35,7 +35,7 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
                 entity.HasOne(x => x.Inspector)
                    .WithMany(x => x.Inspections)
-                   .HasForeignKey(x => x.InspectedBy);
+                   .HasForeignKey(x => x.InspectedById);
 
                 entity.HasOne(x => x.Supplier)
                    .WithMany(x => x.Inspections)

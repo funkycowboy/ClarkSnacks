@@ -9,20 +9,22 @@ namespace ClarkSnacks.MTS.Domain.Enums
     /// </summary>
     public enum DispositionEnum
     {
-        Disposition1 = 1,
-        Disposition2 = 2,
-        Disposition3 = 3
+        UseAsIs = 1,
+        CustomerApprovalToUse = 2,
+        Dispose = 3,
+        Rework = 4,
+        ReturnToSupplier = 5,
+        Other = 6
     }
-
 
     /// <summary>
     /// Hold Status Enums
     /// </summary>
     public enum HoldStatusEnum
     {
-        HoldStatus1 = 1,
-        HoldStatus2 = 2,
-        HoldStatus3 = 3
+        Level1 = 1,
+        Level2 = 2,
+        NotApplicable = 3
     }
 
 

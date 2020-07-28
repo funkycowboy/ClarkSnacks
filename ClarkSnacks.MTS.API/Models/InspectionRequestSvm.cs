@@ -4,12 +4,12 @@ namespace ClarkSnacks.MTS.API.Models
 {
     public class InspectionRequestSvm
     {
-        public List<InspectionItem> items;
+        public List<InspectionItemRequestSvm> items;
         public int SupplierId { get; set; }
         public string DateReceived  { get; set; }
         public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
-        public InspectionQuestion Questions  { get; set; }
+        public InspectionQuestionRequestSvm Questions  { get; set; }
         public int Result  { get; set; }
         public int Disposition  { get; set; }
         public string DeviationNumber { get; set; }
@@ -104,7 +104,7 @@ namespace ClarkSnacks.MTS.API.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<InspectionLot> InspectionLots { get; set; }
+        public List<InspectionLotRequestSvm> InspectionLots { get; set; }
         public string Description { get; set; }
         public int TotalQuantity { get; set; }
     }
