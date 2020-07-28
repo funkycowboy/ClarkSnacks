@@ -697,7 +697,7 @@ export class MaterialInspectionComponent implements OnInit {
       // Set shipment information
       inspection.bolShipmentNumber = this.inspectionForm.get("bolShipmentNumber").value;
       inspection.dateReceived = this.inspectionForm.get("dateReceived").value;
-      inspection.supplier = this.inspectionForm.get("supplier").value;
+      inspection.supplierId = this.inspectionForm.get("supplier").value;
       inspection.isApprovedSupplier = this.inspectionForm.get("approvedSupplier").value;
 
       // Set Item/Lot information
