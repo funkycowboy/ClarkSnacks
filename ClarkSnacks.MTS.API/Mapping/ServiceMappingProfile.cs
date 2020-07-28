@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ClarkSnacks.MTS.API.Models;
 using ClarkSnacks.MTS.API.wwwroot;
 using ClarkSnacks.MTS.Domain.Dtos;
 using ClarkSnacks.MTS.Domain.Entities;
@@ -33,6 +34,14 @@ namespace ClarkSnacks.MTS.API.Mapping
             CreateMap<ProcessedLotRequestSvm, ProcessedLotDto>();
 
             CreateMap<Operator, OperatorResponseSvm>();
+
+            CreateMap<InspectionRequestSvm, Inspection>();
+
+            CreateMap<InspectionQuestionRequestSvm, InspectionQuestion>();
+
+            CreateMap<InspectionItemRequestSvm, InspectionItem>();
+
+            CreateMap<InspectionLotRequestSvm, InspectionItemLot>();
         }
     }
 }

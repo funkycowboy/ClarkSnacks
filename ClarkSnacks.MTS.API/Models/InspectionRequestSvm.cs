@@ -5,19 +5,20 @@ namespace ClarkSnacks.MTS.API.Models
     public class InspectionRequestSvm
     {
         public List<InspectionItem> items;
-        public int Supplier { get; set; }
+        public int SupplierId { get; set; }
         public string DateReceived  { get; set; }
         public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
         public InspectionQuestion Questions  { get; set; }
-        public string Result  { get; set; }
-        public string Disposition  { get; set; }
+        public int Result  { get; set; }
+        public int Disposition  { get; set; }
         public string DeviationNumber { get; set; }
-        public string HoldStatus { get; set; }
+        public int HoldStatus { get; set; }
         public string MeasuresToPreventRelease  { get; set; }
+        public int InspectedBy { get; set; }
     }
 
-    public class InspectionQuestion
+    public class InspectionQuestionRequestSvm
     {
       public string CartonQuestion1 { get; set; }
       public string CartonQuestion1Comment { get; set; }
@@ -99,7 +100,7 @@ namespace ClarkSnacks.MTS.API.Models
       public string OverwrapFilmQuestion8Comment { get; set; }
     }
 
-    public class InspectionItem
+    public class InspectionItemRequestSvm
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -108,7 +109,7 @@ namespace ClarkSnacks.MTS.API.Models
         public int TotalQuantity { get; set; }
     }
 
-    public class InspectionLot
+    public class InspectionLotRequestSvm
     {
         public int Id { get; set; }
         public string LotNumber { get; set; }

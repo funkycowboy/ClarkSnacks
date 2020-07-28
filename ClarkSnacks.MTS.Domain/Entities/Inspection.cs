@@ -16,13 +16,13 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public int SupplierId { get; set; }
         public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
-        public int Result { get; set; }
-        public int Disposition { get; set; }
+        public int ResultId { get; set; }
+        public int DispositionId { get; set; }
         public string DeviationNumber { get; set; }
-        public int HoldStatus { get; set; }
+        public int HoldStatusId { get; set; }
         public string MeasuresToPreventRelease { get; set; }
         public DateTime DateInspected { get; set; }
-        public int InspectedBy { get; set; }
+        public int InspectedById { get; set; }
 
         // Navigation Properties
         public virtual Operator Inspector { get; set; }

@@ -1,15 +1,16 @@
 export class Inspection {
   items: InspectionItem[];
-  supplier: number;
+  supplierId: number;
   dateReceived: string;
   bolShipmentNumber: string;
   isApprovedSupplier: boolean;
   questions: InspectionQuestions
-  result: string;
-  disposition: string;
+  resultId: number;
+  dispositionId: number;
   deviationNumber: string;
-  holdStatus: string;
+  holdStatusId: number;
   measuresToPreventRelease: string;
+  inspectedById: number
 }
 
 export class InspectionLot {

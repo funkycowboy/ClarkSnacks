@@ -789,25 +789,25 @@ export class MaterialInspectionComponent implements OnInit {
       // Set results/disposition
 
       let result = this.inspectionForm.get("inspectionFormStep4").get("result").value;
-      inspection.result = result.name;
+      inspection.resultId = result.id;
       switch (result.code) {
         case "accepted":
-          inspection.disposition = null;
+          inspection.dispositionId = null;
           inspection.deviationNumber = null
-          inspection.holdStatus = null;
+          inspection.holdStatusId = null;
           inspection.measuresToPreventRelease = null;
           break;
         case "rejected":
-          inspection.disposition = this.inspectionForm.get("inspectionFormStep4").get("disposition").value;
+          inspection.dispositionId = this.inspectionForm.get("inspectionFormStep4").get("disposition").value;
           inspection.deviationNumber = null;
-          inspection.holdStatus = this.inspectionForm.get("inspectionFormStep4").get("holdStatus").value;
+          inspection.holdStatusId = this.inspectionForm.get("inspectionFormStep4").get("holdStatus").value;
           inspection.measuresToPreventRelease = this.inspectionForm.get("inspectionFormStep4").get("measuresToPreventRelease").value;
           break;
 
         case "deviation":
-          inspection.disposition = null;
+          inspection.dispositionId = null;
           inspection.deviationNumber = this.inspectionForm.get("inspectionFormStep4").get("deviationNumber").value;
-          inspection.holdStatus = this.inspectionForm.get("inspectionFormStep4").get("holdStatus").value;
+          inspection.holdStatusId = this.inspectionForm.get("inspectionFormStep4").get("holdStatus").value;
           inspection.measuresToPreventRelease = this.inspectionForm.get("inspectionFormStep4").get("measuresToPreventRelease").value;
           break;
       }
