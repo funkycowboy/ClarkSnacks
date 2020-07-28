@@ -21,6 +21,5 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public virtual Item Item { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual Operator Operator { get; set; }
-
     }
 }

@@ -6,6 +6,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 {
     public class MTSDbContext : DbContext
     {
+        public virtual DbSet<Inspection> Inspections { get; set; }
+        public virtual DbSet<InspectionItem> InspectionItems { get; set; }
+        public virtual DbSet<InspectionItemLot> InspectionItemLots{ get; set; }
+        public virtual DbSet<InspectionQuestion> InspectionQuestions{ get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Lot> Lots { get; set; }
         public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
@@ -21,7 +25,69 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        { 
+
+            modelBuilder.Entity<Inspection>(entity =>
+            { 
+                entity.ToTable("Inspection");
+
+                entity.HasKey(x => x.Id);
+
+                entity.HasOne(x => x.Inspector)
+                   .WithMany(x => x.Inspections)
+                   .HasForeignKey(x => x.InspectedBy);
+
+                entity.HasOne(x => x.Supplier)
+                   .WithMany(x => x.Inspections)
+                   .HasForeignKey(x => x.SupplierId);
+            });
+
+            modelBuilder.Entity<InspectionItem>(entity =>
+            {
+                entity.ToTable("InspectionItem");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(x => x.Inspection)
+                   .WithMany(x => x.InspectionItems)
+                   .HasForeignKey(x => x.InspectionId);
+
+                entity.HasOne(x => x.Item)
+                   .WithMany(x => x.InspectionItems)
+                   .HasForeignKey(x => x.ItemId);
+            });
+
+            modelBuilder.Entity<InspectionItemLot>(entity =>
+            {
+                entity.ToTable("InspectionItemLot");
+
+                entity.HasKey(x => x.Id);
+
+                entity.HasOne(x => x.InspectionItem)
+                   .WithMany(x => x.InspectionItemLots)
+                   .HasForeignKey(x => x.InspectionItemId);
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+            });
+
+            modelBuilder.Entity<InspectionQuestion>(entity =>
+            {
+                entity.ToTable("InspectionQuestion");
+
+                entity.HasKey(x => x.Id);
+
+                entity.HasOne(x => x.Inspection)
+                  .WithOne(x => x.InspectionQuestion)
+                  .HasForeignKey<InspectionQuestion>(x => x.InspectionId);
+
+            });
+
             modelBuilder.Entity<Item>(entity =>
             {
                 entity.ToTable("Item");

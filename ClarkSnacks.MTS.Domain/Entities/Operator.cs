@@ -9,6 +9,7 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public Operator(){
             Lots = new HashSet<Lot>();
             ProcessedLots = new HashSet<ProcessedLot>();
+            Inspections = new HashSet<Inspection>();
         }
 
         public int Id { get; set; }
@@ -17,5 +18,6 @@ namespace ClarkSnacks.MTS.Domain.Entities
 
         public virtual ICollection<ProcessedLot> ProcessedLots { get; set; }
         public virtual ICollection<Lot> Lots { get; set; }
+        public virtual ICollection<Inspection> Inspections { get; set; }
     }
 }

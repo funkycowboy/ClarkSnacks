@@ -7,9 +7,9 @@ namespace ClarkSnacks.MTS.API.Models
         public List<InspectionItem> items;
         public int Supplier { get; set; }
         public string DateReceived  { get; set; }
-        public string BolShipmentNumber { get; set; }
+        public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
-        public InspectionQuestions Questions  { get; set; }
+        public InspectionQuestion Questions  { get; set; }
         public string Result  { get; set; }
         public string Disposition  { get; set; }
         public string DeviationNumber { get; set; }
@@ -17,7 +17,7 @@ namespace ClarkSnacks.MTS.API.Models
         public string MeasuresToPreventRelease  { get; set; }
     }
 
-    public class InspectionQuestions
+    public class InspectionQuestion
     {
       public string CartonQuestion1 { get; set; }
       public string CartonQuestion1Comment { get; set; }
