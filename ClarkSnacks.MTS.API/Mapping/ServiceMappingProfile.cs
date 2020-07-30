@@ -16,7 +16,6 @@ namespace ClarkSnacks.MTS.API.Mapping
         {
             CreateMap<Lot, LotsResponseSvm>()
                 .ForMember(dst => dst.ItemDescription, opt => opt.MapFrom(src => src.Item.Description))
-                .ForMember(dst => dst.VendorName, opt => opt.MapFrom(src => src.Vendor.Name))
                 .ForMember(dst => dst.MaterialCategoryName, opt => opt.MapFrom(src => src.Item.MaterialCategory.Name));
 
             CreateMap<LotsRequestSvm, Lot>();
@@ -36,12 +35,13 @@ namespace ClarkSnacks.MTS.API.Mapping
             CreateMap<Operator, OperatorResponseSvm>();
 
             CreateMap<InspectionRequestSvm, Inspection>();
+                //.ForMember(dst => dst.Lots, opt => opt.MapFrom(src => src.Lots));
+
+            CreateMap<InspectionLotRequestSvm, Lot>()
+                 .ForMember(dst => dst.Id, opt => opt.Ignore());
+
 
             CreateMap<InspectionQuestionRequestSvm, InspectionQuestion>();
-
-            CreateMap<InspectionItemRequestSvm, InspectionItem>();
-
-            CreateMap<InspectionLotRequestSvm, InspectionItemLot>();
         }
     }
 }

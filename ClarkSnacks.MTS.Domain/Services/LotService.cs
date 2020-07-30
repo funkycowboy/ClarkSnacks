@@ -55,8 +55,6 @@ namespace ClarkSnacks.MTS.Domain.Services
             {
                 LotNumber = lot.LotNumber,
                 ItemId = lot.ItemId,
-                VendorId = lot.VendorId,
-                StatusId = 1,
                 Quantity = lot.Quantity
             };
 

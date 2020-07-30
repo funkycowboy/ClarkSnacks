@@ -4,18 +4,28 @@ namespace ClarkSnacks.MTS.API.Models
 {
     public class InspectionRequestSvm
     {
-        public List<InspectionItemRequestSvm> items;
+        public List<InspectionLotRequestSvm> Lots;
         public int SupplierId { get; set; }
         public string DateReceived  { get; set; }
         public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
         public InspectionQuestionRequestSvm Questions  { get; set; }
-        public int Result  { get; set; }
-        public int Disposition  { get; set; }
+        public int ResultId  { get; set; }
+        public int DispositionId  { get; set; }
         public string DeviationNumber { get; set; }
-        public int HoldStatus { get; set; }
+        public int HoldStatusId { get; set; }
         public string MeasuresToPreventRelease  { get; set; }
-        public int InspectedBy { get; set; }
+        public int InspectedById { get; set; }
+    }
+
+    public class InspectionLotRequestSvm
+    {
+        public int Id { get; set; }
+        public string ItemId { get; set; }
+        public string LotNumber { get; set; }
+        public int Quantity { get; set; }
+        public string Comment { get; set; }
+        public int CreatedByUserId { get; set; }
     }
 
     public class InspectionQuestionRequestSvm
@@ -98,22 +108,5 @@ namespace ClarkSnacks.MTS.API.Models
       public string OverwrapFilmQuestion7Comment { get; set; }
       public string OverwrapFilmQuestion8 { get; set; }
       public string OverwrapFilmQuestion8Comment { get; set; }
-    }
-
-    public class InspectionItemRequestSvm
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<InspectionLotRequestSvm> InspectionLots { get; set; }
-        public string Description { get; set; }
-        public int TotalQuantity { get; set; }
-    }
-
-    public class InspectionLotRequestSvm
-    {
-        public int Id { get; set; }
-        public string LotNumber { get; set; }
-        public int ItemQuantity { get; set; }
-        public string Comment { get; set; }
     }
 }

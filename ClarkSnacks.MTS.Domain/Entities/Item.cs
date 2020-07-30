@@ -9,7 +9,6 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public Item(){
             VendorItems = new HashSet<VendorItem>();
             Lots = new HashSet<Lot>();
-            InspectionItems = new HashSet<InspectionItem>();
         }
 
         public int Id { get; set; }
@@ -21,6 +20,5 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public virtual ICollection<VendorItem> VendorItems { get; set; }
         public virtual MaterialCategory MaterialCategory{ get; set; }
         public virtual ICollection<Lot> Lots { get; set; }
-        public virtual ICollection<InspectionItem> InspectionItems { get; set; }
     }
 }

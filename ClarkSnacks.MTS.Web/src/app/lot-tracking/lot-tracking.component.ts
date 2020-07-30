@@ -14,7 +14,7 @@ import { GalleriaModule } from 'primeng/galleria';
 
 // models
 import { Lot, ProcessedLot } from '../models/lot';
-import { InspectionItem, InspectionLot } from '../models/inspection';
+import { InspectionItem } from '../models/inspection';
 
 // services
 import { VendorService } from '../services/vendor-service';

@@ -132,9 +132,9 @@ export class MaterialInspectionComponent implements OnInit {
             { label: 'Deviation', value: { id: 3, name: 'Deviation', code: 'deviation' } },
         ];
         this.resultOptions = [
-            { label: 'Yes', value: { id: 1, name: 'Yes', code: 'Y' } },
-            { label: 'No', value: { id: 2, name: 'No', code: 'N' } },
-            { label: 'N/A', value: { id: 3, name: 'N/A', code: 'NA' } },
+            { label: 'Yes', value: 1},
+            { label: 'No', value: 2},
+            { label: 'N/A', value: 3},
         ];       
         this.dispositionOptions = [
 
@@ -497,8 +497,6 @@ export class MaterialInspectionComponent implements OnInit {
         this.itemCounter++;
         let inspectionItem = new InspectionItem();
         inspectionItem.id = this.itemCounter;
-        inspectionItem.name = "";
-        inspectionItem.description = "";
 
         // Uncomment if we are wanting to add a default inspect lot record initially
         //let inspectionLot = new InspectionLot
@@ -519,7 +517,7 @@ export class MaterialInspectionComponent implements OnInit {
         let inspectionLot = new InspectionLot
         inspectionLot.id = this.lotCounter;
         inspectionLot.comment = "";
-        inspectionLot.itemQuantity = null;
+        inspectionLot.quantity = null;
         inspectionLot.lotNumber = "";
 
         this.pTableItem.value[rowIndex].inspectionLots.push(inspectionLot)
@@ -671,7 +669,7 @@ export class MaterialInspectionComponent implements OnInit {
             .then(items => {
                 
                 (<any>items).forEach((item) => {
-                    this.itemOptions.push({ label: item.vendorItemId + " - " + item.description, value: { id: item.vendorItemId, description: item.description, materialCategoryId: item.materialCategoryId } });
+                    this.itemOptions.push({ label: item.vendorItemId + " - " + item.description, value: { id: item.id, description: item.description, materialCategoryId: item.materialCategoryId } });
                 });
             });
   }
@@ -691,7 +689,7 @@ export class MaterialInspectionComponent implements OnInit {
   }
 
     onSubmit(value: NgForm) {
-      ;
+      
       let inspection = new Inspection();
 
       // Set shipment information
@@ -699,10 +697,21 @@ export class MaterialInspectionComponent implements OnInit {
       inspection.dateReceived = this.inspectionForm.get("dateReceived").value;
       inspection.supplierId = this.inspectionForm.get("supplier").value;
       inspection.isApprovedSupplier = this.inspectionForm.get("approvedSupplier").value;
+      inspection.inspectedById = 1;
 
       // Set Item/Lot information
-      let inspectionItems = this.pTableItem.value;
-      inspection.items = inspectionItems;
+      let inspectionItems: InspectionItem[];
+      inspectionItems = this.pTableItem.value;
+
+      let lots: InspectionLot[] = [];
+      inspectionItems.forEach(item => {
+        item.inspectionLots.forEach(lot => {
+          lot.itemId = (<any>item).item.id
+          lot.createdByUserId = 1;
+          lots.push(lot);
+        });
+      });
+      inspection.lots = lots;
 
       // Set Questions
       let questions = new InspectionQuestions();

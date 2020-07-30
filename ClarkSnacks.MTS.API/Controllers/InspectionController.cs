@@ -26,8 +26,8 @@ namespace ClarkSnacks.MTS.API.Controllers
         {
             try
             {
-                var lot = _mapper.Map<InspectionRequestSvm, Inspection>(request);
-                var result = _inspectionService.CreateInspection(lot);
+                var inspection = _mapper.Map<InspectionRequestSvm, Inspection>(request);
+                var result = _inspectionService.CreateInspection(inspection);
 
                 return Ok(result);
             }

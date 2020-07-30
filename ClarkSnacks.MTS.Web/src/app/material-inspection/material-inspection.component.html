@@ -95,12 +95,12 @@
           </td>
           <td style="text-align:center">
             <div style="display: inline-block; vertical-align:middle">
-              <p-spinner [min]="0" [max]="1000" (onBlur)="quantityChange($event,rowIndexLot2)" [ngModelOptions]="{standalone: true}" [(ngModel)]="rowData.itemQuantity"></p-spinner>
+              <p-spinner [min]="0" [max]="1000" (onBlur)="quantityChange($event,rowIndexLot2)" [ngModelOptions]="{standalone: true}" [(ngModel)]="rowData.quantity"></p-spinner>
             </div>
           </td>
           <td style="text-align:center">
             <div style="display: inline-block; vertical-align:middle">
-              <textarea pInputTextarea></textarea>
+              <textarea pInputTextarea [ngModelOptions]="{standalone: true}" [(ngModel)]="rowData.comment"></textarea>
             </div>
           </td>
           <td style="vertical-align:middle; text-align:right">
@@ -156,7 +156,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestion1" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion1Comment"></textarea></div>
       </div>
@@ -164,7 +164,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestion2" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion2Comment"></textarea></div>
       </div>
@@ -172,7 +172,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestion3" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion3Comment"></textarea></div>
       </div>
@@ -180,7 +180,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestion4" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion4Comment"></textarea></div>
       </div>
@@ -188,7 +188,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the individual cases of bags marked with item number and tracking number (lot)?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestion5" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion5Comment"></textarea></div>
       </div>
@@ -196,7 +196,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is a Certificate of Conformance available for each item & lot on the shipment?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestionQ6" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestionQ6" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion6Comment"></textarea></div>
       </div>
@@ -204,7 +204,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the Certificate of Conformance acceptable? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestionQ7" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestionQ7" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion7Comment"></textarea></div>
       </div>
@@ -212,7 +212,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestionQ8" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestionQ8" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion8Comment"></textarea></div>
       </div>
@@ -220,7 +220,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the bag printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestionQ9" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestionQ9" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion9Comment"></textarea></div>
       </div>
@@ -228,7 +228,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the bag construction match the standard on file, in regards to physical characteristics (paper type, size) functionality (gusset, glue, bottom seal)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="bagQuestionQ10" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="bagQuestionQ10" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="bagQuestion10Comment"></textarea></div>
       </div>
@@ -242,7 +242,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion1" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion1Comment"></textarea></div>
       </div>
@@ -250,7 +250,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion2" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion2Comment"></textarea></div>
       </div>
@@ -258,7 +258,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion3" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion3Comment"></textarea></div>
       </div>
@@ -266,7 +266,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers and quantities of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion4" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion4Comment"></textarea></div>
       </div>
@@ -274,7 +274,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the individual cases of cartons marked with item number?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion5" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion5Comment"></textarea></div>
       </div>
@@ -282,7 +282,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion6" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion6" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion6Comment"></textarea></div>
       </div>
@@ -290,7 +290,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the carton printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard, especially net weight & allergen/ingredient statements)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion7" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion7" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion7Comment"></textarea></div>
       </div>
@@ -298,7 +298,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the carton construction match the standard on file, in regards to physical characteristics (paper type, size, coatings) and functionality (flaps, glue, scoring)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="cartonQuestion8" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="cartonQuestion8" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="cartonQuestion8Comment"></textarea></div>
       </div>
@@ -312,7 +312,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion1" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion1Comment"></textarea></div>
       </div>
@@ -320,7 +320,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion2" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion2Comment"></textarea></div>
       </div>
@@ -328,7 +328,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion3" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion3Comment"></textarea></div>
       </div>
@@ -336,7 +336,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion4" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion4Comment"></textarea></div>
       </div>
@@ -344,7 +344,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the cores marked with item number and quantity?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion5" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion5Comment"></textarea></div>
       </div>
@@ -352,7 +352,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Have 3 samples been collected from each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion6" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion6" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion6Comment"></textarea></div>
       </div>
@@ -360,7 +360,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the overwrap printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard, especially net weight & allergen/ingredient statements)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion7" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion7" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion7Comment"></textarea></div>
       </div>
@@ -368,7 +368,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the overwrap construction match the standard on file, in regards to physical characteristics (film type, size, coatings) and functionality (seal area free of coating, wind direction is correct)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="overwrapFilmQuestion8" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="overwrapFilmQuestion8" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="overwrapFilmQuestion8Comment"></textarea></div>
       </div>
@@ -382,7 +382,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the trailer inspection complete and the trailer acceptable for receipt? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion1" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion1" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion1Comment"></textarea></div>
       </div>
@@ -390,7 +390,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the load in good condition (no damage, stretch wrap intact, no signs of pest activity or water damage)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion2" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion2" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion2Comment"></textarea></div>
       </div>
@@ -398,7 +398,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the quantity adequate to the quantity ordered? (Clark’s Purchased Items Only)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion3" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion3" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion3Comment"></textarea></div>
       </div>
@@ -406,7 +406,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Do the item numbers, quantities, tracking numbers (lot) of physical receipt match the Bill of Lading?  </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion4" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion4" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion4Comment"></textarea></div>
       </div>
@@ -414,7 +414,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Are the rolls marked with item number, tracking number and quantity of impressions?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion5" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion5" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion5Comment"></textarea></div>
       </div>
@@ -422,7 +422,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is a Certificate of Conformance available for each item & lot on the shipment?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion6" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion6" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea pla12cceholder="Comments" formControlName="contactFilmQuestion6Comment"></textarea></div>
       </div>
@@ -430,7 +430,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Is the Certificate of Conformance acceptable?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion7" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion7" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion7Comment"></textarea></div>
       </div>
@@ -439,7 +439,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Has 1 impression been collected for each item?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion8" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion8" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion8Comment"></textarea></div>
       </div>
@@ -447,7 +447,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the film printing match the standard on file, in regards to quality (print is clear and readable) & accuracy (print is identical to standard)?</div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion9" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion9" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion9Comment"></textarea></div>
       </div>
@@ -455,7 +455,7 @@
       <div class="ui-g-12">
         <div class="ui-g-6 ui-sm-12">Does the film construction match the standard on file, in regards to physical characteristics (film type, width, thickness)? </div>
         <div class="ui-g-3 ui-sm-12" style="white-space: nowrap">
-          <p-selectButton multiple="multiple" formControlName="contactFilmQuestion10" [options]="resultOptions"></p-selectButton>
+          <p-selectButton formControlName="contactFilmQuestion10" [options]="resultOptions"></p-selectButton>
         </div>
         <div class="ui-g-3 ui-sm-12"><textarea [rows]="2" [cols]="30" pInputTextarea placeholder="Comments" formControlName="contactFilmQuestion10Comment"></textarea></div>
       </div>

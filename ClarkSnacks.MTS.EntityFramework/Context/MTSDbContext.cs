@@ -7,8 +7,6 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
     public class MTSDbContext : DbContext
     {
         public virtual DbSet<Inspection> Inspections { get; set; }
-        public virtual DbSet<InspectionItem> InspectionItems { get; set; }
-        public virtual DbSet<InspectionItemLot> InspectionItemLots{ get; set; }
         public virtual DbSet<InspectionQuestion> InspectionQuestions{ get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Lot> Lots { get; set; }
@@ -23,58 +21,26 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
         {
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         { 
-
             modelBuilder.Entity<Inspection>(entity =>
             { 
                 entity.ToTable("Inspection");
 
                 entity.HasKey(x => x.Id);
 
-                entity.HasOne(x => x.Inspector)
+                entity.Property(e => e.DateInspected)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(x => x.Operator)
                    .WithMany(x => x.Inspections)
                    .HasForeignKey(x => x.InspectedById);
 
-                entity.HasOne(x => x.Supplier)
+                entity.HasOne(x => x.Vendor)
                    .WithMany(x => x.Inspections)
-                   .HasForeignKey(x => x.SupplierId);
-            });
-
-            modelBuilder.Entity<InspectionItem>(entity =>
-            {
-                entity.ToTable("InspectionItem");
-
-                entity.HasKey(x => x.Id);
-
-                entity.Property(e => e.DateCreated)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(x => x.Inspection)
-                   .WithMany(x => x.InspectionItems)
-                   .HasForeignKey(x => x.InspectionId);
-
-                entity.HasOne(x => x.Item)
-                   .WithMany(x => x.InspectionItems)
-                   .HasForeignKey(x => x.ItemId);
-            });
-
-            modelBuilder.Entity<InspectionItemLot>(entity =>
-            {
-                entity.ToTable("InspectionItemLot");
-
-                entity.HasKey(x => x.Id);
-
-                entity.HasOne(x => x.InspectionItem)
-                   .WithMany(x => x.InspectionItemLots)
-                   .HasForeignKey(x => x.InspectionItemId);
-
-                entity.Property(e => e.DateCreated)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-            });
+                   .HasForeignKey(x => x.VendorId);
+            });            
 
             modelBuilder.Entity<InspectionQuestion>(entity =>
             {
@@ -123,17 +89,21 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.StatusId)
+                   .HasColumnType("int")
+                   .HasDefaultValueSql("(1)");
+
                 entity.HasOne(x => x.Item)
                     .WithMany(x => x.Lots)
                     .HasForeignKey(x => x.ItemId);
 
-                entity.HasOne(x => x.Vendor)
-                   .WithMany(x => x.Lots)
-                   .HasForeignKey(x => x.VendorId);
-
                 entity.HasOne(x => x.Operator)
                    .WithMany(x => x.Lots)
                    .HasForeignKey(x => x.CreatedByUserId);
+
+                //entity.HasOne(x => x.Inspection)
+                //   .WithMany(x => x.Lots)
+                //   .HasForeignKey(x => x.InspectionId);
             });
 
             modelBuilder.Entity<MaterialCategory>(entity =>
@@ -162,6 +132,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.ToTable("Operator");
 
                 entity.HasKey(x => x.Id);
+
+                entity.HasMany(x => x.Inspections)
+                   .WithOne(x => x.Operator)
+                   .HasForeignKey("InspectedById");
 
             });
 
@@ -198,7 +172,6 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.Property(e => e.StatusId)
                     .IsRequired()
                     .HasColumnType("int");
-
             });
 
             modelBuilder.Entity<VendorItem>(entity =>

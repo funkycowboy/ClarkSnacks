@@ -8,12 +8,12 @@ namespace ClarkSnacks.MTS.Domain.Entities
     {
         public Inspection()
         {
-            InspectionItems = new HashSet<InspectionItem>();
+            //Lots = new HashSet<Lot>();
         }
 
         public int Id { get; set; }
         public DateTime DateReceived { get; set; }
-        public int SupplierId { get; set; }
+        public int VendorId { get; set; }
         public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
         public int ResultId { get; set; }
@@ -25,10 +25,10 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public int InspectedById { get; set; }
 
         // Navigation Properties
-        public virtual Operator Inspector { get; set; }
+        public virtual Operator Operator { get; set; }
         public virtual InspectionQuestion InspectionQuestion { get; set; }
-        public virtual Vendor Supplier { get; set; } 
-        public virtual ICollection<InspectionItem> InspectionItems { get; set; }
+        public virtual Vendor Vendor { get; set; } 
+       // public virtual ICollection<Lot> Lots { get; set; }
     }
 
     public class InspectionQuestion
@@ -119,37 +119,5 @@ namespace ClarkSnacks.MTS.Domain.Entities
 
         // Navigation Properties
         public virtual Inspection Inspection { get; set; }
-    }
-
-    public class InspectionItem
-    {
-        public InspectionItem()
-        {
-            InspectionItemLots = new HashSet<InspectionItemLot>();
-        }
-
-        public int Id { get; set; }
-        public int InspectionId { get; set; }
-        public int ItemId { get; set; }
-        public DateTime DateCreated { get; set; }
-
-        // Navigation Properties
-        public virtual Inspection Inspection { get; set; }
-        public virtual Item Item { get; set; }
-        public virtual ICollection<InspectionItemLot> InspectionItemLots { get; set; }
-    }
-
-    public class InspectionItemLot
-    {
-        public int Id { get; set; }
-        public int InspectionItemId { get; set; }
-        public int LotId { get; set; }
-        public int Quantity { get; set; }
-        public DateTime DateCreated { get; set; }
-
-        // Navigation Properties
-        public virtual Lot Lot { get; set; }
-        public virtual InspectionItem InspectionItem { get; set; }
-
     }
 }

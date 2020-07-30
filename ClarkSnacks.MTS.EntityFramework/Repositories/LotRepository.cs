@@ -23,8 +23,7 @@ namespace ClarkSnacks.MTS.EntityFramework.Repositories
         {
             return _context.Lots
                  .Include(x => x.Item)
-                    .ThenInclude(x => x.MaterialCategory)
-                 .Include(x => x.Vendor);                                
+                    .ThenInclude(x => x.MaterialCategory);                             
         }
 
         /// <summary>
