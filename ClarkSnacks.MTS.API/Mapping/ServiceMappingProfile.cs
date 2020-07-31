@@ -16,7 +16,9 @@ namespace ClarkSnacks.MTS.API.Mapping
         {
             CreateMap<Lot, LotsResponseSvm>()
                 .ForMember(dst => dst.ItemDescription, opt => opt.MapFrom(src => src.Item.Description))
-                .ForMember(dst => dst.MaterialCategoryName, opt => opt.MapFrom(src => src.Item.MaterialCategory.Name));
+                .ForMember(dst => dst.MaterialCategoryName, opt => opt.MapFrom(src => src.Item.MaterialCategory.Name))
+                .ForMember(dst => dst.VendorName, opt => opt.MapFrom(src => src.Inspection.Vendor.Name))
+                .ForMember(dst => dst.DateReceived, opt => opt.MapFrom(src => src.Inspection.DateReceived));
 
             CreateMap<LotsRequestSvm, Lot>();
 
