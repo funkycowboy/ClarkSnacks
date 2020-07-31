@@ -3,7 +3,7 @@
 <p-toast position="top-right"></p-toast>
 <!-- Step1 : Shipment Information -->
 <p style="font-weight:bold"><span class="ui-state-default fa fa-arrow-circle-right"></span> Step 1. Provide the following shipment information.</p>
-<!--Valid Form: {{inspectionForm.valid}}-->
+
 <form [formGroup]="inspectionForm" (ngSubmit)="onSubmit(inspectionForm.value)">
 
   <div class="ui-g" style="background-color: #ececec; border-radius:5px;">
@@ -532,7 +532,7 @@
 
       <p-footer>
         <button type="button" pButton icon="fa fa-times" label="Cancel" (click)="cancel()"></button>&nbsp;
-        <button type="submit" pButton icon="fa fa-check" label="Save" [disabled]="!inspectionForm.valid"></button>
+        <button type="submit" pButton icon="fa fa-check" label="Save" [disabled]="this.selectedOverallResult.name === undefined || !inspectionForm.valid"></button>
       </p-footer>
     </p-dialog>
     </div>

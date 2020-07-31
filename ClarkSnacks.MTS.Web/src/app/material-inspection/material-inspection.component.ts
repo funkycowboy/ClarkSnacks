@@ -243,7 +243,7 @@ export class MaterialInspectionComponent implements OnInit {
               overwrapFilmQuestion8Comment: new FormControl('')
             }),
             inspectionFormStep4: new FormGroup({
-              result: new FormControl(''),
+              result: new FormControl('', Validators.required),
               disposition: new FormControl(''),
               deviationNumber: new FormControl(''),
               holdStatus: new FormControl(),
