@@ -5,7 +5,7 @@ namespace ClarkSnacks.MTS.Domain.Entities
     public class Lot
     {
         public int Id { get; set; }
-        public int InspectionId { get; set; }
+        public int? InspectionId { get; set; }
         public string LotNumber { get; set; }
         public int? Quantity { get; set; }
         public int ItemId { get; set; }
