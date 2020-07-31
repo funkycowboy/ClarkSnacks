@@ -490,13 +490,13 @@
           </div>
           <div class="ui-g-6 ui-sm-12">
             <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
-            <p-selectButton formControlName="result" name="InspectionResult" [options]="overallResultOptions" (onChange)="showDescription($event)"></p-selectButton>
+            <p-selectButton formControlName="result" name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
           </div>
         </div>
-        <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+        <div *ngIf="selectedOverallResult && (selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation')">
           <p style="font-weight: bold">Please provide the additional information below.</p>
         </div>
-        <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected'">
+        <div class="ui-g-12" *ngIf="selectedOverallResult && selectedOverallResult.code == 'rejected'">
           <div class="ui-g-4">
             <label for="name">Disposition:</label>
           </div>
@@ -504,7 +504,7 @@
             <p-dropdown formControlName="disposition" name="Disposition" [options]="dispositionOptions"></p-dropdown>
           </div>
         </div>
-        <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'deviation'">
+        <div class="ui-g-12" *ngIf="selectedOverallResult && selectedOverallResult.code == 'deviation'">
           <div class="ui-g-4">
             <label for="name">Deviation #:</label>
           </div>
@@ -512,7 +512,7 @@
             <input formControlName="deviationNumber" #deviationnumber type="text" pInputText />
           </div>
         </div>
-        <div class="ui-g-12" *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">
+        <div class="ui-g-12" *ngIf="selectedOverallResult && (selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation')">
           <div class="ui-g-4">
             <label for="name">Hold Status:</label>
           </div>

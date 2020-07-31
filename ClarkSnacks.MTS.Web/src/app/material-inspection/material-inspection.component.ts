@@ -462,7 +462,7 @@ export class MaterialInspectionComponent implements OnInit {
       this.inspectionForm.get("inspectionFormStep4").get('result').valueChanges
         .subscribe(x => {
           
-          if (x.name) {
+          if (x != null && x.name) {
             
 
             switch (x.name.toLowerCase()) {
