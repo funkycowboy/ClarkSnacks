@@ -490,7 +490,7 @@
           </div>
           <div class="ui-g-6 ui-sm-12">
             <span style="font-size:12px; font-weight: bold">{{resultDescription}}</span>
-            <p-selectButton formControlName="result" name="InspectionResult" [options]="overallResultOptions" [(ngModel)]="selectedOverallResult" (onChange)="showDescription($event)"></p-selectButton>
+            <p-selectButton formControlName="result" name="InspectionResult" [options]="overallResultOptions" (onChange)="showDescription($event)"></p-selectButton>
           </div>
         </div>
         <div *ngIf="selectedOverallResult.code == 'rejected' || selectedOverallResult.code == 'deviation'">

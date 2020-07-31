@@ -34,8 +34,8 @@ namespace ClarkSnacks.MTS.API.Mapping
 
             CreateMap<Operator, OperatorResponseSvm>();
 
-            CreateMap<InspectionRequestSvm, Inspection>();
-                //.ForMember(dst => dst.Lots, opt => opt.MapFrom(src => src.Lots));
+            CreateMap<InspectionRequestSvm, Inspection>()
+                .ForMember(dst => dst.InspectionQuestion, opt => opt.MapFrom(src => src.Questions));
 
             CreateMap<InspectionLotRequestSvm, Lot>()
                  .ForMember(dst => dst.Id, opt => opt.Ignore());

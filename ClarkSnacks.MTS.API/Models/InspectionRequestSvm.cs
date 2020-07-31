@@ -11,9 +11,9 @@ namespace ClarkSnacks.MTS.API.Models
         public bool IsApprovedSupplier { get; set; }
         public InspectionQuestionRequestSvm Questions  { get; set; }
         public int ResultId  { get; set; }
-        public int DispositionId  { get; set; }
+        public int? DispositionId  { get; set; }
         public string DeviationNumber { get; set; }
-        public int HoldStatusId { get; set; }
+        public int? HoldStatusId { get; set; }
         public string MeasuresToPreventRelease  { get; set; }
         public int InspectedById { get; set; }
     }
@@ -21,7 +21,7 @@ namespace ClarkSnacks.MTS.API.Models
     public class InspectionLotRequestSvm
     {
         public int Id { get; set; }
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
         public string LotNumber { get; set; }
         public int Quantity { get; set; }
         public string Comment { get; set; }

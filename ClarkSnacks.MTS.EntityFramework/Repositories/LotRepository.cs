@@ -21,9 +21,9 @@ namespace ClarkSnacks.MTS.EntityFramework.Repositories
         /// <returns></returns>
         public IQueryable<Lot> Get()
         {
-            return _context.Lots
-                 .Include(x => x.Item)
-                    .ThenInclude(x => x.MaterialCategory);                             
+            return _context.Lots;
+                 //.Include(x => x.Item)
+                 //   .ThenInclude(x => x.MaterialCategory);                             
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace ClarkSnacks.MTS.EntityFramework.Repositories
         {
             return _context.ProcessedLots
                  .Include(x => x.Lot)
-                    .ThenInclude(x => x.Item)
-                        .ThenInclude(x => x.MaterialCategory)
+                    //.ThenInclude(x => x.Item)
+                    //    .ThenInclude(x => x.MaterialCategory)
                  .Include(x => x.Operator);
         }
 

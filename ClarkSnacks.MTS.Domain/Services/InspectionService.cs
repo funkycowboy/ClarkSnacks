@@ -8,10 +8,12 @@ namespace ClarkSnacks.MTS.Domain.Services
     {
 
         private readonly IInspectionRepository _inspectionRepository;
+        private readonly ILotRepository _lotRepository;
 
-        public InspectionService(IInspectionRepository inspectionRepository)
+        public InspectionService(IInspectionRepository inspectionRepository, ILotRepository lotRepository)
         {
             _inspectionRepository = inspectionRepository;
+            _lotRepository = lotRepository;
         }
 
         /// <summary>

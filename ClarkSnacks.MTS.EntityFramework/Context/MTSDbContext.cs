@@ -39,7 +39,7 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
 
                 entity.HasOne(x => x.Vendor)
                    .WithMany(x => x.Inspections)
-                   .HasForeignKey(x => x.VendorId);
+                   .HasForeignKey(x => x.SupplierId);                
             });            
 
             modelBuilder.Entity<InspectionQuestion>(entity =>
@@ -47,6 +47,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.ToTable("InspectionQuestion");
 
                 entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.DateCreated)
+                   .HasColumnType("datetime")
+                   .HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(x => x.Inspection)
                   .WithOne(x => x.InspectionQuestion)
@@ -101,9 +105,7 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                    .WithMany(x => x.Lots)
                    .HasForeignKey(x => x.CreatedByUserId);
 
-                //entity.HasOne(x => x.Inspection)
-                //   .WithMany(x => x.Lots)
-                //   .HasForeignKey(x => x.InspectionId);
+                
             });
 
             modelBuilder.Entity<MaterialCategory>(entity =>

@@ -8,12 +8,12 @@ namespace ClarkSnacks.MTS.Domain.Entities
     {
         public Inspection()
         {
-            //Lots = new HashSet<Lot>();
+            Lots = new HashSet<Lot>();
         }
 
         public int Id { get; set; }
         public DateTime DateReceived { get; set; }
-        public int VendorId { get; set; }
+        public int SupplierId { get; set; }
         public string BOLShipmentNumber { get; set; }
         public bool IsApprovedSupplier { get; set; }
         public int ResultId { get; set; }
@@ -28,7 +28,7 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public virtual Operator Operator { get; set; }
         public virtual InspectionQuestion InspectionQuestion { get; set; }
         public virtual Vendor Vendor { get; set; } 
-       // public virtual ICollection<Lot> Lots { get; set; }
+        public virtual ICollection<Lot> Lots { get; set; }
     }
 
     public class InspectionQuestion

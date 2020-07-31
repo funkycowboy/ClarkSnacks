@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroupDirective, FormGroup, Validators, NgForm } from '@angular/forms';
 import { PageScrollService } from 'ngx-page-scroll-core';
 // primeng
 import { ConfirmationService, Message, MessageService, SelectItem } from 'primeng/api';
@@ -28,7 +28,8 @@ export class MaterialInspectionComponent implements OnInit {
     // Define ViewChilds
     @ViewChild("dtItem", { static: false }) public pTableItem: Table;
     @ViewChild('addNewItem', { read: false, static: false }) addNewItemButton: ElementRef;
-    @ViewChild('addNewLot', { read: false, static: false }) addNewLotButton: ElementRef;
+  @ViewChild('addNewLot', { read: false, static: false }) addNewLotButton: ElementRef;
+  @ViewChild(FormGroupDirective, { read: false, static: false }) formGroupDirective: FormGroupDirective;
     
 
     // Define select list options
@@ -643,13 +644,15 @@ export class MaterialInspectionComponent implements OnInit {
 
     // Begin load methods
 
-    loadVendors() : void {
-        this.vendorService.getVendors()
-            .then(vendors => {
-                (<any>vendors).forEach((item) => {
-                    this.supplierOptions.push({ label: item.name, value: item.id });
-                });
+  loadVendors(): void {
+    this.supplierOptions = [];
+    this.supplierOptions.push({ label: '-Select One-', value: '' });
+    this.vendorService.getVendors()
+        .then(vendors => {
+            (<any>vendors).forEach((item) => {
+                this.supplierOptions.push({ label: item.name, value: item.id });
             });
+        });
     }
 
     loadCategories() : void {
@@ -830,9 +833,17 @@ export class MaterialInspectionComponent implements OnInit {
           this.messageService.add({ severity: 'info', summary: 'Confirmation', detail: 'The inspection has been saved.' });
           this.displayDialog = false;
           this.goToStep1();
+          this.resetForm();
         },() => {
             this.messageService.add({ severity: 'error', summary: 'Confirmation', detail: 'There was an error saving the inspection.' });
         });
+
+    }
+
+    resetForm(): void {
+      this.inspectionForm.reset();
+      this.pTableItem.reset();
+      this.pTableItem.value.length = 0;
     }
 
     cancel(): void {
