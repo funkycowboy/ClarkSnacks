@@ -171,7 +171,7 @@ export class LotTrackingComponent implements OnInit {
 
     itemChange(event: any): void {
         let lastLotLogged = <any>this.lotLogs[0];
-        if (lastLotLogged.itemDescription !== event.value.description) {
+        if (lastLotLogged.itemDescription.split(" - ")[1] !== event.value.description) {
             this.confirmationService.confirm({
                 message: 'The item selected is different than the item of the last lot processed. Are you sure you want to continue?',
                 header: 'Confirmation',
