@@ -25,7 +25,6 @@ export class InspectionService {
     // Save Inspection
     saveInspection(inspection: Inspection) {
         let url = this.baseurl + this.controller;
-        debugger;
         let promise = new Promise((resolve, reject) => {
           this.http.post(url, JSON.stringify(inspection), this.httpOptions)
                 .toPromise()

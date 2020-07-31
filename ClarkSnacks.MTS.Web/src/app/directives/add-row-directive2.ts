@@ -10,7 +10,6 @@ export class AddRowDirective2 {
 
     @HostListener('click', ['$event'])
     onClick(event: Event) {
-        debugger
         // Insert a new row
         this.table.value.push(this.newRow2);
 

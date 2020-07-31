@@ -102,7 +102,6 @@ export class LotTrackingComponent implements OnInit {
         this.loadLotLog();
         this.loadVendorLableImages();
         this.initializeLotLogHeaders();
-        debugger
         this.productionLine = this.route.snapshot.queryParamMap.get("pl")
   }
 
@@ -128,7 +127,6 @@ export class LotTrackingComponent implements OnInit {
     }
 
     setUserCategoryValidators(): void {
-        debugger
         this.lotTrackingForm.get('lotNumber').valueChanges
             .subscribe(x => {                
                 if (typeof x === 'string') {
@@ -152,7 +150,6 @@ export class LotTrackingComponent implements OnInit {
     // Begin Change Events
 
     operatorChange(event): void {
-        debugger
         this.selectedOperator = event.value;
     }
 
@@ -173,7 +170,6 @@ export class LotTrackingComponent implements OnInit {
     }
 
     itemChange(event: any): void {
-        debugger
         let lastLotLogged = <any>this.lotLogs[0];
         if (lastLotLogged.itemDescription !== event.value.description) {
             this.confirmationService.confirm({
@@ -333,7 +329,6 @@ export class LotTrackingComponent implements OnInit {
            .then(lots => {
                this.lotLogs = (<any>lots);
              this.lotLogs.forEach((x) => {
-                 debugger
                (<any>x).dateProcessed = moment.utc((<any>x).dateProcessed).tz("America/New_York").format("MM/DD/YYYY, hh:mm a");
                (<any>x).itemDescription = (<any>x).vendorItemId + " - " + (<any>x).itemDescription
                })
@@ -352,7 +347,6 @@ export class LotTrackingComponent implements OnInit {
     }
 
     onSubmit(value: any) {
-        debugger
         let processedLot = new ProcessedLot();
         processedLot.lotId = value.lotNumber.id;
         processedLot.lotNumber = this.selectedLotNumber;
@@ -405,7 +399,6 @@ export class LotTrackingComponent implements OnInit {
     }
 
     filterByMaterialCategory(event: any) {
-      debugger
       this.pLotLog.filter(event.value.name, "materialCategoryName", "");
     }
 }

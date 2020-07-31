@@ -19,7 +19,6 @@ export class ItemService {
     // Get items by vendor
     getItems(selectedSupplier:number){
         let url = this.baseurl + this.controller + "/vendors/" + selectedSupplier;
-        debugger
         let promise = new Promise((resolve, reject) => {
             this.http.get(url)
                 .toPromise()
@@ -34,7 +33,6 @@ export class ItemService {
     // Get items by material category
     getItemsByMaterialCategory(materialCategoryId: number) {
         let url = this.baseurl + this.controller + "/material-category/" + materialCategoryId;
-        debugger
         let promise = new Promise((resolve, reject) => {
             this.http.get(url)
                 .toPromise()

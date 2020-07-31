@@ -33,7 +33,6 @@ export class OperatorService {
     // Get items by material category
     getItemsByMaterialCategory(materialCategoryId: number) {
         let url = this.baseurl + this.controller + "/material-category/" + materialCategoryId;
-        debugger
         let promise = new Promise((resolve, reject) => {
             this.http.get(url)
                 .toPromise()
