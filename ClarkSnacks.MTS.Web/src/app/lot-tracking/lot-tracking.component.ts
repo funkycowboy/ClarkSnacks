@@ -28,8 +28,8 @@ import { OperatorService } from '../services/operator-service';
 @Component({
   selector: 'app-lot-tracking',
   templateUrl: './lot-tracking.component.html',
-    styleUrls: ['./lot-tracking.component.css'],
-    providers: [MessageService]
+  styleUrls: ['./lot-tracking.component.css'],
+  providers: [MessageService]
 })
 export class LotTrackingComponent implements OnInit {
 
@@ -93,14 +93,15 @@ export class LotTrackingComponent implements OnInit {
                 numVisible: 1
             }
         ];
-    }
+  }
+
+  getVisibleItems() { return this.supplierOptions.length < 4 ? this.supplierOptions.length : 4; } 
 
     ngOnInit() {
         this.configureForm();
         this.setUserCategoryValidators();
         this.loadOptions();
         this.loadLotLog();
-        this.loadVendorLableImages();
         this.initializeLotLogHeaders();
         this.productionLine = this.route.snapshot.queryParamMap.get("pl")
   }
@@ -139,13 +140,15 @@ export class LotTrackingComponent implements OnInit {
 
     loadVendorLableImages(): void {
 
+      this.supplierOptions.forEach(x => {
+        
         let image = new Object();
-        (<any>image).previewImageSrc = "/assets/supplier-labels/belnmark.jpg";
-        (<any>image).thumbnailImageSrc = "/assets/supplier-labels/belnmark.jpg";
-        (<any>image).title = "Belmark";
-        (<any>image).alt = "Belmark Shipping Label";
+        (<any>image).previewImageSrc = x.label.split(" ").join("-").toLowerCase();
+        (<any>image).title = x.label;
+        (<any>image).alt = x.label + " Shipping Label";
 
         this.supplierShippingLabelImages.push(image);
+      });
     }
 
     // Begin Change Events
@@ -261,17 +264,21 @@ export class LotTrackingComponent implements OnInit {
 
     // Begin load data methods
 
-    loadOptions(): void {
+  loadOptions(): void {
+        this.loadVendors();
         this.loadOperators();
         this.loadMaterialCategories();
     }
 
     loadVendors(): void {
         this.vendorService.getVendors()
-            .then(vendors => {
+          .then(vendors => {
                 (<any>vendors).forEach((vendor) => {
                     this.supplierOptions.push({ label: vendor.name, value: { id: vendor.id, name: vendor.name} });
                 });
+
+                this.loadVendorLableImages();
+
             });
     }
 

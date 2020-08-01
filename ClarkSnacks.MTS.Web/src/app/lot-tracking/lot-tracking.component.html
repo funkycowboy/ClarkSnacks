@@ -62,17 +62,45 @@
     </div>
   </div>
 
-  <p-dialog header="Supplier Label Information" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true">
-    <div class="ui-g ui-fluid">
-      <div class="ui-g-12">
-        <img src="assets/supplier-labels/belmark.jpg" />
+ <p-dialog header="Supplier Label Information" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '90%'}">
+  <p-carousel [value]="supplierShippingLabelImages">
+      <!--<p-header>
+        <h3>Supplier Labels</h3>
+      </p-header>-->
+      <ng-template let-label pTemplate="item">
+        <div class="label-details">
+          <div class="p-grid p-nogutter">
+            <div class="p-col-12 label-data">
+              <div class="label-title">{{label.title}}</div>
+                <!--<div class="label-buttons">
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-star"></button>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
+              </div>-->
+            </div>
+            <div class="p-col-12">
+              <img src="assets/supplier-labels/label-{{label.previewImageSrc}}.png" style="width:500px" alt="{{label.alt}}" />
+            </div>
+
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+
+  <p-footer>
+    <div class="p-grid">
+      <div class="p-col-3" style="margin: 10px; padding:0"><h4>Legend:</h4></div>
+      <div class="p-col-2" style="margin: 10px;padding:0;background-color:#6ecd14; border-radius: 10px; color: #FFF; text-align: center"><h4>Item Number</h4></div>
+      <div class="p-col-2" style="margin: 10px;padding:0;background-color:#f99b2b; border-radius: 10px; color: #FFF; text-align: center"><h4>Lot Number</h4></div>
+      <div class="p-col p-align-center" style="margin: 10px;">
+        <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>
       </div>
     </div>
+  </p-footer>
 
-    <p-footer>
-      <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>&nbsp;
-    </p-footer>
   </p-dialog>
+
+  
 
   <div class="footer">
     <div style="display:inline-block; width: 50%">
@@ -136,8 +164,8 @@
     </div>
   </div>
   <!--</p-sidebar>-->
-  <!-- Supplier Image-->
-  <!--<p-galleria [(value)]="supplierShippingLabelImages" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}" [numVisible]="5">
+   <!--Supplier Image-->
+  <!--<p-galleria value="supplierShippingLabelImages" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}" [numVisible]="5">
     <ng-template pTemplate="item" let-item>
       <img [src]="item.previewImageSrc" style="width: 100%; display: block;" />
     </ng-template>
@@ -151,7 +179,6 @@
       <p>{{item.alt}}</p>
     </ng-template>
   </p-galleria>-->
-  <!-- Confirm Dialogs -->
 
 </form>
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

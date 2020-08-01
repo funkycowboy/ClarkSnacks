@@ -31,3 +31,59 @@ label
 /deep/ .ui-dropdown {
   min-width: 300px !important;
 }
+
+
+
+/deep/ .ui-carousel .ui-carousel-content .ui-carousel-item .label-details > .p-grid {
+  border: 1px solid #b3c2ca;
+  border-radius: 3px;
+  margin: 0.3em;
+  text-align: center;
+  padding: 2em 0 2.25em 0;
+}
+
+
+/deep/ .ui-carousel .ui-carousel-content .ui-carousel-item .label-data .label-title {
+  font-weight: 700;
+  font-size: 20px;
+  padding:20px;
+}
+
+
+/deep/ .ui-carousel .ui-carousel-content .ui-carousel-item .label-data .label-subtitle {
+  margin: 0.25em 0 2em 0;
+}
+
+
+/deep/ .ui-carousel .ui-carousel-content .ui-carousel-item .label-data button {
+  margin-left: 0.5em;
+}
+
+
+  /deep/ .ui-carousel .ui-carousel-content .ui-carousel-item .label-data button:first-child {
+    margin-left: 0;
+  }
+
+
+/deep/ .ui-carousel.custom-carousel .ui-carousel-dot-icon {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50%;
+}
+
+
+/deep/ .ui-carousel.ui-carousel-horizontal .ui-carousel-content .ui-carousel-item.ui-carousel-item-start .label-details > .p-grid {
+  margin-left: 0.6em;
+}
+
+
+/deep/ .ui-carousel.ui-carousel-horizontal .ui-carousel-content .ui-carousel-item.ui-carousel-item-end .label-details > .p-grid {
+  margin-right: 0.6em;
+}
+
+/deep/ .ui-carousel-dots-container {
+  top: 20px;
+  position: absolute;
+  left: 0;
+  right:0;
+}

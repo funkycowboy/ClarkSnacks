@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -48,6 +48,7 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { SidebarModule } from 'primeng/sidebar';
 import { GalleriaModule } from 'primeng/galleria';
+import { CarouselModule } from 'primeng/carousel';
 
 
 @NgModule({
@@ -59,6 +60,9 @@ import { GalleriaModule } from 'primeng/galleria';
         AddRowDirective,
         AddRowDirective2,
         LotTrackingComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   imports: [
     BrowserModule,
@@ -79,14 +83,15 @@ import { GalleriaModule } from 'primeng/galleria';
     TooltipModule,
     InputTextareaModule,
     SpinnerModule,
-      HttpClientModule,
-      NgxPageScrollCoreModule.forRoot({ scrollOffset: 130 }),
-      ConfirmDialogModule,
-      MessageModule,
-      MessagesModule,
-      ToastModule,
-      SidebarModule,
-      GalleriaModule
+    HttpClientModule,
+    NgxPageScrollCoreModule.forRoot({ scrollOffset: 130 }),
+    ConfirmDialogModule,
+    MessageModule,
+    MessagesModule,
+    ToastModule,
+    SidebarModule,
+    GalleriaModule,
+    CarouselModule
   ],
     providers: [
         VendorService,
