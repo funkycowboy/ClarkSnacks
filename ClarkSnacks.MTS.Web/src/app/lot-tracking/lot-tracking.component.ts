@@ -111,7 +111,8 @@ export class LotTrackingComponent implements OnInit {
             materialCategory: new FormControl('', Validators.required),
             item: new FormControl('', Validators.required),
             lotNumber: new FormControl('', Validators.required),
-            lastCaseOnPalette: new FormControl('')
+            lastCaseOnPalette: new FormControl(''),
+            filterLotLogBy: new FormControl('')
         });
     }
 
@@ -157,9 +158,8 @@ export class LotTrackingComponent implements OnInit {
       this.selectedMaterialCategory = event.value.id;
       this.loadItems(this.selectedMaterialCategory);
       this.selectedSupplierLabelImageName = "belmark";
-
-      // filter lot log
-      this.pLotLog.filter(event.value.name, "materialCategoryName", "");
+      
+      this.filterLotLog(event.value.name);      
     }
 
     vendorChange(event): void {
@@ -223,7 +223,23 @@ export class LotTrackingComponent implements OnInit {
       }
 
         
-    }
+  }
+
+  filterLotLog(materialCategory: any): void {
+    // enable/disable ui-state-active class
+    var list: string[] = ["Carton", "Bag", "Overwrap Film", "Contact Film"];
+
+    list.forEach(x => {
+      if (x === materialCategory) {
+        document.querySelectorAll('div[aria-label="' + x + '"]')[0].classList.add("ui-state-active");
+      } else {
+        document.querySelectorAll('div[aria-label="' + x + '"]')[0].classList.remove("ui-state-active");
+      }
+    });
+
+    // filter lot log dynamically
+    this.pLotLog.filter(materialCategory, "materialCategoryName", "");
+  }
 
     // End Change Events
 
