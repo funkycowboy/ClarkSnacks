@@ -29,6 +29,21 @@ export class VendorService {
                 );
         });
         return promise;
+  }
+
+    // Get all vendors  by Material CategoryId
+    getVendorsByMaterialCategory(materialCategoryId: number) {
+      let url = this.baseurl + this.controller;
+
+      let promise = new Promise((resolve, reject) => {
+        this.http.get(url + "/categories/" + materialCategoryId)
+          .toPromise()
+          .then(
+            res => { resolve(res); },
+            msg => { reject(msg); }
+          );
+      });
+      return promise;
     }
 
     private handleError(error: any): Promise<any> {

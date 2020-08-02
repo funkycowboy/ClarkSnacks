@@ -9,6 +9,7 @@ namespace ClarkSnacks.MTS.Domain.Entities
 
         public MaterialCategory(){
             Items = new HashSet<Item>();
+            VendorMaterialCategories = new HashSet<VendorMaterialCategory>();
         }
 
         public int Id { get; set; }
@@ -16,5 +17,6 @@ namespace ClarkSnacks.MTS.Domain.Entities
         public int StatusId { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<VendorMaterialCategory> VendorMaterialCategories { get; set; }
     }
 }

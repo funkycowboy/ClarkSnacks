@@ -35,6 +35,7 @@ export class LotTrackingComponent implements OnInit {
 
     @ViewChild("dtLotLog", { static: false }) public pLotLog: Table;
 
+    
     supplierOptions: SelectItem[] = [];
     itemOptions: SelectItem[] = [];
     lotOptions: SelectItem[] = [];
@@ -63,6 +64,7 @@ export class LotTrackingComponent implements OnInit {
 
     responsiveOptions: any[]
     supplierShippingLabelImages: any[] = [];
+    supplierLabelList: any[] = [];
 
     productionLine: string;
 
@@ -93,9 +95,7 @@ export class LotTrackingComponent implements OnInit {
                 numVisible: 1
             }
         ];
-  }
-
-  getVisibleItems() { return this.supplierOptions.length < 4 ? this.supplierOptions.length : 4; } 
+    }
 
     ngOnInit() {
         this.configureForm();
@@ -104,7 +104,7 @@ export class LotTrackingComponent implements OnInit {
         this.loadLotLog();
         this.initializeLotLogHeaders();
         this.productionLine = this.route.snapshot.queryParamMap.get("pl")
-  }
+    }
 
     configureForm(): void {
         this.lotTrackingForm = new FormGroup({
@@ -138,17 +138,23 @@ export class LotTrackingComponent implements OnInit {
             });
     }
 
-    loadVendorLableImages(): void {
+    loadVendorLableImages(materialCategoryId: number): void {
 
-      this.supplierOptions.forEach(x => {
-        
-        let image = new Object();
-        (<any>image).previewImageSrc = x.label.split(" ").join("-").toLowerCase();
-        (<any>image).title = x.label;
-        (<any>image).alt = x.label + " Shipping Label";
+      this.supplierShippingLabelImages = [];
+      debugger
+      this.vendorService.getVendorsByMaterialCategory(materialCategoryId)
+        .then(vendors => {
+          (<any>vendors).forEach((vendor) => {
+            if (vendor) {
+              let image = new Object();
+              (<any>image).previewImageSrc = vendor.name.split(" ").join("-").toLowerCase();
+              (<any>image).title = vendor.name;
+              (<any>image).alt = vendor.name + " Shipping Label";
 
-        this.supplierShippingLabelImages.push(image);
-      });
+              this.supplierShippingLabelImages.push(image);
+            }
+          });
+        });
     }
 
     // Begin Change Events
@@ -160,14 +166,12 @@ export class LotTrackingComponent implements OnInit {
     materialCategoryChange(event): void {
       this.selectedMaterialCategory = event.value.id;
       this.loadItems(this.selectedMaterialCategory);
-      this.selectedSupplierLabelImageName = "belmark";
-      
-      this.filterLotLog(event.value.name);      
+      this.filterLotLog(event.value.name);
+      this.loadVendorLableImages(this.selectedMaterialCategory);
     }
 
     vendorChange(event): void {
         this.selectedSupplier = event.value;
-        this.selectedSupplierLabelImageName = event.value.name.replace(" ", "-").toLowerCase();
         this.loadLots(this.selectedSupplier.id);
         this.loadItems(this.selectedSupplier.id);
     }
@@ -228,21 +232,21 @@ export class LotTrackingComponent implements OnInit {
         
   }
 
-  filterLotLog(materialCategory: any): void {
-    // enable/disable ui-state-active class
-    var list: string[] = ["Carton", "Bag", "Overwrap Film", "Contact Film"];
+    filterLotLog(materialCategory: any): void {
+      // enable/disable ui-state-active class
+      var list: string[] = ["Carton", "Bag", "Overwrap Film", "Contact Film"];
 
-    list.forEach(x => {
-      if (x === materialCategory) {
-        document.querySelectorAll('div[aria-label="' + x + '"]')[0].classList.add("ui-state-active");
-      } else {
-        document.querySelectorAll('div[aria-label="' + x + '"]')[0].classList.remove("ui-state-active");
-      }
-    });
+      list.forEach(x => {
+        if (x === materialCategory) {
+          document.querySelectorAll('div[aria-label="' + x + '"]')[0].classList.add("ui-state-active");
+        } else {
+          document.querySelectorAll('div[aria-label="' + x + '"]')[0].classList.remove("ui-state-active");
+        }
+      });
 
-    // filter lot log dynamically
-    this.pLotLog.filter(materialCategory, "materialCategoryName", "");
-  }
+      // filter lot log dynamically
+      this.pLotLog.filter(materialCategory, "materialCategoryName", "");
+    }
 
     // End Change Events
 
@@ -260,26 +264,23 @@ export class LotTrackingComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    // End dialog methods
+      // End dialog methods
 
-    // Begin load data methods
+      // Begin load data methods
 
-  loadOptions(): void {
-        this.loadVendors();
-        this.loadOperators();
-        this.loadMaterialCategories();
-    }
+    loadOptions(): void {
+          this.loadVendors();
+          this.loadOperators();
+          this.loadMaterialCategories();
+      }
 
     loadVendors(): void {
-        this.vendorService.getVendors()
-          .then(vendors => {
-                (<any>vendors).forEach((vendor) => {
-                    this.supplierOptions.push({ label: vendor.name, value: { id: vendor.id, name: vendor.name} });
-                });
-
-                this.loadVendorLableImages();
-
-            });
+      this.vendorService.getVendors()
+        .then(vendors => {
+          (<any>vendors).forEach((vendor) => {
+            this.supplierLabelList.push(vendor.name);
+          });
+        });        
     }
 
     loadOperators(): void {

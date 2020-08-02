@@ -127,6 +127,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 .WithOne(x => x.MaterialCategory)
                 .HasForeignKey(x => x.MaterialCategoryId);
 
+                entity.HasMany(x => x.VendorMaterialCategories)
+               .WithOne(x => x.MaterialCategory)
+               .HasForeignKey(x => x.MaterialCategoryId);
+
             });
 
             modelBuilder.Entity<Operator>(entity =>
@@ -174,6 +178,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Context
                 entity.Property(e => e.StatusId)
                     .IsRequired()
                     .HasColumnType("int");
+
+               entity.HasMany(x => x.VendorMaterialCategories)
+                  .WithOne(x => x.Vendor)
+                  .HasForeignKey(x => x.VendorId);
             });
 
             modelBuilder.Entity<VendorItem>(entity =>

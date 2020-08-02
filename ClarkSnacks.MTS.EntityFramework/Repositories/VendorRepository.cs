@@ -1,6 +1,7 @@
 ﻿using ClarkSnacks.MTS.Domain.Entities;
 using ClarkSnacks.MTS.Domain.Repositories.Interfaces;
 using ClarkSnacks.MTS.EntityFramework.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace ClarkSnacks.MTS.EntityFramework.Repositories
@@ -20,7 +21,10 @@ namespace ClarkSnacks.MTS.EntityFramework.Repositories
         /// <returns></returns>
         public IQueryable<Vendor> Get()
         {
-           return _context.Vendors;
+            return _context.Vendors
+                .Include(x => x.VendorMaterialCategories);
+                 //.Include(x => x.VendorItems)
+                 //   .ThenInclude(x => x.Item);
         }
     }
 }

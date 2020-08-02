@@ -4,6 +4,7 @@ using ClarkSnacks.MTS.Domain.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace ClarkSnacks.MTS.Domain.Services
@@ -43,7 +44,8 @@ namespace ClarkSnacks.MTS.Domain.Services
         /// <returns></returns>
         public List<Vendor> GetVendorsByCategoryId(int categoryId)
         {
-            return _vendorRepository.Get().ToList();
+            //return _vendorRepository.Get().Select(x => x.VendorItems.FirstOrDefault(y => y.Item.MaterialCategoryId == categoryId).Vendor).ToList();
+            return _vendorRepository.Get().Select(x => x.VendorMaterialCategories.FirstOrDefault(y => y.MaterialCategoryId == categoryId).Vendor).ToList();
         }
     }
 }
