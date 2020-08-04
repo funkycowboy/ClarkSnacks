@@ -2,53 +2,54 @@
 <!--<h3>Lot Tracking Form</h3>-->
 
 <form [formGroup]="lotTrackingForm" (ngSubmit)="onSubmit(lotTrackingForm.value)">
-
+  <p>Please provide the following information to process a Lot.</p>
   <div class="ui-g" style="background-color: #ececec; border-radius:5px; padding: 15px;">
 
     <div class="ui-g-12" style="padding-top:0px">
       <div class="ui-g-2" style="padding-top:0px">
-        <label for="Operator">Operator: </label>
+        <label for="Operator">1. Operator  (Line {{productionLine}}): </label>
       </div>
       <div class="ui-g-10" style="padding-top:0px">
 
         <p-dropdown formControlName="operator" filter="true" name="Operator" (onChange)="operatorChange($event)" [options]="operatorOptions"></p-dropdown>&nbsp;
 
-        <label for="Supplier" style="font-weight: normal">Line: </label> <span style="color: blue">{{productionLine}}</span>
+        <!--<label for="Supplier" style="font-weight: normal">Line: </label> <span style="color: blue">{{productionLine}}</span>-->
       </div>
     </div>
 
     <div class="ui-g-12">
       <div class="ui-g-2">
-        <label for="Supplier">Material Category: </label>
-      </div>
-      <div class="ui-g-10 ui-fluid">
-        <p-dropdown formControlName="materialCategory" filter="true" name="MaterialCategory" (onChange)="materialCategoryChange($event)" [options]="materialCategoryOptions"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedMaterialCategory">
-      <div class="ui-g-2">
-        <label for="Items">Item: </label>
-        <span class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
-      </div>
-      <div class="ui-g-10 ui-fluid">
-        <p-dropdown formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedItem">
-      <div class="ui-g-2">
-        <label for="Items">Lot Number:</label>
-        <span class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
-      </div>
-      <div class="ui-g-10 ui-fluid">
-        <p-dropdown formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12" *ngIf="selectedLotNumber">
-      <div class="ui-g-2">
-        <label for="lastCaseOnPalette">Last case on the pallette?:</label>
+        <label for="Supplier">2. Material Category: </label>
       </div>
       <div class="ui-g-10">
-        <p-inputSwitch formControlName="lastCaseOnPalette" [(ngModel)]="lastCaseOnPaletteChecked">></p-inputSwitch>
+        <p-dropdown [disabled]="!selectedOperator" formControlName="materialCategory" filter="true" name="MaterialCategory" (onChange)="materialCategoryChange($event)" [options]="materialCategoryOptions"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-2">
+        <label for="Items">3. Item: </label>        
+      </div>
+      <div class="ui-g-10">
+        <p-dropdown [disabled]="!selectedMaterialCategory" formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
+        <span *ngIf="selectedMaterialCategory" class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-2">
+        <label for="Items">4. Lot Number:</label>
+      </div>
+      <div class="ui-g-10">
+        <p-dropdown [disabled]="!selectedItem" formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>
+        <span *ngIf="selectedMaterialCategory" class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
+
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-2">
+        <label for="lastCaseOnPalette">5. Last case on the pallette?:</label>
+      </div>
+      <div class="ui-g-10">
+        <p-inputSwitch [disabled]="!selectedLotNumber" formControlName="lastCaseOnPalette" [(ngModel)]="lastCaseOnPaletteChecked">></p-inputSwitch>
       </div>
     </div>
     <div class="ui-g-12" style="text-align:right">
@@ -57,8 +58,8 @@
     </div>
   </div>
 
- <p-dialog header="Supplier Label Information" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '90%'}">
-  <p-carousel [value]="supplierShippingLabelImages">
+  <p-dialog header="Supplier Label Information" [(visible)]="displayDialog" [focusOnShow]="true" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '90%'}">
+    <p-carousel [value]="supplierShippingLabelImages">
       <!--<p-header>
         <h3>Supplier Labels</h3>
       </p-header>-->
@@ -67,7 +68,7 @@
           <div class="p-grid p-nogutter">
             <div class="p-col-12 label-data">
               <div class="label-title">{{label.title}}</div>
-                <!--<div class="label-buttons">
+              <!--<div class="label-buttons">
                 <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>
                 <button pButton type="button" class="ui-button-secondary" icon="pi pi-star"></button>
                 <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
@@ -82,20 +83,20 @@
       </ng-template>
     </p-carousel>
 
-  <p-footer>
-    <div class="p-grid">
-      <div class="p-col-4" style="margin: 10px; padding:0"><h4>Legend:</h4></div>
-      <div class="p-col-2" style="margin: 10px;padding:0;background-color:#6ecd14; border-radius: 10px; color: #FFF; text-align: center"><h4>Item Number</h4></div>
-      <div class="p-col-2" style="margin: 10px;padding:0;background-color:#f99b2b; border-radius: 10px; color: #FFF; text-align: center"><h4>Lot Number</h4></div>
-      <div class="p-col p-align-center" style="margin: 10px;">
-        <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>
+    <p-footer>
+      <div class="p-grid">
+        <div class="p-col-4" style="margin: 10px; padding:0"><h4>Legend:</h4></div>
+        <div class="p-col-2" style="margin: 10px;padding:0;background-color:#6ecd14; border-radius: 10px; color: #FFF; text-align: center"><h4>Item Number</h4></div>
+        <div class="p-col-2" style="margin: 10px;padding:0;background-color:#f99b2b; border-radius: 10px; color: #FFF; text-align: center"><h4>Lot Number</h4></div>
+        <div class="p-col p-align-center" style="margin: 10px;">
+          <button type="button" pButton icon="fa fa-close" label="Close" (click)="closeLabelInfoDialog()"></button>
+        </div>
       </div>
-    </div>
-  </p-footer>
+    </p-footer>
 
   </p-dialog>
 
-  
+
 
   <div class="footer">
     <div style="display:inline-block; width: 50%">
@@ -159,7 +160,7 @@
     </div>
   </div>
   <!--</p-sidebar>-->
-   <!--Supplier Image-->
+  <!--Supplier Image-->
   <!--<p-galleria value="supplierShippingLabelImages" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}" [numVisible]="5">
     <ng-template pTemplate="item" let-item>
       <img [src]="item.previewImageSrc" style="width: 100%; display: block;" />

@@ -29,7 +29,7 @@ label
 }
 
 /deep/ .ui-dropdown {
-  min-width: 300px !important;
+  min-width: 600px !important;
 }
 
 
@@ -86,4 +86,8 @@ label
   position: absolute;
   left: 0;
   right:0;
+}
+
+/deep/ .ui-g-12 {
+    padding: .25em;
 }
