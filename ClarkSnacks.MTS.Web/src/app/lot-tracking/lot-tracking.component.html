@@ -30,8 +30,8 @@
         <label for="Items">3. Item: </label>        
       </div>
       <div class="ui-g-10">
-        <p-dropdown [disabled]="!selectedMaterialCategory" formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>
-        <span *ngIf="selectedMaterialCategory" class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
+        <p-dropdown [disabled]="!selectedMaterialCategory" formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>&nbsp;
+        <button *ngIf="selectedMaterialCategory" class="ui-button-rounded ui-button-warning" style="width:150px" type="button" pButton icon="fa fa-search" label="Find Item No." (click)="showLabelInfo()"></button>
       </div>
     </div>
     <div class="ui-g-12">
@@ -39,9 +39,8 @@
         <label for="Items">4. Lot Number:</label>
       </div>
       <div class="ui-g-10">
-        <p-dropdown [disabled]="!selectedItem" formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>
-        <span *ngIf="selectedMaterialCategory" class="fa fa-search" style="margin-left:15px;font-size: 20px; color: #007ad9" (click)="showLabelInfo()" title="View Supplier Labels"></span>
-
+        <p-dropdown [disabled]="!selectedItem" formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>&nbsp;
+        <button *ngIf="selectedItem" class="ui-button-rounded ui-button-warning" style="width:150px" type="button" pButton icon="fa fa-search" label="Find Lot No." (click)="showLabelInfo()"></button>
       </div>
     </div>
     <div class="ui-g-12">
