@@ -1,6 +1,24 @@
+
 <div class="p-grid">
   <div class="p-col home-card">
+    <div>
+      <p-calendar name="DateReceived" readonlyInput="true"></p-calendar>
+    </div>
+    <p-chart type="bar" [data]="dataCartonLotsInspectedByMonth" [options]="optionsCartonLotsInspectedByMonth"></p-chart>
+  </div>
+  <div class="p-col home-card">
+    <p-chart type="bar" [data]="dataBagLotsInspectedByMonth" [options]="optionsBagLotsInspectedByMonth"></p-chart>
+  </div>
+  <div class="p-col home-card">
+    <p-chart type="bar" [data]="dataOverwrapFilmLotsInspectedByMonth" [options]="optionsOverwrapFilmLotsInspectedByMonth"></p-chart>
+  </div>
+</div>
+<div class="p-grid">
+  <!--<div class="p-col home-card">
     <p-chart type="bar" [data]="dataLotsInspectedByMonth" [options]="optionsLotsInspectedByMonth"></p-chart>
+  </div>-->
+  <div class="p-col home-card">
+    <p-chart type="line" [data]="dataLotsInspectedByMonth" [options]="optionsLotsInspectedByMonth"></p-chart>
   </div>
   <div class="p-col home-card">
     <p-chart type="doughnut" [data]="dataLotsInspectedBySupplier" [options]="optionsLotsInspectedBySupplier"></p-chart>

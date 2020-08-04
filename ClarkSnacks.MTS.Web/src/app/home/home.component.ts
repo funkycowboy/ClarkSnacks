@@ -19,6 +19,10 @@ export class HomeComponent implements OnInit {
   dataLotsProcessedBySupplier: any;
   dataLotInspectionsByResult: any;
   dataLotsProcessedByHour: any;
+  dataCartonLotsInspectedByMonth: any;
+  dataBagLotsInspectedByMonth: any;
+  dataOverwrapFilmLotsInspectedByMonth: any;
+  dataContactFilmLotsInspectedByMonth: any;
 
   // Chart options
   optionsLotsInspectedByMonth: any;
@@ -28,6 +32,10 @@ export class HomeComponent implements OnInit {
   optionsLotsProcessedBySupplier: any;
   optionsLotInspectionsByResult: any;
   optionsLotsProcessedByHour: any;
+  optionsCartonLotsInspectedByMonth: any;
+  optionsBagLotsInspectedByMonth: any;
+  optionsOverwrapFilmLotsInspectedByMonth: any;
+  optionsContactFilmLotsInspectedByMonth: any;
 
   supplierLabelList: any[] = [];
 
@@ -52,15 +60,89 @@ export class HomeComponent implements OnInit {
   loadChartData(): void {
 
     // bar chart
+    this.dataCartonLotsInspectedByMonth = {
+      labels: this.getMonthArray(),
+      datasets: [
+        {
+          label: 'Cartons',
+          backgroundColor: '#42A5F5',
+          borderColor: '#1E88E5',
+          data: [59, 80, 65, 59, 80, 81, 56, 55, 65, 81, 56, 55, 40]
+        }
+      ]
+    }
+    // bar chart
+    this.dataBagLotsInspectedByMonth = {
+      labels: this.getMonthArray(),
+      datasets: [
+        {
+          label: 'Bags',
+          backgroundColor: '#42A5F5',
+          borderColor: '#1E88E5',
+          data: [59, 80, 65, 59, 80, 81, 56, 55, 65, 81, 56, 55, 40]
+        }
+      ]
+    }
+    // bar chart
+    this.dataOverwrapFilmLotsInspectedByMonth = {
+      labels: this.getMonthArray(),
+      datasets: [
+        {
+          label: 'Overwrap Film',
+          backgroundColor: 'orange',
+          borderColor: 'orange',
+          data: [100, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 65]
+        }
+      ]
+    }
+
+    // bar chart
+    this.dataContactFilmLotsInspectedByMonth = {
+      labels: this.getMonthArray(),
+      datasets: [      
+        {
+          label: 'Contact Film',
+          backgroundColor: 'red',
+          borderColor: 'red',
+          data: [55, 65, 81, 56, 59, 80, 65, 59, 80, 81, 56, 55, 40]
+        }
+
+      ]
+    }
+
+    // bar chart
     this.dataLotsInspectedByMonth = {
       labels: this.getMonthArray(),
       datasets: [
         {
-          label: 'Lots Inspected',
-          backgroundColor: '#42A5F5',
+          label: 'Cartons',
+          //backgroundColor: '#42A5F5',
           borderColor: '#1E88E5',
-          data: [65, 59, 80, 81, 56, 55, 65, 59, 80, 81, 56, 55, 40]
+          data: [59, 80, 65, 59, 80, 81, 56, 55, 65, 81, 56, 55, 40],
+          fill: false
+        },
+        {
+          label: 'Bags',
+          //backgroundColor: 'green',
+          borderColor: 'green',
+          data: [30, 40, 65, 81, 56, 55, 65, 59, 80, 81, 59, 80, 56],
+          fill: false
+        },
+        {
+          label: 'Overwrap Film',
+          //backgroundColor: 'orange',
+          borderColor: 'orange',
+          data: [100, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 65],
+          fill: false
+        },
+        {
+          label: 'Contact Film',
+          //backgroundColor: 'red',
+          borderColor: 'red',
+          data: [55, 65, 81, 56, 59, 80, 65, 59, 80, 81, 56, 55, 40],
+          fill: false
         }
+        
       ]
     }
 
@@ -198,6 +280,46 @@ export class HomeComponent implements OnInit {
 
   loadChartOptions() {
 
+    this.optionsCartonLotsInspectedByMonth = {
+      title: {
+        display: true,
+        text: 'Carton Lots Inspected (By Month)',
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
+    this.optionsBagLotsInspectedByMonth = {
+      title: {
+        display: true,
+        text: 'Bag Lots Inspected (By Month)',
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
+    this.optionsOverwrapFilmLotsInspectedByMonth = {
+      title: {
+        display: true,
+        text: 'Overwrap Film Lots Inspected (By Month)',
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
+    this.optionsContactFilmLotsInspectedByMonth = {
+      title: {
+        display: true,
+        text: 'Contact Film Lots Inspected (By Month)',
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
     this.optionsLotsInspectedByMonth = {
       title: {
         display: true,
@@ -288,13 +410,17 @@ export class HomeComponent implements OnInit {
   }
 
   getTimeArray(): string[] {
-    const locale = 'en'; // or whatever you want...
+
+    const locale = 'en'; 
     const hours = [];
 
-    moment.locale(locale);  // optional - can remove if you are only dealing with one locale
+    moment.locale(locale); 
     const now = moment()
+
+    let currentHour = parseInt(now.format("h"));
    
-    for (let hour = parseInt(now.format("h")); hour < 24; hour++) {
+    for (let hour = currentHour; hour < 24; hour++) {
+
       hours.push(moment({ hour }).format('h:mm A'));
       hours.push(
         moment({
@@ -304,7 +430,20 @@ export class HomeComponent implements OnInit {
       );
     }
 
+    if (currentHour > 0) {
+      for (let hour = 0; hour < currentHour; hour++) {
+        hours.push(moment({ hour }).format('h:mm A'));
+        hours.push(
+          moment({
+            hour,
+            minute: 30
+          }).format('h:mm A')
+        );
+      }
+    }
+
     return hours;
+
   }
 
   getMonthArray(): string[] {
