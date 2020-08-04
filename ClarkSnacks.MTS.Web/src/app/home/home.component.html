@@ -1,1 +1,32 @@
-<p>home works!</p>
+<div class="p-grid">
+  <div class="p-col home-card">
+    <p-chart type="bar" [data]="dataLotsInspectedByMonth" [options]="optionsLotsInspectedByMonth"></p-chart>
+  </div>
+  <div class="p-col home-card">
+    <p-chart type="doughnut" [data]="dataLotsInspectedBySupplier" [options]="optionsLotsInspectedBySupplier"></p-chart>
+  </div>
+  <div class="p-col home-card">
+    <p-chart type="doughnut" [data]="dataLotInspectionsByResult" [options]="optionsLotInspectionsByResult"></p-chart>
+  </div>
+</div>
+
+<div class="p-grid">
+  <div class="p-col home-card">
+    <p-chart type="doughnut" [data]="dataLotsProcessedByMaterialCategory" [options]="optionsLotsProcessedByMaterialCategory"></p-chart>
+  </div>
+  <div class="p-col home-card">
+    <p-chart type="doughnut" [data]="dataLotsProcessedBySupplier" [options]="optionsLotsProcessedBySupplier"></p-chart>
+  </div>
+  <div class="p-col home-card">
+    <p-chart type="doughnut" [data]="dataLotsProcessedByProdLine" [options]="optionsLotsProcessedByProdLine"></p-chart>
+  </div>
+</div>
+
+<div class="p-grid">
+  <div class="p-col home-card">
+    <p-chart type="bar" [data]="dataLotsProcessedByHour" [options]="optionsLotsProcessedByHour" height="40vh"></p-chart>
+  </div>
+</div>
+
+
+

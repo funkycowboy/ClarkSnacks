@@ -49,6 +49,8 @@ import { ToastModule } from 'primeng/toast';
 import { SidebarModule } from 'primeng/sidebar';
 import { GalleriaModule } from 'primeng/galleria';
 import { CarouselModule } from 'primeng/carousel';
+import { ChartModule } from 'primeng/chart';
+import { DragDropModule } from 'primeng/dragdrop';
 
 
 @NgModule({
@@ -91,7 +93,9 @@ import { CarouselModule } from 'primeng/carousel';
     ToastModule,
     SidebarModule,
     GalleriaModule,
-    CarouselModule
+    CarouselModule,
+    ChartModule,
+    DragDropModule
   ],
     providers: [
         VendorService,
