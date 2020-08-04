@@ -7,7 +7,7 @@
 
     <div class="ui-g-12" style="padding-top:0px">
       <div class="ui-g-2" style="padding-top:0px">
-        <label for="Operator">1. Operator  (Line {{productionLine}}): </label>
+        <span class="ui-state-default fa fa-arrow-circle-right"></span> <label for="Operator"> 1. Operator  (Line {{productionLine}}): </label>
       </div>
       <div class="ui-g-10" style="padding-top:0px">
 
@@ -19,7 +19,7 @@
 
     <div class="ui-g-12">
       <div class="ui-g-2">
-        <label for="Supplier">2. Material Category: </label>
+        <span class="ui-state-default fa fa-arrow-circle-right"></span> <label for="Supplier"> 2. Material Category: </label>
       </div>
       <div class="ui-g-10">
         <p-dropdown [disabled]="!selectedOperator" formControlName="materialCategory" filter="true" name="MaterialCategory" (onChange)="materialCategoryChange($event)" [options]="materialCategoryOptions"></p-dropdown>
@@ -27,7 +27,7 @@
     </div>
     <div class="ui-g-12">
       <div class="ui-g-2">
-        <label for="Items">3. Item: </label>        
+        <span class="ui-state-default fa fa-arrow-circle-right"></span> <label for="Items"> 3. Item: </label>
       </div>
       <div class="ui-g-10">
         <p-dropdown [disabled]="!selectedMaterialCategory" formControlName="item" filter="true" (onChange)="itemChange($event)" [options]="itemOptions"></p-dropdown>&nbsp;
@@ -36,7 +36,7 @@
     </div>
     <div class="ui-g-12">
       <div class="ui-g-2">
-        <label for="Items">4. Lot Number:</label>
+        <span class="ui-state-default fa fa-arrow-circle-right"></span> <label for="Items"> 4. Lot Number:</label>
       </div>
       <div class="ui-g-10">
         <p-dropdown [disabled]="!selectedItem" formControlName="lotNumber" filter="true" [options]="lotOptions" [editable]="true" (onChange)="lotNumberChange($event)"></p-dropdown>&nbsp;
@@ -45,7 +45,7 @@
     </div>
     <div class="ui-g-12">
       <div class="ui-g-2">
-        <label for="lastCaseOnPalette">5. Last case on the pallette?:</label>
+        <span class="ui-state-default fa fa-arrow-circle-right"></span> <label for="lastCaseOnPalette"> 5. Last case on pallette:</label>
       </div>
       <div class="ui-g-10">
         <p-inputSwitch [disabled]="!selectedLotNumber" formControlName="lastCaseOnPalette" [(ngModel)]="lastCaseOnPaletteChecked">></p-inputSwitch>

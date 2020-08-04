@@ -32,7 +32,9 @@ label
   min-width: 600px !important;
 }
 
-
+/deep/ span.ui-state-default.fa.fa-arrow-circle-right {
+  color: #007ad9;
+}
 
 /deep/ .ui-carousel .ui-carousel-content .ui-carousel-item .label-details > .p-grid {
   border: 1px solid #b3c2ca;
