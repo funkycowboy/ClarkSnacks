@@ -2,6 +2,7 @@
 using ClarkSnacks.MTS.API.wwwroot;
 using ClarkSnacks.MTS.Domain.Entities;
 using ClarkSnacks.MTS.Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace ClarkSnacks.MTS.API.Controllers
         }
         
         [HttpGet]
+        [Authorize]
         public ActionResult<string> GetAll()
         {
             try

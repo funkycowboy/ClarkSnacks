@@ -1,11 +1,21 @@
 <div class="container">
-  <div class="topnav" style="background-color: #ccc; border-bottom:5px solid gray; padding:10px;">
-    <div class="logo" style="display: inline-block; vertical-align:middle; margin-right:50px">
+  <div class="topnav p-grid" style="background-color: #ccc; border-bottom:5px solid gray; padding:10px;">
+    <div class="logo p-col-2" style="vertical-align:middle">
       <img src="http://www.clarksnacks.com/images/Clark'sTrans.gif" style="width: 125px" />
     </div>
-    <div style="display: inline-block;vertical-align:middle">
-      <span style="font-family:'Arial Rounded MT'; font-size:35px; color:#ececec; text-shadow: 2px 2px 2px gray;">Materials Tracking System</span>
+    <div class="p-col-5">
+      <span style="font-family:'Arial Rounded MT'; font-size:2em; color:#ececec; text-shadow: 2px 2px 2px gray;">Materials Tracking System</span>
+    </div>
+    <div class="p-col-5" style="text-align: right;padding-right: 10px;">
+      <span *ngIf="!auth.loggedIn" class="fa fa-sign-in" style="font-size: 1.5em; margin-right:5px"></span>
+      <a *ngIf="!auth.loggedIn" (click)="auth.login()" style="cursor:pointer; text-decoration: underline">Sign-In</a>
+      <div *ngIf="auth.userProfile$ | async as profile">
+        <span class="fa fa-user ui-menuitem-text" style="font-size: 1.5em"></span>&nbsp;
+        <span class="ui-menuitem-text">{{profile.name}}</span>
+      </div>
+      <a *ngIf="auth.loggedIn" (click)="auth.logout()" style="cursor:pointer; text-decoration: underline">Sign-Out</a>
     </div>
   </div>
 </div>
 <p-menubar [model]="items"></p-menubar>
+

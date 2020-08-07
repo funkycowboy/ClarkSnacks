@@ -1,5 +1,6 @@
 ﻿using ClarkSnacks.MTS.API.Mapping;
 using ClarkSnacks.MTS.EntityFramework.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,8 @@ namespace ClarkSnacks.MTS.API
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            ConfigureAuthenticationService(services);
+
             return ConfigureIoC(services);
         }
 
@@ -95,6 +98,9 @@ namespace ClarkSnacks.MTS.API
 
             });
 
+            // Enable authentication middleware
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
             app.UseCors("default");
             app.UseMvc();
@@ -117,6 +123,23 @@ namespace ClarkSnacks.MTS.API
             });
 
             return container.GetInstance<IServiceProvider>();
+        }
+
+        /// <summary>
+        /// Add Authentication Services
+        /// </summary>
+        /// <param name="services"></param>
+        private void ConfigureAuthenticationService(IServiceCollection services)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://clarksnacks.us.auth0.com/";
+                options.Audience = "https://api.clarksnacks.com";
+            });
         }
     }
 }

@@ -3,19 +3,28 @@ import { Router } from '@angular/router';
 
 // prime ng
 import { MegaMenuModule, Menubar, MenuModule, MenuItem } from 'primeng/primeng';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     //moduleId: module.id,
     selector: 'default-header',
     templateUrl: 'default-header.component.html',
-    styleUrls: ['default-header.component.css']
+    styleUrls: ['default-header.component.css'],
+    providers: [AuthService]
 })
 export class DefaultHeaderComponent implements OnInit {
 
-    items: MenuItem[];
-    constructor(private router: Router) {
+  items: MenuItem[];
+
+  userName: any;
+
+  constructor(
+    private router: Router,
+    public auth: AuthService) {
     }
-    ngOnInit() {
+  ngOnInit() {
+    debugger
+    this.userName = this.auth.userProfile$
         this.items = [
             {
                 label: 'Home',
@@ -108,7 +117,14 @@ export class DefaultHeaderComponent implements OnInit {
                     }
 
                 ]
-            }//,  
+          }
+          //,
+          //  {
+          //    label: '',
+          //    icon: 'fa fa-user',
+          //    'routerLink': ['/profile'],
+            //  title: "User Profile"
+            //}
             //{
             //    label: 'Admin',
             //    icon: 'fa fa-user',
