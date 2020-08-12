@@ -5,11 +5,60 @@ import * as config from '../../../auth_config.json';
 import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 import { tap, catchError, concatMap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.js';
+
+import Auth0Lock from 'auth0-lock';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  auth0Options = {
+    theme: {
+      logo: '/assets/clark-snacks-logo.gif',
+      primaryColor: '#DFA612'
+    },
+    auth: {
+      redirectUrl: environment.auth0CallbackUrl,
+      responseType: 'token id_token',
+      audience: config.audience,
+      params: {
+        scope: 'openid profile'
+      }
+    },
+    autoclose: true,
+    oidcConformant: true,
+  };
+  lock = new Auth0Lock(
+    config.clientId,
+    config.domain,
+    this.auth0Options
+  );
+  constructor(private router: Router) {
+
+    // On initial load, check authentication state with authorization server
+    // Set up local auth streams if user is already authenticated
+    this.localAuthSetup();
+    // Handle redirect from Auth0 login
+    this.handleAuthCallback();
+
+    this.lock.on('authenticated', (authResult: any) => {
+      console.log('Nice, it worked!');
+      this.router.navigate(['/']); // go to the home route
+      // ...finish implementing authenticated
+    });
+    this.lock.on('authorization_error', error => {
+      console.log('something went wrong', error);
+    });
+  }
+  //login() {
+  //  this.lock.show();
+  //}
+
+  //logout() {
+  //  // ...implement logout
+  //}
+
   // Create an observable of Auth0 instance of client
   auth0Client$ = (from(
     createAuth0Client({
@@ -39,13 +88,13 @@ export class AuthService {
   // Create a local property for login status
   loggedIn: boolean = null;
 
-  constructor(private router: Router) {
-    // On initial load, check authentication state with authorization server
-    // Set up local auth streams if user is already authenticated
-    this.localAuthSetup();
-    // Handle redirect from Auth0 login
-    this.handleAuthCallback();
-  }
+  //constructor(private router: Router) {
+  //  // On initial load, check authentication state with authorization server
+  //  // Set up local auth streams if user is already authenticated
+  //  this.localAuthSetup();
+  //  // Handle redirect from Auth0 login
+  //  this.handleAuthCallback();
+  //}
 
   // When calling, options can be passed if desired
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
@@ -74,6 +123,9 @@ export class AuthService {
   }
 
   login(redirectPath: string = '/') {
+
+    this.lock.show();
+
     // A desired redirect path can be passed to login method
     // (e.g., from a route guard)
     // Ensure Auth0 client instance exists

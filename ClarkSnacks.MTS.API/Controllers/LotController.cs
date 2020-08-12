@@ -3,6 +3,7 @@ using ClarkSnacks.MTS.API.wwwroot;
 using ClarkSnacks.MTS.Domain.Dtos;
 using ClarkSnacks.MTS.Domain.Entities;
 using ClarkSnacks.MTS.Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace ClarkSnacks.MTS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy ="read:lot")]
     public class LotController : ControllerBase
     {
         private readonly ILotService _lotService;

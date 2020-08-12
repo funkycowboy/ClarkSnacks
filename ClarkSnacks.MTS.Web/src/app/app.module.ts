@@ -52,6 +52,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
 import { DragDropModule } from 'primeng/dragdrop';
 import { ProfileComponent } from './profile/profile.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { ProfileComponent } from './profile/profile.component';
         AddRowDirective,
         AddRowDirective2,
         LotTrackingComponent,
-        ProfileComponent
+        ProfileComponent,
+        ReportsComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

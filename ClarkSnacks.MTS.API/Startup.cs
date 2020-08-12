@@ -1,6 +1,7 @@
 ﻿using ClarkSnacks.MTS.API.Mapping;
 using ClarkSnacks.MTS.EntityFramework.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using StructureMap;
 using System;
+using System.Security.Claims;
 
 namespace ClarkSnacks.MTS.API
 {
@@ -135,11 +138,27 @@ namespace ClarkSnacks.MTS.API
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            })
+            .AddJwtBearer(options =>
             {
                 options.Authority = "https://clarksnacks.us.auth0.com/";
                 options.Audience = "https://api.clarksnacks.com";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:lot", policy => policy.Requirements.Add(new HasScopeRequirement("read:lot", "https://clarksnacks.us.auth0.com/")));
+                options.AddPolicy("write:lot", policy => policy.Requirements.Add(new HasScopeRequirement("write:lot", "https://clarksnacks.us.auth0.com/")));
+                options.AddPolicy("read:inspection", policy => policy.Requirements.Add(new HasScopeRequirement("read:inspection", "https://clarksnacks.us.auth0.com/")));
+                options.AddPolicy("write:inspection", policy => policy.Requirements.Add(new HasScopeRequirement("write:inspection", "https://clarksnacks.us.auth0.com/")));
+            });
+
+            // register the scope authorization handler
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
-    }
+    };
 }

@@ -40,15 +40,7 @@ export class DefaultHeaderComponent implements OnInit {
                     {
                         label: 'Perform Inspection',
                         icon: 'fa fa-arrow-circle-right', 'routerLink': ['/material-inspection']
-                    }//,
-                    //{
-                    //    label: 'View Inspections',
-                    //    icon: 'fa fa-arrow-circle-right', 'routerLink': ['/view-inspections']
-                    //},
-                    //{
-                    //    label: 'Upload Artwork',
-                    //    icon: 'fa fa-arrow-circle-right', 'routerLink': ['/upload']
-                    //}
+                    }
                 ]
             },
             {
@@ -115,7 +107,6 @@ export class DefaultHeaderComponent implements OnInit {
                             }
                         ]
                     }
-
                 ]
           }
           //,
