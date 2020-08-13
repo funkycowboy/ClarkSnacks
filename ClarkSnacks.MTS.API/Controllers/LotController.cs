@@ -12,7 +12,7 @@ namespace ClarkSnacks.MTS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy ="read:lot")]
+    //[Authorize(Policy ="read:lot")]
     public class LotController : ControllerBase
     {
         private readonly ILotService _lotService;

@@ -24,7 +24,7 @@ namespace ClarkSnacks.MTS.API.Controllers
         }
         
         [HttpGet]
-        [Authorize()]
+        //[Authorize()]
         public ActionResult<string> GetAll()
         {
             try
