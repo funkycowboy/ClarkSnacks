@@ -23,13 +23,12 @@ export class AuthService {
         scope: 'openid profile'
       }
     },
-
     languageDictionary: {
       title: "MTS Login"
     },
     autoclose: true,
     oidcConformant: true,
-    rememberLastLogin: false
+    allowSignUp: false
   };
 
   lock = new Auth0Lock(
