@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     clarkSnacksUrl: "https://localhost:44387/api/",
-    auth0CallbackUrl: "http://localhost:4200"
+    auth0CallbackUrl: "http://localhost:4200",
+    auth0RedirectUrl: "http://localhost:4200/callback"
 };
 
 /*

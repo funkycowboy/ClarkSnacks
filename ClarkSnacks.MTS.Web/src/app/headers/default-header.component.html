@@ -7,13 +7,13 @@
       <span style="font-family:'Arial Rounded MT'; font-size:2em; color:#ececec; text-shadow: 2px 2px 2px gray;">Materials Tracking System</span>
     </div>
     <div class="p-col-5" style="text-align: right;padding-right: 10px;">
-      <span *ngIf="!auth.loggedIn" class="fa fa-sign-in" style="font-size: 1.5em; margin-right:5px"></span>
-      <a *ngIf="!auth.loggedIn" (click)="auth.login()" style="cursor:pointer; text-decoration: underline">Sign-In</a>
-      <div *ngIf="auth.userProfile$ | async as profile">
+      <span *ngIf="!auth.isAuthenticated" class="fa fa-sign-in" style="font-size: 1.5em; margin-right:5px"></span>
+      <a *ngIf="!auth.isAuthenticated" (click)="auth.login()" style="cursor:pointer; text-decoration: underline">Sign-In</a>
+      <div *ngIf="auth.isAuthenticated && auth.userProfile$ | async as profile">
         <span class="fa fa-user ui-menuitem-text" style="font-size: 1.5em"></span>&nbsp;
         <span class="ui-menuitem-text">{{profile.name}}</span>
       </div>
-      <a *ngIf="auth.loggedIn" (click)="auth.logout()" style="cursor:pointer; text-decoration: underline">Sign Out</a>
+      <a *ngIf="auth.isAuthenticated" (click)="auth.logout()" style="cursor:pointer; text-decoration: underline">Sign Out</a>
     </div>
   </div>
 </div>

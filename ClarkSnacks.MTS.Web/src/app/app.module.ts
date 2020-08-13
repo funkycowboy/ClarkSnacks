@@ -16,6 +16,7 @@ import { ItemService } from './services/item-service';
 import { LotService } from './services/lot-service';
 import { OperatorService } from './services/operator-service';
 import { InspectionService } from './services/inspection-service';
+import { AuthService } from './auth/auth.service';
 
 
 // directives
@@ -108,7 +109,8 @@ import { ReportsComponent } from './reports/reports.component';
         OperatorService,
         LotService,
         ConfirmationService,
-        InspectionService
+      InspectionService,
+      AuthService
     ],
   bootstrap: [AppComponent]
 })
